@@ -16,5 +16,13 @@ class Plant(db.Model):
     sunlight = db.Column(db.String(50)) # "Full Sun", "Partial Sun", "Partial Shade", "Full Shade"
     space_required = db.Column(db.String(20)) # "Small", "Medium", "Large"
     
+    # OpenFarm-specific fields
+    sowing_method = db.Column(db.String(50)) # Example: "Direct sow", "Transplant"
+    spread = db.Column(db.Float) # Spread in inches/cm
+    row_spacing = db.Column(db.Float) # Row spacing in inches/cm
+    height = db.Column(db.Float) # Height in inches/cm
+    description = db.Column(db.Text) # Description of the plant
+    image_url = db.Column(db.String(255)) # URL to the plant image
+    
     def __repr__(self):
         return f"<Plant {self.name}>"
