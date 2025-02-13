@@ -17,7 +17,7 @@ def create_app():
     app = Flask(__name__)
     
     # Load SECRET_KEY
-    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "fallback_secret_key")
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     
     # Database Configuration
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///gardening.db"
