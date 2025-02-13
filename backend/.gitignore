@@ -3,9 +3,15 @@ venv/
 
 # Ignore Python cache files
 __pycache__/
+*.pyc
 
 # Ignore environment file
 .env
 
-# Ignore dtabase files
+# Ignore database files
 *.sqlite3
+backend/app/gardening.db 
+
+# Track migrations but ignore compiled Python files within versions
+!backend/migrations/
+backend/migrations/versions/*.pyc
