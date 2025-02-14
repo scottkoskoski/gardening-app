@@ -20,16 +20,14 @@ def create_app():
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     
     # Database Configuration
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///gardening.db"
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__)) # backend/app
+    DB_PATH = os.path.join(BASE_DIR, "..","instance", "gardening.db") # backend/instance/gardening.db
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_PATH}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    
+    # Initialize extensions 
     db.init_app(app)
-    
-    # Initialize Migrate
     migrate = Migrate(app, db)
-    
-    # Create the database if it doesn't exist
-    with app.app_context():
-        create_database(app)
     
     # Register Blueprints
     app.register_blueprint(hardiness_bp, url_prefix="/api/hardiness")
