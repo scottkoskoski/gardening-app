@@ -20,6 +20,8 @@ We started by ensuring that the project follows a clean and organized structure.
 │   │   │── routes/  # API routes
 │   │   └── __init__.py  # App factory
 │   │── migrations/  # Database migrations
+│   │── instance/  # SQLite database storage
+│   │── scripts/  # Scripts for data fetching
 │   └── run.py  # Entry point
 │── frontend/ (Coming Soon)
 └── README.md
@@ -129,20 +131,19 @@ flask db upgrade
 
 ---
 
-## 6. **User Registration Endpoint**
+## 6. **User Registration & Authentication**
 
 ### Purpose
 
-Allows users to create an account with a **username, email, and password**.
+Allows users to register and log in using JWT-based authentication.
 
 ### Steps Taken
 
 -   Created `users.py` inside `app/routes/`.
--   Used **Flask-SQLAlchemy** to manage users.
--   Hashed passwords before storing them.
--   Registered the blueprint for `/api/users`.
+-   Implemented **password hashing** and **JWT token-based authentication**.
+-   Registered a Flask blueprint for `/api/users`.
 
-**Tested using:**
+**User Registration**
 
 ```bash
 curl -X POST http://127.0.0.1:5000/api/users/register \
@@ -156,45 +157,25 @@ Expected output:
 { "message": "User registered successfully.", "user_id": 1 }
 ```
 
----
+**User Login**
 
-## Date: 2/13/2025
+```bash
+curl -X POST http://127.0.0.1:5000/api/users/login \
+     -H "Content-Type: application/json" \
+     -d '{"email": "test@example.com", "password": "mypassword"}'
+```
 
-## 7. **Database Migration and Model Updates**
+Expected output:
 
-### Database Structure and Migration Fixes
-
-Today, we worked on fixing database issues and properly setting up migrations for the **Plant** and **User** models.
-
-**Key Steps Taken:**
-
--   Verified the Flask application and database connection.
--   Deleted the existing migrations and database files to start fresh.
--   Re-initialized Flask-Migrate and applied migrations:
-
-    ```bash
-    rm -rf migrations/ instance/
-    flask db init
-    flask db migrate -m "Reinitialized database"
-    flask db upgrade
-    ```
-
--   Ensured the database tables were correctly created and accessible in SQLite:
-
-    ```bash
-    sqlite3 instance/gardening.db
-    .tables
-    ```
-
-Expected tables:
-
-```txt
-alembic_version  plant  user
+```json
+{ "message": "Login successful!", "token": "<JWT_TOKEN>" }
 ```
 
 ---
 
-## 8. **Fetching Plant Data from OpenFarm API**
+## Date: 2/13/2025
+
+## 7. **Fetching Plant Data from OpenFarm API**
 
 ### Purpose
 
@@ -202,7 +183,7 @@ We integrated OpenFarm's API to fetch and store plant data in our database.
 
 ### Steps Taken:
 
--   Implemented `fetch_openfarm_data.py` to query OpenFarm for plant data.
+-   Implemented `fetch_openfarm_data.py` in `scripts/` to query OpenFarm for plant data.
 -   Stored relevant attributes (name, sunlight, sowing method, spacing, height, description, and image URL).
 -   Avoided duplicate entries by checking for existing plants before insertion.
 -   Verified that data was correctly inserted into the `plant` table.
@@ -222,23 +203,21 @@ Example output:
 1|Tomato||||||0|0|||Full Sun||Direct seed indoors, transplant seedlings outside after hardening off|45.0|45.0|45.0|The tomato is the fruit of the tomato plant, a member of the Nightshade family (Solanaceae).|https://s3.amazonaws.com/openfarm-project/production/media/pictures/attachments/5dc3618ef2c1020004f936e4.jpg?1573085580
 ```
 
-This confirmed that the OpenFarm data was successfully imported.
-
 ---
 
-## 9. **Summary & Next Steps**
+## 8. **Summary & Next Steps**
 
 ### What We Accomplished Today:
 
--   Fixed database migration issues and ensured all tables were correctly created.
+-   Implemented **user authentication and JWT-based login**.
 -   Successfully fetched and stored plant data from the OpenFarm API.
 -   Verified data insertion in SQLite and confirmed plant records exist in the `plant` table.
 
 ### Next Steps:
 
--   Implement authentication for **User Registration & Login**.
 -   Build API endpoints to query plant data efficiently.
 -   Set up the **frontend structure** for integrating with the backend.
+-   Implement user profile management and authentication improvements.
 
 ---
 
