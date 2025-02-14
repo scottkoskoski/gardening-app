@@ -13,12 +13,13 @@ This project is a web application that provides users with personalized gardenin
 -   **Database of Plants**: Stores plant data fetched from OpenFarm API.
 -   **User Accounts & Authentication**: Users can register, log in, and receive personalized recommendations.
 -   **JWT-Based Authentication**: Secure user authentication using JSON Web Tokens.
--   **Interactive Garden Planner (Future)**: Allows users to visualize and manage their garden layout.
+-   **React Frontend with TypeScript**: A modern UI built using React.js with TypeScript for type safety.
+-   **Vite for Fast Development**: Uses Vite for efficient frontend bundling and development.
 
 ## Tech Stack
 
 -   **Backend**: Flask (Python), Flask-Migrate, Flask-SQLAlchemy, Flask-JWT
--   **Frontend**: React.js (To be implemented)
+-   **Frontend**: React.js with TypeScript, Vite
 -   **Database**: SQLite (currently), PostgreSQL (planned for production)
 -   **APIs Used**:
     -   [USDA Plant Hardiness Zone API](https://phzmapi.org/) – Determines planting zones by ZIP code.
@@ -39,20 +40,30 @@ This project is a web application that provides users with personalized gardenin
 │   │── scripts/  # Utility scripts
 │   │   └── fetch_openfarm_data.py  # Script to populate the database with plant data
 │   └── run.py  # Entry point
-│── frontend/ (Coming Soon)
-└── README.md
+│── frontend/
+│   │── src/  # React source code
+│   │── public/  # Static assets
+│   │── .gitignore  # Ignores node_modules and build files
+│   │── package.json  # Project dependencies
+│   │── tsconfig.json  # TypeScript configuration
+│   └── vite.config.ts  # Vite configuration
+│── README.md
 ```
 
 ## Setup Instructions
 
-### 1. Clone the Repository
+### **1. Clone the Repository**
 
 ```bash
 git clone <repo-url>
 cd gardening-app
 ```
 
-### 2. Set Up the Backend
+---
+
+## **Setting Up the Backend**
+
+### **2. Set Up the Backend Environment**
 
 ```bash
 cd backend
@@ -61,14 +72,14 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Configure Flask
+### **3. Configure Flask**
 
 ```bash
 export FLASK_APP=app  # Windows: $env:FLASK_APP = "app"
 export FLASK_ENV=development  # Windows: $env:FLASK_ENV = "development"
 ```
 
-### 4. Initialize the Database
+### **4. Initialize the Database**
 
 ```bash
 flask db init
@@ -76,64 +87,128 @@ flask db migrate -m "Initial migration"
 flask db upgrade
 ```
 
-### 5. Fetch Plant Data from OpenFarm API
+### **5. Fetch Plant Data from OpenFarm API**
 
 ```bash
 python scripts/fetch_openfarm_data.py
 ```
 
-### 6. Run the Application
+### **6. Run the Backend**
 
 ```bash
 flask run
 ```
 
-Server runs at: [http://127.0.0.1:5000](http://127.0.0.1:5000)
-
-## API Endpoints
-
-### Plant Hardiness Zone
-
--   GET `/api/hardiness/get_hardiness_zone?zip=<ZIP>`
--   Response: `{ "hardiness_zone": "7a" }`
-
-### Weather Data
-
--   GET `/api/weather/get_weather?zip=<ZIP>`
--   Response: `{ "temperature": 65, "precipitation": 0 }`
-
-### Plant Data
-
--   GET `/api/plants/get_plants`
--   Response: `{ "plants": [ { "name": "Tomato", "zone": "5-9" } ] }`
-
-### User Registration
-
--   POST `/api/users/register`
--   Request Body: `{ "username": "testuser", "email": "test@example.com", "password": "mypassword" }`
--   Response: `{ "message": "User registered successfully.", "user_id": 1 }`
-
-### User Login
-
--   POST `/api/users/login`
--   Request Body: `{ "email": "test@example.com", "password": "mypassword" }`
--   Response: `{ "message": "Login successful!", "token": "<JWT_TOKEN>" }`
-
-### Get User Information
-
--   GET `/api/users/get_user?email=<EMAIL>`
--   Response: `{ "id": 1, "username": "testuser", "email": "test@example.com" }`
-
-## Future Enhancements
-
--   **Garden Planning Tool** with Drag-and-Drop UI
--   **Notifications** for Planting & Harvesting Schedules
--   **Community Features**: Connect Local Gardeners
-
-## License
-
-Currently, this project is private and does not have a public license.
+The backend should now be running at: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ---
 
-**Next Steps**: Finalize plant API integration and continue improving authentication and user experience.
+## **Setting Up the Frontend**
+
+### **1. Install Dependencies**
+
+```bash
+cd frontend
+npm install
+```
+
+### **2. Run the Frontend**
+
+```bash
+npm run dev
+```
+
+The frontend should now be running at: [http://localhost:5173](http://localhost:5173)
+
+---
+
+## Untracked Files
+
+Certain files are required but are **not tracked** in Git for security reasons. You may need to create them manually:
+
+-   **backend/.env** – Contains environment variables, such as:
+    ```
+    SECRET_KEY=<your_secret_key>
+    ```
+-   **frontend/.env** – If API keys or environment settings are required for the frontend.
+
+Ensure these files exist before running the project.
+
+---
+
+## API Endpoints
+
+### **Plant Hardiness Zone**
+
+-   **GET** `/api/hardiness/get_hardiness_zone?zip=<ZIP>`
+-   **Response:**
+    ```json
+    { "hardiness_zone": "7a" }
+    ```
+
+### **Weather Data**
+
+-   **GET** `/api/weather/get_weather?zip=<ZIP>`
+-   **Response:**
+    ```json
+    { "temperature": 65, "precipitation": 0 }
+    ```
+
+### **Plant Data**
+
+-   **GET** `/api/plants/get_plants`
+-   **Response:**
+    ```json
+    { "plants": [{ "name": "Tomato", "zone": "5-9" }] }
+    ```
+
+### **User Registration**
+
+-   **POST** `/api/users/register`
+-   **Request Body:**
+    ```json
+    {
+        "username": "testuser",
+        "email": "test@example.com",
+        "password": "mypassword"
+    }
+    ```
+-   **Response:**
+    ```json
+    { "message": "User registered successfully.", "user_id": 1 }
+    ```
+
+### **User Login**
+
+-   **POST** `/api/users/login`
+-   **Request Body:**
+    ```json
+    { "email": "test@example.com", "password": "mypassword" }
+    ```
+-   **Response:**
+    ```json
+    { "message": "Login successful!", "token": "<JWT_TOKEN>" }
+    ```
+
+### **Get User Information (JWT Required)**
+
+-   **GET** `/api/users/get_user`
+-   **Headers:**
+    ```http
+    Authorization: Bearer <JWT_TOKEN>
+    ```
+-   **Response:**
+    ```json
+    { "id": 1, "username": "testuser", "email": "test@example.com" }
+    ```
+
+---
+
+## Future Enhancements
+
+-   **Frontend Authentication Flow** (Login & Logout UI)
+-   **User Dashboard with Gardening Recommendations**
+
+## Next Steps
+
+-   **Build the frontend login page** and integrate authentication.
