@@ -61,17 +61,32 @@ def register_user():
 
 @users_bp.route("/get_user", methods=["GET"])
 def get_user():
-    """Gets user details by email (excluding password hash)."""
-    email = request.args.get("email")
-    if not email:
-        return jsonify({"error": "Email is required."}), 400
+    """Gets user details by for the authenticated user."""
     
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        return jsonify({"error": "User not found."}), 404
+    auth_header = request.headers.get("Authorization")
     
-    return jsonify({
-        "id": user.id,
-        "username": user.username,
-        "email": user.email
-    })
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return jsonify({"error": "Authorization token required."}), 401
+    
+    token = auth_header.split(" ")[1] # Extract token after "Bearer"
+    
+    try:
+        secret_key = current_app.config["SECRET_KEY"]
+        decoded_token = jwt.decode(token, secret_key, algorithms=["HS256"])
+        user_id = decoded_token["user_id"]
+        
+        user = User.query.get(user_id)
+        
+        if not user:
+            return jsonify({"error": "User not found."}), 404
+        
+        return jsonify({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email
+        }), 200
+    
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Token has expired. Please log in again."}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Invalid token. Please log in again."}), 401
