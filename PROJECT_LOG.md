@@ -158,34 +158,88 @@ Expected output:
 
 ---
 
-## 7. **Fixing Issues & Debugging**
+## Date: 2/13/2025
 
-During development, we encountered and fixed the following issues:
+## 7. **Database Migration and Model Updates**
 
-1. **Module Import Errors**: Fixed issues related to Python path settings and module imports.
-2. **Database Table Not Found**: Ensured proper migration steps and confirmed `flask db upgrade` ran successfully.
-3. **Flask-Migrate Not Recognized**: Added correct `import` statements in `__init__.py`.
-4. **Incorrect API Requests**: Debugged malformed curl requests.
+### Database Structure and Migration Fixes
+
+Today, we worked on fixing database issues and properly setting up migrations for the **Plant** and **User** models.
+
+**Key Steps Taken:**
+
+-   Verified the Flask application and database connection.
+-   Deleted the existing migrations and database files to start fresh.
+-   Re-initialized Flask-Migrate and applied migrations:
+
+    ```bash
+    rm -rf migrations/ instance/
+    flask db init
+    flask db migrate -m "Reinitialized database"
+    flask db upgrade
+    ```
+
+-   Ensured the database tables were correctly created and accessible in SQLite:
+
+    ```bash
+    sqlite3 instance/gardening.db
+    .tables
+    ```
+
+Expected tables:
+
+```txt
+alembic_version  plant  user
+```
 
 ---
 
-## Summary & Next Steps
+## 8. **Fetching Plant Data from OpenFarm API**
+
+### Purpose
+
+We integrated OpenFarm's API to fetch and store plant data in our database.
+
+### Steps Taken:
+
+-   Implemented `fetch_openfarm_data.py` to query OpenFarm for plant data.
+-   Stored relevant attributes (name, sunlight, sowing method, spacing, height, description, and image URL).
+-   Avoided duplicate entries by checking for existing plants before insertion.
+-   Verified that data was correctly inserted into the `plant` table.
+
+### Database Verification:
+
+To confirm the data was stored successfully, we ran:
+
+```bash
+sqlite3 instance/gardening.db
+SELECT * FROM plant LIMIT 5;
+```
+
+Example output:
+
+```txt
+1|Tomato||||||0|0|||Full Sun||Direct seed indoors, transplant seedlings outside after hardening off|45.0|45.0|45.0|The tomato is the fruit of the tomato plant, a member of the Nightshade family (Solanaceae).|https://s3.amazonaws.com/openfarm-project/production/media/pictures/attachments/5dc3618ef2c1020004f936e4.jpg?1573085580
+```
+
+This confirmed that the OpenFarm data was successfully imported.
+
+---
+
+## 9. **Summary & Next Steps**
 
 ### What We Accomplished Today:
 
--   Successfully initialized the Flask project and set up virtual environments.
--   Created and tested the **Hardiness Zone API**.
--   Created and tested the **Weather API**.
--   Set up an **SQLite database** and implemented Flask-Migrate.
--   Developed and tested **User Registration**.
--   Fixed several common web development errors.
+-   Fixed database migration issues and ensured all tables were correctly created.
+-   Successfully fetched and stored plant data from the OpenFarm API.
+-   Verified data insertion in SQLite and confirmed plant records exist in the `plant` table.
 
 ### Next Steps:
 
--   Implement **User Authentication** (JWT-based login/logout).
--   Finalize the **Plant Data API** (integrate OpenFarm API).
--   Plan the **Frontend Implementation** (React setup).
+-   Implement authentication for **User Registration & Login**.
+-   Build API endpoints to query plant data efficiently.
+-   Set up the **frontend structure** for integrating with the backend.
 
 ---
 
-This log should serve as a useful tutorial for anyone starting with **Flask, APIs, and databases**. Let me know if anything needs clarification or updating.
+This log serves as a useful reference for managing database migrations, API data fetching, and Flask application setup.
