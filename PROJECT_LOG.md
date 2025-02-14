@@ -175,50 +175,67 @@ Expected output:
 
 ## Date: 2/13/2025
 
-## 7. **Fetching Plant Data from OpenFarm API**
+## 7. **Frontend Initialization with React and TypeScript**
 
 ### Purpose
 
-We integrated OpenFarm's API to fetch and store plant data in our database.
+We initialized the frontend using React with TypeScript and Vite for a modern, performant setup.
 
 ### Steps Taken:
 
--   Implemented `fetch_openfarm_data.py` in `scripts/` to query OpenFarm for plant data.
--   Stored relevant attributes (name, sunlight, sowing method, spacing, height, description, and image URL).
--   Avoided duplicate entries by checking for existing plants before insertion.
--   Verified that data was correctly inserted into the `plant` table.
+1. Created the frontend project:
+    ```bash
+    cd gardening-app
+    npm create vite@latest frontend --template react-ts
+    ```
+2. Installed dependencies:
+    ```bash
+    cd frontend
+    npm install
+    ```
+3. Ran the development server:
+    ```bash
+    npm run dev
+    ```
 
-### Database Verification:
+The frontend is now running at `http://localhost:5173/`.
 
-To confirm the data was stored successfully, we ran:
+---
+
+## 8. **Securing the User API with JWT Authentication**
+
+### Purpose
+
+Previously, `get_user()` allowed users to fetch data using an email query, which was insecure. We improved security by requiring a JWT token for authentication.
+
+### Steps Taken:
+
+-   Updated `users.py` to require a **Bearer token** in the request headers.
+-   Implemented JWT decoding and validation.
+-   Prevented unauthorized access to user data.
+
+**Testing Secure Requests:**
 
 ```bash
-sqlite3 instance/gardening.db
-SELECT * FROM plant LIMIT 5;
+curl -X GET http://127.0.0.1:5000/api/users/get_user \
+     -H "Authorization: Bearer <JWT_TOKEN>"
 ```
 
-Example output:
+Expected output:
 
-```txt
-1|Tomato||||||0|0|||Full Sun||Direct seed indoors, transplant seedlings outside after hardening off|45.0|45.0|45.0|The tomato is the fruit of the tomato plant, a member of the Nightshade family (Solanaceae).|https://s3.amazonaws.com/openfarm-project/production/media/pictures/attachments/5dc3618ef2c1020004f936e4.jpg?1573085580
+```json
+{ "id": 1, "username": "testuser", "email": "test@example.com" }
 ```
 
 ---
 
-## 8. **Summary & Next Steps**
+## 9. **Next Steps**
 
-### What We Accomplished Today:
-
--   Implemented **user authentication and JWT-based login**.
--   Successfully fetched and stored plant data from the OpenFarm API.
--   Verified data insertion in SQLite and confirmed plant records exist in the `plant` table.
-
-### Next Steps:
-
--   Build API endpoints to query plant data efficiently.
--   Set up the **frontend structure** for integrating with the backend.
--   Implement user profile management and authentication improvements.
+-   Implement authentication UI in the frontend.
+-   Connect the frontend to the backend API.
+-   Build user registration and login pages.
+-   Store JWT tokens securely in the frontend.
 
 ---
 
-This log serves as a useful reference for managing database migrations, API data fetching, and Flask application setup.
+This log serves as a detailed reference for backend and frontend setup, security improvements, and future development plans.
