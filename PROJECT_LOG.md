@@ -319,4 +319,56 @@ To enable navigation between different pages in the frontend, we set up **React 
 
 ---
 
+## Date: 2/15/2025
+
+## 12. **Fetching and Displaying Plant Data in the Frontend**
+
+### **Purpose**
+
+Today, we connected the frontend to the backend API to fetch and display real plant data. We previously had mock data, but now our frontend dynamically retrieves plant information from the database.
+
+### **Steps Taken**
+
+1. **Set Up API Call in the Frontend**
+
+    - Created an API service (`api.ts`) to fetch plant data from `http://127.0.0.1:5000/api/plants/get_plants`.
+    - Updated `Home.tsx` to use the `getPlants()` function with `useEffect()`.
+
+2. **Fixed Backend API Connection Issues**
+
+    - Encountered `ERR_CONNECTION_REFUSED` due to the backend not running.
+    - Restarted Flask and ensured the frontend could communicate with `localhost:5000`.
+
+3. **Implemented Styling Using CSS Modules**
+
+    - Created `Home.module.css` for styling the Home page.
+    - Applied styles to display plant data in readable, structured cards.
+
+4. **Resolved Issues with API Response Formatting**
+    - Previously, the API returned null values for some plant attributes.
+    - Updated the backend to provide `"N/A"` or `false` defaults when needed.
+    - Ensured JSON responses followed camelCase naming conventions.
+
+### **Testing**
+
+✅ Successfully fetched live plant data from the database.  
+✅ Displayed plant names and descriptions dynamically in the frontend.  
+✅ Styled the list of plants for better readability.  
+✅ Resolved API and CORS-related issues.
+
+---
+
+## 13. **Next Steps**
+
+-   Continue improving UI design and responsiveness.
+-   Implement filtering based on **hardiness zone, greenhouse suitability, and container gardening**.
+-   Add a **loading state** while fetching data.
+-   Begin implementing **user authentication in the frontend**.
+
+---
+
+This update marks the first time our frontend is successfully interacting with real data from the backend! 🚀
+
+---
+
 This log serves as a detailed reference for backend and frontend setup, security improvements, and future development plans.
