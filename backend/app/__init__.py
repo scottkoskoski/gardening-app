@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from dotenv import load_dotenv
 from .models.database import db, create_database
 from .models.plant import Plant
@@ -24,6 +25,9 @@ def create_app():
     DB_PATH = os.path.join(BASE_DIR, "..","instance", "gardening.db") # backend/instance/gardening.db
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_PATH}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    
+    # Enable CORS
+    CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
     
     # Initialize extensions 
     db.init_app(app)
