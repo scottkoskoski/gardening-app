@@ -42,6 +42,10 @@ This project is a web application that provides users with personalized gardenin
 │   └── run.py  # Entry point
 │── frontend/
 │   │── src/  # React source code
+│   │   │── components/  # Reusable UI components
+│   │   │── pages/  # Page components
+│   │   │── services/  # API service calls
+│   │   │── styles/  # Styling (CSS Modules)
 │   │── public/  # Static assets
 │   │── .gitignore  # Ignores node_modules and build files
 │   │── package.json  # Project dependencies
