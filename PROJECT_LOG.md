@@ -319,8 +319,4 @@ To enable navigation between different pages in the frontend, we set up **React 
 
 ---
 
-This log continues to serve as a detailed reference for backend and frontend setup, security improvements, and future development plans.
-
----
-
 This log serves as a detailed reference for backend and frontend setup, security improvements, and future development plans.
