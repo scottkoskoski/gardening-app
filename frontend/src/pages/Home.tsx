@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPlants } from "../services/api";
+import styles from "./Home.module.css";
 
 type Plant = {
     id: number;
@@ -24,14 +25,16 @@ const Home = () => {
     }, []);
 
     return (
-        <div>
+        <div className={styles.container}>
             <h1>Welcome to my Gardening App!</h1>
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <ul>
+            <ul className={styles.plantList}>
                 {plants.map((plant) => (
-                    <li key={plant.id}>
-                        <h2>{plant.name}</h2>
-                        <p>{plant.description}</p>
+                    <li key={plant.id} className={styles.plantItem}>
+                        <h2 className={styles.plantName}>{plant.name}</h2>
+                        <p className={styles.plantDescription}>
+                            {plant.description}
+                        </p>
                     </li>
                 ))}
             </ul>
