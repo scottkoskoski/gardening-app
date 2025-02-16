@@ -2,31 +2,45 @@
 
 ## Overview
 
-This project is a web application that provides users with personalized gardening recommendations based on their geographic location, climate zone, and local weather patterns. The application integrates real-time data to suggest what plants to grow and what gardening tasks to perform at any given time.
+The Gardening App is a full-stack web application that provides users with personalized gardening recommendations based on their geographic location, climate zone, and local weather patterns. Users can register, log in, and receive data-driven insights into optimal planting schedules and plant care.
 
 ## Features
 
--   **User Location Input**: Users can enter their ZIP code or allow geolocation detection.
--   **Climate Zone Identification**: Determines the user's USDA Plant Hardiness Zone.
--   **Weather Data Integration**: Fetches current and forecasted weather data.
--   **Planting Recommendations**: Suggests suitable plants and optimal planting schedules.
--   **Database of Plants**: Stores plant data fetched from OpenFarm API.
--   **User Accounts & Authentication**: Users can register, log in, and receive personalized recommendations.
--   **JWT-Based Authentication**: Secure user authentication using JSON Web Tokens.
--   **React Frontend with TypeScript**: A modern UI built using React.js with TypeScript for type safety.
--   **Vite for Fast Development**: Uses Vite for efficient frontend bundling and development.
+-   **User Authentication**: Secure JWT-based authentication system.
+-   **Location-Based Recommendations**: Determines USDA Plant Hardiness Zone based on ZIP code.
+-   **Weather Integration**: Fetches real-time weather data using Open-Meteo API.
+-   **Plant Database**: Stores plant data from OpenFarm API.
+-   **Personalized Gardening Insights**: Users receive suggestions based on climate, season, and space constraints.
+-   **React Frontend with TypeScript**: A modern UI for an intuitive user experience.
 -   **Protected Routes**: Certain pages require authentication before access is granted.
--   **Navigation Bar**: Provides dynamic navigation based on authentication state.
+-   **Dynamic Navigation**: Navbar updates based on user login status.
 
 ## Tech Stack
 
--   **Backend**: Flask (Python), Flask-Migrate, Flask-SQLAlchemy, Flask-JWT-Extended
--   **Frontend**: React.js with TypeScript, Vite, React Router
--   **Database**: SQLite (currently), PostgreSQL (planned for production)
--   **APIs Used**:
-    -   [USDA Plant Hardiness Zone API](https://phzmapi.org/) – Determines planting zones by ZIP code.
-    -   [Open-Meteo](https://open-meteo.com/) – Provides real-time weather data.
-    -   [OpenFarm API](https://openfarm.cc/) – Fetches plant data.
+### Backend
+
+-   **Flask** (Python)
+-   **Flask-SQLAlchemy** (ORM)
+-   **Flask-Migrate** (Database migrations)
+-   **Flask-JWT-Extended** (Authentication)
+
+### Frontend
+
+-   **React.js with TypeScript**
+-   **React Router** (Client-side navigation)
+-   **Vite** (Fast frontend development)
+-   **CSS Modules** (Scoped styling)
+
+### Database
+
+-   **SQLite** (Development database)
+-   **PostgreSQL** (Planned for production)
+
+### APIs Used
+
+-   **[USDA Plant Hardiness Zone API](https://phzmapi.org/)** – Determines planting zones.
+-   **[Open-Meteo](https://open-meteo.com/)** – Provides weather data.
+-   **[OpenFarm API](https://openfarm.cc/)** – Fetches plant information.
 
 ## Project Structure
 
@@ -40,16 +54,16 @@ This project is a web application that provides users with personalized gardenin
 │   │── instance/  # SQLite database storage
 │   │── migrations/  # Database migrations
 │   │── scripts/  # Utility scripts
-│   │   └── fetch_openfarm_data.py  # Script to populate the database with plant data
+│   │   └── fetch_openfarm_data.py  # Script to populate the database
 │   └── run.py  # Entry point
 │── frontend/
 │   │── src/  # React source code
 │   │   │── components/  # Reusable UI components
 │   │   │── pages/  # Page components
 │   │   │── services/  # API service calls
-│   │   │── styles/  # Styling (CSS Modules)
+│   │   │── styles/  # CSS Modules
 │   │── public/  # Static assets
-│   │── .gitignore  # Ignores node_modules and build files
+│   │── .env  # Environment variables, including VITE_API_BASE_URL
 │   │── package.json  # Project dependencies
 │   │── tsconfig.json  # TypeScript configuration
 │   └── vite.config.ts  # Vite configuration
@@ -118,7 +132,15 @@ cd frontend
 npm install
 ```
 
-### **2. Run the Frontend**
+### **2. Configure Environment Variables**
+
+Create a `.env` file inside `frontend/` and define the API base URL:
+
+```env
+VITE_API_BASE_URL=http://127.0.0.1:5000
+```
+
+### **3. Run the Frontend**
 
 ```bash
 npm run dev
@@ -128,97 +150,17 @@ The frontend should now be running at: [http://localhost:5173](http://localhost:
 
 ---
 
-## Untracked Files
-
-Certain files are required but are **not tracked** in Git for security reasons. You may need to create them manually:
-
--   **backend/.env** – Contains environment variables, such as:
-    ```
-    SECRET_KEY=<your_secret_key>
-    ```
--   **frontend/.env** – If API keys or environment settings are required for the frontend.
-
-Ensure these files exist before running the project.
-
----
-
-## API Endpoints
-
-### **Plant Hardiness Zone**
-
--   **GET** `/api/hardiness/get_hardiness_zone?zip=<ZIP>`
--   **Response:**
-    ```json
-    { "hardiness_zone": "7a" }
-    ```
-
-### **Weather Data**
-
--   **GET** `/api/weather/get_weather?zip=<ZIP>`
--   **Response:**
-    ```json
-    { "temperature": 65, "precipitation": 0 }
-    ```
-
-### **Plant Data**
-
--   **GET** `/api/plants/get_plants`
--   **Response:**
-    ```json
-    { "plants": [{ "name": "Tomato", "zone": "5-9" }] }
-    ```
-
-### **User Registration**
-
--   **POST** `/api/users/register`
--   **Request Body:**
-    ```json
-    {
-        "username": "testuser",
-        "email": "test@example.com",
-        "password": "mypassword"
-    }
-    ```
--   **Response:**
-    ```json
-    { "message": "User registered successfully.", "user_id": 1 }
-    ```
-
-### **User Login**
-
--   **POST** `/api/users/login`
--   **Request Body:**
-    ```json
-    { "email": "test@example.com", "password": "mypassword" }
-    ```
--   **Response:**
-    ```json
-    { "message": "Login successful!", "token": "<JWT_TOKEN>" }
-    ```
-
-### **Get User Information (JWT Required)**
-
--   **GET** `/api/users/get_user`
--   **Headers:**
-    ```http
-    Authorization: Bearer <JWT_TOKEN>
-    ```
--   **Response:**
-    ```json
-    { "id": 1, "username": "testuser", "email": "test@example.com" }
-    ```
-
----
-
 ## Future Enhancements
 
--   **User Registration Page** – Allow users to create new accounts from the frontend.
 -   **User Dashboard** – Display personalized gardening recommendations.
--   **Session Management** – Improve JWT handling and refresh tokens.
--   **UI Improvements** – Enhance responsiveness and design.
+-   **Session Management** – Improve JWT handling.
+-   **Improved UI/UX** – Enhance responsiveness and accessibility.
+-   **Additional APIs** – Integrate more data sources for advanced recommendations.
+-   **Improve form validation and user feedback** – Enhance error handling and provide better UI feedback for login and registration.
 
 ## Next Steps
 
--   Implement user registration in the frontend.
--   Improve the authentication UI with better error handling and form validation.
--   Implement logout functionality with state updates.
+-   Implement logout with session management.
+-   Continue improving UI and state management.
+
+This updated `README.md` reflects the current state of the Gardening App and outlines future development goals.
