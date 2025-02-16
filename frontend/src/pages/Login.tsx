@@ -8,6 +8,7 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -15,9 +16,29 @@ const Login = () => {
         return <p>Loading...</p>;
     }
 
+    const validateInputs = () => {
+        if (!username.trim()) {
+            setError("Username is required.");
+            return false;
+        }
+        if (!password.trim()) {
+            setError("Password is required.");
+            return false;
+        }
+        if (password.length < 6) {
+            setError("Password must be at least 6 characters.");
+            return false;
+        }
+        return true;
+    };
+
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
+
+        if (!validateInputs()) return;
+
+        setLoading(true);
 
         try {
             const response = await fetch(`${API_BASE_URL}/api/users/login`, {
@@ -36,6 +57,8 @@ const Login = () => {
             navigate("/"); // Redirect to home after login
         } catch (err: any) {
             setError(err?.message || "Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -60,7 +83,9 @@ const Login = () => {
                     required
                 />
 
-                <button type="submit">Login</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? "Loading..." : "Login"}
+                </button>
             </form>
 
             <p>
