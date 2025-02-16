@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import styles from "./Navbar.module.css";
+import styles from "../styles/Navbar.module.css";
 
 const Navbar = () => {
     const auth = useContext(AuthContext);
@@ -9,22 +9,18 @@ const Navbar = () => {
     if (!auth) return null;
 
     return (
-        <nav className={styles.navbar}>
-            <div className={styles.navLinks}>
-                <Link to="/" className={styles.link}>
-                    Home
-                </Link>
+        <nav className={styles["navbar"]}>
+            <div className={styles["nav-links"]}>
+                <Link to="/">Home</Link>
                 {auth.isAuthenticated ? (
                     <button
                         onClick={auth.logout}
-                        className={styles.logoutButton}
+                        className={styles["logout-button"]}
                     >
                         Logout
                     </button>
                 ) : (
-                    <Link to="/login" className={styles.link}>
-                        Login
-                    </Link>
+                    <Link to="/login">Login</Link>
                 )}
             </div>
         </nav>

@@ -62,11 +62,11 @@ const Register = () => {
     };
 
     return (
-        <div>
+        <div className={styles["register-container"]}>
             <h2>Register</h2>
-            {error && <p className={styles.error}>{error}</p>}
-            {success && <p className={styles.success}>{success}</p>}
-            <form onSubmit={handleRegister} className={styles.form}>
+            {error && <p className={styles["error-message"]}>{error}</p>}
+            {success && <p className={styles["success-message"]}>{success}</p>}
+            <form onSubmit={handleRegister} className={styles["register-form"]}>
                 <label>Username:</label>
                 <input
                     type="text"
@@ -90,7 +90,11 @@ const Register = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit" disabled={loading}>
+                <button
+                    type="submit"
+                    className={styles["register-button"]}
+                    disabled={loading}
+                >
                     {loading ? "Registering..." : "Register"}
                 </button>
             </form>
