@@ -351,23 +351,72 @@ Today, we connected the frontend to the backend API to fetch and display real pl
 
 ### **Testing**
 
-✅ Successfully fetched live plant data from the database.  
-✅ Displayed plant names and descriptions dynamically in the frontend.  
-✅ Styled the list of plants for better readability.  
-✅ Resolved API and CORS-related issues.
+-   Successfully fetched live plant data from the database.
+-   Displayed plant names and descriptions dynamically in the frontend.
+-   Styled the list of plants for better readability.
+-   Resolved API and CORS-related issues.
 
 ---
 
-## 13. **Next Steps**
+## 13. **User Authentication & Navbar Improvements**
 
+### **Purpose**
+
+We implemented **user authentication** in the frontend, allowing users to log in and log out while ensuring secure token storage. Additionally, we improved the **navbar styling** for better navigation.
+
+### **Steps Taken**
+
+1. **Implemented Login & Logout in the Frontend**
+
+    - Created `Login.tsx` with a form for user authentication.
+    - Integrated API calls to the backend for login.
+    - Stored JWT token securely in `localStorage`.
+    - Created an `AuthContext.tsx` to manage authentication state globally.
+    - Ensured the navbar dynamically updates based on login status.
+
+    **Testing:**
+
+    - Successfully logged in with a test user.
+    - Verified JWT token storage and persistence.
+    - Implemented logout functionality that clears the token and updates UI.
+
+2. **Fixed Issues with Protected Routes**
+
+    - Wrapped protected pages in `ProtectedRoute.tsx` to restrict access.
+    - Used `useContext(AuthContext)` to check authentication state before rendering.
+    - Implemented redirect logic to send unauthorized users to the login page.
+
+    **Testing:**
+
+    - Verified that logged-out users cannot access the dashboard.
+    - Ensured logged-in users can navigate protected routes.
+
+3. **Styled the Navbar for Better UI**
+
+    - Moved navigation links (`Home`, `Login`, `Logout`) into a **styled navbar**.
+    - Applied **flexbox styling** to align navbar items properly.
+    - Used CSS Modules (`Navbar.module.css`) for a cleaner UI.
+
+    **Testing:**
+
+    - Links are properly spaced and aligned.
+    - The navbar updates dynamically when a user logs in or logs out.
+
+---
+
+## 14. **Next Steps**
+
+-   Improve the **login UI/UX** with better form validation and feedback messages.
+-   Implement **user registration** on the frontend.
+-   Add a **"Remember Me"** option for persistent login.
+-   Enhance error handling for API authentication failures.
 -   Continue improving UI design and responsiveness.
--   Implement filtering based on **hardiness zone, greenhouse suitability, and container gardening**.
--   Add a **loading state** while fetching data.
--   Begin implementing **user authentication in the frontend**.
 
 ---
 
-This update marks the first time our frontend is successfully interacting with real data from the backend! 🚀
+This update completes user authentication in the frontend and improves navigation, bringing us closer to a fully interactive experience.
+
+This update also marks the first time our frontend is successfully interacting with real data from the backend! 🚀
 
 ---
 
