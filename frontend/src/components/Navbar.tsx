@@ -14,7 +14,7 @@ const Navbar = () => {
                 <Link to="/" className={styles.link}>
                     Home
                 </Link>
-                {auth.isAuthenticated() ? (
+                {auth.isAuthenticated ? (
                     <button
                         onClick={auth.logout}
                         className={styles.logoutButton}

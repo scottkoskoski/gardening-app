@@ -1,15 +1,14 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
 
-type AuthContextType = {
-    token: string | null;
+// Defining the expected structure for the AuthContext
+interface AuthContextType {
+    isAuthenticated: boolean;
     login: (token: string) => void;
     logout: () => void;
-    isAuthenticated: () => boolean;
-};
+}
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-    undefined
-);
+// Export AuthContext so other components can use it
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [token, setToken] = useState<string | null>(
@@ -17,28 +16,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     );
 
     useEffect(() => {
-        if (token) {
-            localStorage.setItem("token", token);
-        } else {
-            localStorage.removeItem("token");
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+            setToken(storedToken);
         }
-    }, [token]);
+    }, []);
 
-    const login = (newToken: string) => {
-        setToken(newToken);
+    const login = (token: string) => {
+        localStorage.setItem("token", token);
+        setToken(token);
     };
 
     const logout = () => {
+        localStorage.removeItem("token");
         setToken(null);
     };
 
     return (
         <AuthContext.Provider
-            value={{ token, login, logout, isAuthenticated: () => !!token }}
+            value={{ isAuthenticated: !!token, login, logout }}
         >
             {children}
         </AuthContext.Provider>
     );
 };
-
-export default AuthProvider;
