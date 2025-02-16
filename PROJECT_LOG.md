@@ -420,4 +420,60 @@ This update also marks the first time our frontend is successfully interacting w
 
 ---
 
+## Date: 2/16/2025
+
+## 15. **Frontend Validation, Layout, and Styling Enhancements**
+
+### **Purpose**
+
+Today, we focused on improving the **user experience** by adding form validation, refining the layout, and enhancing the styling of the authentication pages. This ensures a **better, more professional UI** while preventing invalid user input.
+
+### **Steps Taken**
+
+1. **Improved Input Validation**
+
+    - **Added frontend validation** in `Login.tsx` and `Register.tsx` to prevent empty submissions and enforce password length requirements.
+    - Created a **`validateInputs` function** in `Login.tsx` to handle validation before sending requests to the backend.
+    - Implemented **real-time validation feedback** by displaying error messages when fields are invalid.
+
+2. **Refined Layout and Styling**
+
+    - Updated **`Login.tsx` and `Register.tsx`** with a modern, nature-inspired styling theme.
+    - Improved **form spacing and alignment** to enhance readability.
+    - Added **disabled states for buttons** to prevent duplicate submissions when requests are processing.
+
+3. **Moved API Base URL to Environment File**
+
+    - Refactored `API_BASE_URL` across the frontend to use an **environment variable (`.env`)**.
+    - Updated `.gitignore` to **prevent committing `.env` files** to the repository.
+
+4. **Navbar Styling Enhancements**
+
+    - Applied a **cohesive styling theme** to `Navbar.tsx` for a more **polished and professional** look.
+    - Ensured navbar elements are **properly aligned and responsive** for different screen sizes.
+    - Dynamically updated the **login/logout button visibility** based on authentication status.
+
+    **Testing**
+
+    - Verified that users cannot submit login or registration forms with invalid input.
+    - Ensured **error messages** display correctly for missing fields and weak passwords.
+    - Tested **successful user registration and login flows** with the new styling.
+    - Confirmed that **the navbar updates dynamically** when users log in or out.
+    - Validated that **environment variables are correctly used** to fetch the API base URL.
+
+---
+
+## 16. **Next Steps**
+
+-   Implement **user session persistence** to keep users logged in across page refreshes.
+-   Build the **protected dashboard route** to test authentication functionality.
+-   Improve **error handling from the backend** to display more user-friendly messages.
+-   Add additional UI refinements to **optimize responsiveness and mobile compatibility**.
+
+---
+
+Today's updates significantly improved the UI, making the authentication system more user-friendly and visually appealing.
+
+---
+
 This log serves as a detailed reference for backend and frontend setup, security improvements, and future development plans.
