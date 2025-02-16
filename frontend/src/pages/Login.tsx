@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import styles from "./Login.module.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -63,10 +64,10 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div className={styles.loginContainer}>
             <h2>Login</h2>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <form onSubmit={handleLogin}>
+            {error && <p className={styles.error}>{error}</p>}
+            <form onSubmit={handleLogin} className={styles.form}>
                 <label>Username:</label>
                 <input
                     type="text"
@@ -88,12 +89,15 @@ const Login = () => {
                 </button>
             </form>
 
-            <p>
-                <Link to="/">Back to Home</Link>
-            </p>
-            <p>
-                Don't have an account? <Link to="/register">Register here</Link>
-            </p>
+            <div className={styles.linkContainer}>
+                <p>
+                    <Link to="/">Back to Home</Link>
+                </p>
+                <p>
+                    Don't have an account?{" "}
+                    <Link to="/register">Register here</Link>
+                </p>
+            </div>
         </div>
     );
 };

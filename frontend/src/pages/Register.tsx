@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import styles from "./Register.module.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -9,12 +10,34 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const validateEmail = (email: string) =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
         setSuccess(null);
+
+        // Doing some basic validation
+        if (!username || !email || !password) {
+            setError("All fields are required.");
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setError("Please enter a valid email address.");
+            return;
+        }
+
+        if (password.length < 6) {
+            setError("Password must be at least 6 characters long.");
+            return;
+        }
+
+        setLoading(true);
 
         try {
             const response = await fetch(`${API_BASE_URL}/api/users/register`, {
@@ -33,15 +56,17 @@ const Register = () => {
             setTimeout(() => navigate("/login"), 2000); // Redirect to login after 2 seconds
         } catch (err: any) {
             setError(err?.message || "Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div>
             <h2>Register</h2>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {success && <p style={{ color: "green" }}>{success}</p>}
-            <form onSubmit={handleRegister}>
+            {error && <p className={styles.error}>{error}</p>}
+            {success && <p className={styles.success}>{success}</p>}
+            <form onSubmit={handleRegister} className={styles.form}>
                 <label>Username:</label>
                 <input
                     type="text"
@@ -65,7 +90,9 @@ const Register = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">Register</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? "Registering..." : "Register"}
+                </button>
             </form>
 
             <p>
