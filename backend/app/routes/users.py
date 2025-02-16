@@ -3,6 +3,7 @@ import datetime
 import os
 from flask import Blueprint, request, jsonify, current_app
 from werkzeug.security import check_password_hash
+from sqlalchemy import or_
 from ..models.database import db
 from ..models.user import User
 
@@ -11,16 +12,16 @@ users_bp = Blueprint("users", __name__)
 @users_bp.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
-    email = data.get("email")
+    username = data.get("username")
     password = data.get("password")
     
-    if not email or not password:
-        return jsonify({"error": "Email and password are required."}), 400
+    if not username or not password:
+        return jsonify({"error": "Username and password are required."}), 400
     
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(username=username).first()
     
     if not user or not check_password_hash(user.password_hash, password):
-        return jsonify({"error": "Invalid email or password."}), 401
+        return jsonify({"error": "Invalid username or password."}), 401
     
     # Get SECRET_KEY from Flask app configuration
     secret_key = current_app.config["SECRET_KEY"]
@@ -46,9 +47,12 @@ def register_user():
         return jsonify({"error": "Please provide username, email, and password."}), 400
     
     # Check if user already exists
-    existing_user = User.query.filter_by(email=data["email"]).first()
+    existing_user = User.query.filter(or_(User.username==data["username"], User.email == data["email"])).first()
     if existing_user:
-        return jsonify({"error": "User already exists with this email."}), 409
+        if existing_user.username == data["username"]:
+            return jsonify({"error": "User already exists with this username."}), 409
+        if existing_user.email == data["email"]:
+            return jsonify({"error": "User already exists with this email."}), 409
     
     # Create new user with hashed password
     new_user = User(username=data["username"], email=data["email"])
@@ -61,7 +65,7 @@ def register_user():
 
 @users_bp.route("/get_user", methods=["GET"])
 def get_user():
-    """Gets user details by for the authenticated user."""
+    """Gets user details for the authenticated user."""
     
     auth_header = request.headers.get("Authorization")
     
