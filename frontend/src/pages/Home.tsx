@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPlants } from "../services/api";
-import styles from "./Home.module.css";
+import styles from "../styles/Home.module.css";
 
 type Plant = {
     id: number;

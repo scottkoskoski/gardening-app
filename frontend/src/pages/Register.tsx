@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import styles from "./Register.module.css";
+import styles from "../styles/Register.module.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
