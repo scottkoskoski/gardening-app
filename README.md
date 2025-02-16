@@ -15,11 +15,13 @@ This project is a web application that provides users with personalized gardenin
 -   **JWT-Based Authentication**: Secure user authentication using JSON Web Tokens.
 -   **React Frontend with TypeScript**: A modern UI built using React.js with TypeScript for type safety.
 -   **Vite for Fast Development**: Uses Vite for efficient frontend bundling and development.
+-   **Protected Routes**: Certain pages require authentication before access is granted.
+-   **Navigation Bar**: Provides dynamic navigation based on authentication state.
 
 ## Tech Stack
 
--   **Backend**: Flask (Python), Flask-Migrate, Flask-SQLAlchemy, Flask-JWT
--   **Frontend**: React.js with TypeScript, Vite
+-   **Backend**: Flask (Python), Flask-Migrate, Flask-SQLAlchemy, Flask-JWT-Extended
+-   **Frontend**: React.js with TypeScript, Vite, React Router
 -   **Database**: SQLite (currently), PostgreSQL (planned for production)
 -   **APIs Used**:
     -   [USDA Plant Hardiness Zone API](https://phzmapi.org/) – Determines planting zones by ZIP code.
@@ -210,9 +212,13 @@ Ensure these files exist before running the project.
 
 ## Future Enhancements
 
--   **Frontend Authentication Flow** (Login & Logout UI)
--   **User Dashboard with Gardening Recommendations**
+-   **User Registration Page** – Allow users to create new accounts from the frontend.
+-   **User Dashboard** – Display personalized gardening recommendations.
+-   **Session Management** – Improve JWT handling and refresh tokens.
+-   **UI Improvements** – Enhance responsiveness and design.
 
 ## Next Steps
 
--   **Build the frontend login page** and integrate authentication.
+-   Implement user registration in the frontend.
+-   Improve the authentication UI with better error handling and form validation.
+-   Implement logout functionality with state updates.
