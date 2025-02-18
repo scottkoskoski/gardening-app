@@ -3,6 +3,7 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 from .models.database import db, create_database
 from .models.plant import Plant
@@ -20,6 +21,14 @@ def create_app():
     # Load SECRET_KEY
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     
+    # Ensuring Flask-JWT-Extended knows where to look for the JWT token
+    app.config["JWT_TOKEN_LOCATION"] = ["headers"]
+    app.config["JWT_HEADER_NAME"] = "Authorization"
+    app.config["JWT_HEADER_TYPE"] = "Bearer"
+    
+    # Initializing JWTManager
+    jwt = JWTManager(app)
+    
     # Database Configuration
     BASE_DIR = os.path.abspath(os.path.dirname(__file__)) # backend/app
     DB_PATH = os.path.join(BASE_DIR, "..","instance", "gardening.db") # backend/instance/gardening.db
@@ -27,7 +36,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     
     # Enable CORS
-    CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
+    CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
     
     # Initialize extensions 
     db.init_app(app)

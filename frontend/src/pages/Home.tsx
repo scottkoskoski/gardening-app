@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPlants } from "../services/api";
+import api from "../services/api";
 import styles from "../styles/Home.module.css";
 
 type Plant = {
@@ -13,8 +13,8 @@ const Home = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        getPlants()
-            .then((data) => {
+        api.getPlants()
+            .then((data: { plants: Plant[] }) => {
                 console.log("Fetched plant data:", data); // Debugging log
                 setPlants(data.plants || []);
             })
