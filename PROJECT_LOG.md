@@ -476,4 +476,65 @@ Today's updates significantly improved the UI, making the authentication system 
 
 ---
 
+## Date: 2/17/2025
+
+## 17. **User Profile Setup, JWT Fixes, and API Improvements**
+
+### **Purpose**
+
+Today, we focused on enabling **user profile creation and retrieval** while resolving **JWT authentication issues** that caused profile fetch failures. We also improved frontend-backend consistency in data formatting and handling.
+
+### **Steps Taken**
+
+1. **Fixed JWT Subject Claim Issues**
+
+    - Adjusted the **JWT token structure** to include `sub` as a string to align with `flask_jwt_extended`'s requirements.
+    - Verified token validity using `curl` and ensured correct `Authorization: Bearer` header format.
+
+2. **Implemented First-Time Profile Creation Support**
+
+    - Previously, if a user had no existing profile, the frontend would fail to fetch data.
+    - Now, an empty profile is returned (`{ "first_name": "", "last_name": "", "zip_code": "", "plant_hardiness_zone": "" }`) instead of failing with a `422 Unprocessable Entity`.
+    - **Tested via frontend and `curl` to confirm expected behavior.**
+
+3. **Standardized Data Format Between Frontend and Backend**
+
+    - Updated `users.py` to correctly map frontend keys (`firstName`, `lastName`, `zipCode`) to database fields (`first_name`, `last_name`, `zip_code`).
+    - Ensured consistent camelCase → snake_case conversions for API requests.
+
+4. **Updated `Profile.tsx` to Handle First-Time Profile Creation**
+
+    - Added logic to prevent failures when fetching an empty profile.
+    - Handled missing data gracefully instead of showing undefined values.
+
+5. **Improved Debug Logging for API Calls**
+
+    - Added **debugging logs** to `users.py` to track incoming requests and responses.
+    - Logged token usage and database queries for easier troubleshooting.
+
+6. **Refactored `api.ts` for Improved Error Handling**
+    - Updated `api.get()` and `api.post()` to provide **better error messages** in the console.
+    - Ensured proper handling of API failures when fetching or updating profiles.
+
+### **Testing**
+
+-   Successfully **fetched and created user profiles** via **frontend and `curl`**.
+-   **Confirmed JWT authentication fixes** by verifying proper token usage.
+-   Ensured **profile creation logic works as expected** on first login.
+
+---
+
+## 18. **Next Steps**
+
+-   Implement **frontend UI validation** for profile form fields.
+-   Improve **error handling** for failed API requests with user-friendly messages.
+-   Allow users to **update and save** additional profile details (e.g., garden preferences).
+-   Add **unit tests** for backend API endpoints.
+
+---
+
+Today's changes fixed key issues with **JWT authentication, profile creation, and frontend-backend consistency**, ensuring a smoother user experience when setting up profiles for the first time.
+
+---
+
 This log serves as a detailed reference for backend and frontend setup, security improvements, and future development plans.
