@@ -15,9 +15,9 @@ def add_garden():
     user_id = get_jwt_identity()
     data = request.get_json()
     
-    required_fields = ["garden_name", "garden_type")
+    required_fields = ["garden_name", "garden_type"]
     if not all(field in data for field in required_fields):
-        return jsonify("error": "Missing required fields"}), 400
+        return jsonify({"error": "Missing required fields"}), 400
     
     # Look up garden type ID based on the name
     garden_type = GardenType.query.filter_by(name=data["garden_type"]).first()
@@ -94,7 +94,7 @@ def get_garden_by_id(garden_id):
         {
             "id": garden.id,
             "garden_name": garden.garden_name,
-            "garden_type": garden.garden_type,
+            "garden_type": garden.garden_type.name,
             "is_community_garden": garden.is_community_garden,
             "is_rooftop_garden": garden.is_rooftop_garden,
             "garden_size": garden.garden_size,
@@ -131,6 +131,7 @@ def update_garden(garden_id):
     garden.is_community_garden = data.get("is_community_garden", garden.is_community_garden)
     garden.is_rooftop_garden = data.get("is_rooftop_garden", garden.is_rooftop_garden)
     garden.garden_size = data.get("garden_size", garden.garden_size)
+    garden.garden_dimensions = data.get("garden_dimensions", garden.garden_dimensions)
     garden.soil_type = data.get("soil_type", garden.soil_type)
     garden.water_source = data.get("water_source", garden.water_source)
     garden.pest_protection = data.get("pest_protection", garden.pest_protection)
