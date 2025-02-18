@@ -11,9 +11,13 @@ class UserGarden(db.Model):
     is_community_garden = db.Column(db.Boolean)
     is_rooftop_garden = db.Column(db.Boolean)
     garden_size = db.Column(db.String(50))
+    garden_dimensions = db.Column(db.String(50), nullable=True)
     soil_type = db.Column(db.String(50))
     water_source = db.Column(db.String(100))
     pest_protection = db.Column(db.Boolean, default=False)
+    plant_hardiness_zone = db.Column(db.String(10), nullable=True)
+    preferred_plants = db.Column(db.Text, nullable=True)
+    current_plants = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
