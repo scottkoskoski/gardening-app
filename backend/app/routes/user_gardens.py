@@ -8,7 +8,7 @@ from ..models.profile import UserProfile
 
 user_gardens_bp = Blueprint("user_gardens", __name__)
 
-@user_gardens_bp.route("/user_gardens", methods=["POST"])
+@user_gardens_bp.route("", methods=["POST"])
 @jwt_required()
 def add_garden():
     """Add a new garden for the authenticated user."""
@@ -40,8 +40,8 @@ def add_garden():
         water_source=data.get("water_source"),
         pest_protection=data.get("pest_protection", False),
         plant_hardiness_zone=plant_hardiness_zone,
-        preferred_plants=data.get("preferred_plants"),
-        current_plants=data.get("current_plants"),
+        preferred_plants=",".join(data.get("preferred_plants", [])) if isinstance(data.get("preferred_plants"), list) else data.get("preferred_plants"),
+        current_plants=",".join(data.get("current_plants", [])) if isinstance(data.get("current_plants"), list) else data.get("current_plants"),
     )
     
     try:
@@ -52,7 +52,7 @@ def add_garden():
         db.session.rollback()
         return jsonify({"error": "Failed to add garden"}), 500
 
-@user_gardens_bp.route("/user_gardens", methods=["GET"])
+@user_gardens_bp.route("", methods=["GET"])
 @jwt_required()
 def get_user_gardens():
     """Retrieves all gardens associated with the authenticated user."""
@@ -63,7 +63,7 @@ def get_user_gardens():
         {
             "id": g.id,
             "garden_name": g.garden_name,
-            "garden_type": g.garden_type.name,
+            "garden_type": g.garden_type.name if g.garden_type else None,
             "is_community_garden": g.is_community_garden,
             "is_rooftop_garden": g.is_rooftop_garden,
             "garden_size": g.garden_size,
@@ -72,15 +72,15 @@ def get_user_gardens():
             "water_source": g.water_source,
             "pest_protection": g.pest_protection,
             "plant_hardiness_zone": g.plant_hardiness_zone,
-            "preferred_plants": g.preferred_plants,
-            "current_plants": g.current_plants
+            "preferred_plants": g.preferred_plants.split(",") if g.preferred_plants else [],
+            "current_plants": g.current_plants.split(",") if g.current_plants else [],
         }
         for g in gardens
     ]
     
     return jsonify(garden_list), 200
 
-@user_gardens_bp.route("/user_gardens/<int:garden_id>", methods=["GET"])
+@user_gardens_bp.route("/<int:garden_id>", methods=["GET"])
 @jwt_required()
 def get_garden_by_id(garden_id):
     """Retrieves a specific garden by its ID."""
@@ -94,7 +94,7 @@ def get_garden_by_id(garden_id):
         {
             "id": garden.id,
             "garden_name": garden.garden_name,
-            "garden_type": garden.garden_type.name,
+            "garden_type": garden.garden_type.name if garden.garden_type else None,
             "is_community_garden": garden.is_community_garden,
             "is_rooftop_garden": garden.is_rooftop_garden,
             "garden_size": garden.garden_size,
@@ -103,12 +103,12 @@ def get_garden_by_id(garden_id):
             "water_source": garden.water_source,
             "pest_protection": garden.pest_protection,
             "plant_hardiness_zone": garden.plant_hardiness_zone,
-            "preferred_plants": garden.preferred_plants,
-            "current_plants": garden.current_plants,
+            "preferred_plants": garden.preferred_plants.split(",") if garden.preferred_plants else [],
+            "current_plants": garden.current_plants.split(",") if garden.current_plants else [],
         }
     ), 200
 
-@user_gardens_bp.route("/user_gardens/<int:garden_id>", methods=["PUT"])
+@user_gardens_bp.route("/<int:garden_id>", methods=["PUT"])
 @jwt_required()
 def update_garden(garden_id):
     """Updates a garden for the authenticated user."""
@@ -135,15 +135,14 @@ def update_garden(garden_id):
     garden.soil_type = data.get("soil_type", garden.soil_type)
     garden.water_source = data.get("water_source", garden.water_source)
     garden.pest_protection = data.get("pest_protection", garden.pest_protection)
-    garden.garden_dimensions = data.get("garden_dimensions", garden.garden_dimensions)
-    garden.preferred_plants = data.get("preferred_plants", garden.preferred_plants)
-    garden.current_plants = data.get("current_plants", garden.current_plants)
+    garden.preferred_plants = ",".join(data.get("preferred_plants", [])) if isinstance(data.get("preferred_plants"), list) else data.get("preferred_plants")
+    garden.current_plants = ",".join(data.get("current_plants", [])) if isinstance(data.get("current_plants"), list) else data.get("current_plants")
     
     db.session.commit()
     
     return jsonify({"message": "Garden updated successfully"}), 200
 
-@user_gardens_bp.route("/user_gardens/<int:garden_id>", methods=["DELETE"])
+@user_gardens_bp.route("/<int:garden_id>", methods=["DELETE"])
 @jwt_required()
 def delete_garden(garden_id):
     """Deletes a garden for the authenticated user."""

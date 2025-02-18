@@ -11,6 +11,7 @@ from .routes.hardiness import hardiness_bp
 from .routes.weather import weather_bp
 from .routes.plants import plants_bp
 from .routes.users import users_bp
+from .routes.user_gardens import user_gardens_bp
 
 # Load environment variables
 load_dotenv()
@@ -47,6 +48,7 @@ def create_app():
     app.register_blueprint(weather_bp, url_prefix="/api/weather")
     app.register_blueprint(plants_bp, url_prefix="/api/plants")
     app.register_blueprint(users_bp, url_prefix="/api/users")
+    app.register_blueprint(user_gardens_bp, url_prefix="/api/user_gardens")
     
     @app.route("/")
     def home():
