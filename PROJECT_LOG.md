@@ -537,4 +537,107 @@ Today's changes fixed key issues with **JWT authentication, profile creation, an
 
 ---
 
+## Date: 2/18/2025
+
+## 19. **User Gardens API Implementation**
+
+### **Purpose**
+
+Today, we implemented the **User Gardens API**, allowing users to create, retrieve, update, and delete gardens. This feature enables users to manage their gardening spaces efficiently while integrating with existing user profiles and plant hardiness zone data.
+
+### **Steps Taken**
+
+#### **1. Implemented the User Garden Model**
+
+-   **Renamed `garden.py` to `user_garden.py`** to ensure clarity and alignment with our schema.
+-   Added new fields to store **plant hardiness zone, garden dimensions, preferred plants, and current plants**.
+-   Confirmed relational integrity with **`user`** and **`garden_type`** tables.
+
+#### **2. Created API Endpoints for Managing User Gardens**
+
+-   **POST `/api/user_gardens`**: Allows authenticated users to add a garden.
+-   **GET `/api/user_gardens`**: Retrieves all gardens belonging to the authenticated user.
+-   **GET `/api/user_gardens/<garden_id>`**: Fetches details of a specific garden by ID.
+-   **PUT `/api/user_gardens/<garden_id>`**: Enables users to update their garden information.
+-   **DELETE `/api/user_gardens/<garden_id>`**: Allows users to remove a garden.
+
+#### **3. Ensured Proper Data Relationships**
+
+-   **Garden Types**: Users select garden types by name, not ID, to improve usability.
+-   **Plant Hardiness Zone**: Automatically pulled from the user’s profile to avoid redundant input.
+-   **Optional Fields**: Soil type is no longer required, keeping the form user-friendly.
+
+#### **4. Verified API Functionality via cURL Testing**
+
+-   **Created a new garden:**
+
+    ```bash
+    curl -X POST http://127.0.0.1:5000/api/user_gardens \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer <JWT_TOKEN>" \
+        -d '{
+            "garden_name": "My Backyard Garden",
+            "garden_type": "Raised Bed",
+            "garden_size": "10x15 ft",
+            "garden_dimensions": "10x15 ft",
+            "water_source": "Rainwater Collection",
+            "pest_protection": true,
+            "preferred_plants": ["Tomatoes", "Basil"],
+            "current_plants": ["Lettuce", "Carrots"]
+        }'
+    ```
+
+    Expected output:
+
+    ```json
+    { "garden_id": 1, "message": "Garden added successfully" }
+    ```
+
+-   **Retrieved gardens for the user:**
+
+    ```bash
+    curl -X GET http://127.0.0.1:5000/api/user_gardens \
+        -H "Authorization: Bearer <JWT_TOKEN>"
+    ```
+
+    Expected output:
+
+    ```json
+    [
+        {
+            "id": 1,
+            "garden_name": "My Backyard Garden",
+            "garden_type": "Raised Bed",
+            "is_community_garden": false,
+            "is_rooftop_garden": false,
+            "garden_size": "10x15 ft",
+            "garden_dimensions": "10x15 ft",
+            "soil_type": null,
+            "water_source": "Rainwater Collection",
+            "pest_protection": true,
+            "plant_hardiness_zone": "8a",
+            "preferred_plants": ["Tomatoes", "Basil"],
+            "current_plants": ["Lettuce", "Carrots"]
+        }
+    ]
+    ```
+
+#### **5. Populated the `garden_type` Table**
+
+-   **Issue:** New gardens could not be created due to missing garden types.
+-   **Solution:** Implemented a script (`populate_garden_types.py`) to pre-load the database with standard garden types.
+-   **Tested and confirmed** successful API functionality after populating the table.
+
+### **Next Steps**
+
+-   **Frontend Integration:** Build UI components to display and manage gardens.
+-   **Visualization Planning:** Develop a strategy for visually representing user gardens.
+-   **Enhanced Garden Features:** Implement tracking of plant growth and AI-powered recommendations.
+
+---
+
+Today’s update successfully establishes the foundation for user gardens, enabling efficient tracking and management of gardening spaces. This marks a significant step toward making the Gardening App more interactive and user-friendly.
+
+---
+
 This log serves as a detailed reference for backend and frontend setup, security improvements, and future development plans.
