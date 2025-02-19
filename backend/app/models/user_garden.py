@@ -1,5 +1,5 @@
 from .database import db
-from datetime import datetime
+from datetime import datetime, timezone
 
 class UserGarden(db.Model):
     __tablename__ = "user_garden"
@@ -18,8 +18,8 @@ class UserGarden(db.Model):
     plant_hardiness_zone = db.Column(db.String(10), nullable=True)
     preferred_plants = db.Column(db.Text, nullable=True)
     current_plants = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     user = db.relationship("User", backref="garden")
     garden_type = db.relationship("GardenType", backref="garden_type")

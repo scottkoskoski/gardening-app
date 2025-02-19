@@ -1,5 +1,5 @@
 from .database import db
-from datetime import datetime
+from datetime import datetime, timezone
 
 class UserProfile(db.Model):
     __tablename__ = "user_profile"
@@ -13,8 +13,8 @@ class UserProfile(db.Model):
     has_irrigation = db.Column(db.Boolean, nullable=True)
     sunlight_hours = db.Column(db.Float, nullable=True)
     soil_ph = db.Column(db.Float, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     user = db.relationship("User", backref="profile", uselist=False)
     
