@@ -5,9 +5,9 @@ from ..models.user_garden import UserGarden
 from ..models.plant import Plant
 from ..models.user_garden_plant import UserGardenPlant
 
-user_gardens_plants_bp = Blueprint("user_garden_plants", __name__)
+user_garden_plants_bp = Blueprint("user_garden_plants", __name__)
 
-@user_gardens_plants_bp.route("", methods=["POST"])
+@user_garden_plants_bp.route("", methods=["POST"])
 @jwt_required()
 def add_plant_to_garden():
     """Adds a plant to a user's garden."""
@@ -38,7 +38,7 @@ def add_plant_to_garden():
     
     return jsonify({"message": "Plant added successfully", "garden_plant_id": new_garden_plant})
 
-@user_gardens_plants_bp.route("/<int:garden_id>", methods=["GET"])
+@user_garden_plants_bp.route("/<int:garden_id>", methods=["GET"])
 @jwt_required()
 def get_garden_plants(garden_id):
     """Retrieves all plants in a user's garden."""
@@ -61,7 +61,7 @@ def get_garden_plants(garden_id):
     
     return jsonify(plants), 200
 
-@user_gardens_plants_bp.route("/<int:garden_plant_id>", methods=["DELETE"])
+@user_garden_plants_bp.route("/<int:garden_plant_id>", methods=["DELETE"])
 @jwt_required()
 def remove_garden_plant(garden_plant_id):
     """Removes a plant from a user's garden."""
