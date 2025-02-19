@@ -11,6 +11,6 @@ class UserGardenPlant(db.Model):
     expected_harvest_date = db.Column(db.DateTime, nullable=True)
     growth_stage = db.Column(db.String(50), nullable=True)
     
-    garden = db.relationship("UserGarden", backref="garden_plants")
+    garden = db.relationship("UserGarden", backref="garden_plants", lazy="joined")
     plant = db.relationship("Plant", backref="plant_gardens")
     
