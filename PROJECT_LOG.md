@@ -640,4 +640,102 @@ Today’s update successfully establishes the foundation for user gardens, enabl
 
 ---
 
+## Date: 2/18/2025
+
+## 20. **Fixing Authentication Issues in User Garden Plants API**
+
+### **Purpose**
+
+Today, we resolved authentication issues in the **User Garden Plants API**, ensuring that only the owner of a garden can add or remove plants. We also fixed serialization issues when returning expected harvest dates.
+
+### **Steps Taken**
+
+#### **1. Fixed Unauthorized Deletion of Plants**
+
+-   Previously, users were unable to delete plants due to a type mismatch when validating ownership.
+-   Updated `remove_garden_plant()` to ensure `user_id` from JWT matches the `user_id` of the garden.
+-   Verified that users can now only delete plants from their own gardens.
+
+#### **2. Ensured Proper Date Formatting for API Responses**
+
+-   Fixed the `expected_harvest_date` field in API responses by converting `datetime.date` objects to ISO format (`YYYY-MM-DD`).
+-   Updated the `get_garden_plants()` response to return properly formatted date strings.
+
+#### **3. Tested Fixes via cURL Commands**
+
+-   **Added a plant to a garden:**
+
+    ```bash
+    curl -X POST http://127.0.0.1:5000/api/user_garden_plants \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer <JWT_TOKEN>" \
+        -d '{
+            "garden_id": 1,
+            "plant_id": 1,
+            "expected_harvest_date": "2025-06-15",
+            "growth_stage": "Seedling"
+        }'
+    ```
+
+    Expected output:
+
+    ```json
+    { "message": "Plant added successfully", "garden_plant_id": 2 }
+    ```
+
+-   **Retrieved plants in a garden:**
+
+    ```bash
+    curl -X GET http://127.0.0.1:5000/api/user_garden_plants/1 \
+        -H "Authorization: Bearer <JWT_TOKEN>"
+    ```
+
+    Expected output:
+
+    ```json
+    [
+        {
+            "id": 1,
+            "plant_id": 1,
+            "plant_name": "Tomato",
+            "growth_stage": "Seedling",
+            "expected_harvest_date": "2025-06-15"
+        },
+        {
+            "id": 2,
+            "plant_id": 1,
+            "plant_name": "Tomato",
+            "growth_stage": "Seedling",
+            "expected_harvest_date": "2025-06-15"
+        }
+    ]
+    ```
+
+-   **Deleted a plant from the garden:**
+
+    ```bash
+    curl -X DELETE http://127.0.0.1:5000/api/user_garden_plants/2 \
+        -H "Authorization: Bearer <JWT_TOKEN>"
+    ```
+
+    Expected output:
+
+    ```json
+    { "message": "Plant removed successfully" }
+    ```
+
+### **Next Steps**
+
+-   **Frontend Integration:** Allow users to manage their garden plants from the UI.
+-   **Garden Visualization:** Begin planning interactive garden representation.
+-   **Automated Plant Recommendations:** Implement personalized plant suggestions based on user data.
+
+---
+
+Today's updates improve API security and data consistency, ensuring that only authorized users can modify their gardens. This brings us a step closer to a fully interactive gardening management system.
+
+---
+
+---
+
 This log serves as a detailed reference for backend and frontend setup, security improvements, and future development plans.
