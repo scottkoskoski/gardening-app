@@ -4,7 +4,7 @@ from datetime import datetime
 from ..models.database import db
 from ..models.user_garden import UserGarden
 from ..models.plant import Plant
-from ..models.user_garden_plant import UserGardenPlant
+from ..models.user_garden_plant import UserGardenPlant, GrowthStage
 
 user_garden_plants_bp = Blueprint("user_garden_plants", __name__)
 
@@ -31,7 +31,7 @@ def add_plant_to_garden():
         garden_id=garden.id,
         plant_id=plant.id,
         expected_harvest_date=datetime.strptime(data.get("expected_harvest_date"), "%Y-%m-%d").date() if data.get("expected_harvest_date") else None,
-        growth_stage=data.get("growth_stage", "Seedling")
+        growth_stage=GrowthStage[data.get("growth_stage", "SEEDLING").upper()]
     )
     
     db.session.add(new_garden_plant)
@@ -54,7 +54,7 @@ def get_garden_plants(garden_id):
             "id": gp.id,
             "plant_id": gp.plant_id,
             "plant_name": gp.plant.name,
-            "growth_stage": gp.growth_stage,
+            "growth_stage": gp.growth_stage.value,
             "expected_harvest_date": gp.expected_harvest_date
         }
         for gp in garden.garden_plants
