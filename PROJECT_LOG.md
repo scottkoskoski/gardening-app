@@ -736,6 +736,118 @@ Today's updates improve API security and data consistency, ensuring that only au
 
 ---
 
+# Project Log - Gardening App
+
+## Date: 2/19/2025
+
+## 20. **Refactoring Growth Stage and Garden Type Handling with Enums**
+
+### **Purpose**
+
+To improve maintainability and consistency, we introduced Python Enums for both **GrowthStage** and **GardenType** models. These changes ensure that predefined values are structured and enforced, reducing errors from inconsistent string inputs.
+
+### **Steps Taken**
+
+#### **1. Created the GrowthStage Enum**
+
+-   Defined an Enum for `GrowthStage` in `models/user_garden_plant.py` to replace arbitrary string values.
+-   The Enum includes predefined growth stages such as `Seedling`, `Vegetative`, `Flowering`, and `Harvest`.
+-   Updated `user_garden_plants.py` to reference the Enum when handling growth stage values.
+
+#### **2. Created the GardenType Enum**
+
+-   Defined an Enum for `GardenType` in `models/garden_type.py` to replace string-based garden types.
+-   The Enum includes predefined values for each garden type, ensuring consistency across the application.
+
+#### **3. Updated the User Garden and Garden Plant Models**
+
+-   Modified `user_garden.py` to reference the new `GardenType` Enum instead of raw string values.
+-   Updated `user_garden_plant.py` to reference `GrowthStage` Enum.
+-   Updated database constraints to enforce that garden type and growth stage values come from their respective Enums.
+
+#### **4. Adjusted API Endpoints to Handle Enum Values**
+
+-   Updated `user_gardens.py` and `user_garden_plants.py` to accept and return Enum values as strings for frontend compatibility.
+-   Ensured API responses properly serialize Enum values.
+
+#### **5. Refactored the Garden Type Population Script**
+
+-   Modified `scripts/populate_garden_types.py` to utilize Enum values instead of plain text.
+-   Verified that the script correctly inserts predefined garden types into the database.
+
+#### **6. Verified Functionality with API Testing**
+
+-   **Created a new garden using the Enum-based approach:**
+
+    ```bash
+    curl -X POST http://127.0.0.1:5000/api/user_gardens \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer <JWT_TOKEN>" \
+        -d '{
+            "garden_name": "My Test Garden",
+            "garden_type": "Raised_Bed",
+            "garden_size": "10x10 ft",
+            "water_source": "Rainwater Collection"
+        }'
+    ```
+
+    Expected output:
+
+    ```json
+    { "garden_id": 1, "message": "Garden added successfully" }
+    ```
+
+-   **Retrieved gardens to verify Enum serialization:**
+
+    ```bash
+    curl -X GET http://127.0.0.1:5000/api/user_gardens \
+        -H "Authorization: Bearer <JWT_TOKEN>"
+    ```
+
+    Expected output:
+
+    ```json
+    [
+        {
+            "id": 1,
+            "garden_name": "My Test Garden",
+            "garden_type": "Raised_Bed",
+            "garden_size": "10x10 ft",
+            "water_source": "Rainwater Collection"
+        }
+    ]
+    ```
+
+-   **Added a plant to a garden using GrowthStage Enum:**
+
+    ```bash
+    curl -X POST http://127.0.0.1:5000/api/user_garden_plants \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer <JWT_TOKEN>" \
+        -d '{
+            "garden_id": 1,
+            "plant_id": 1,
+            "expected_harvest_date": "2025-06-15",
+            "growth_stage": "Seedling"
+        }'
+    ```
+
+    Expected output:
+
+    ```json
+    { "message": "Plant added successfully", "garden_plant_id": 2 }
+    ```
+
+### **Next Steps**
+
+-   Update the frontend to handle Enum values correctly when displaying garden types and growth stages.
+-   Expand Enum-based validation to other models where applicable.
+-   Ensure database migrations fully support Enum constraints.
+
+---
+
+Today's refactoring improves type safety and consistency for garden types and growth stages, reducing the likelihood of errors from inconsistent string inputs. This change lays the foundation for future improvements in handling predefined categories throughout the application.
+
 ---
 
 This log serves as a detailed reference for backend and frontend setup, security improvements, and future development plans.
