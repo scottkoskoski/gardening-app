@@ -1,5 +1,5 @@
-from .database import db
 from datetime import datetime, timezone
+from .database import db
 
 class UserGarden(db.Model):
     __tablename__ = "user_garden"
@@ -7,7 +7,7 @@ class UserGarden(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     garden_name = db.Column(db.String(100))
-    garden_type_id = db.Column(db.Integer, db.ForeignKey("garden_type.id"))
+    garden_type_id = db.Column(db.Integer, db.ForeignKey("garden_type.id"), nullable=False)
     is_community_garden = db.Column(db.Boolean)
     is_rooftop_garden = db.Column(db.Boolean)
     garden_size = db.Column(db.String(50))
