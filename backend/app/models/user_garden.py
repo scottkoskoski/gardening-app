@@ -1,7 +1,6 @@
 from marshmallow import Schema, fields, validate
 from datetime import datetime, timezone
 from .database import db
-from .garden_type import GardenTypeEnum
 
 class UserGardenSchema(Schema):
     """
@@ -19,8 +18,13 @@ class UserGardenSchema(Schema):
         required=True,
         validate=[
             validate.Length(min=2, max=100, error="Garden name must be 2-100 characters."),
-            validate.Regexp(r'^[a-zA-Z0-9]+$', error="Garden name can only contain letters, numbers, and spaces.")
+            validate.Regexp(r'^[a-zA-Z0-9 ]+$', error="Garden name can only contain letters, numbers, and spaces.")
         ]
+    )
+    
+    garden_type_id = fields.Integer(
+        required=True,
+        validate=validate.Range(min=1, error="Garden type must be a valid ID.")
     )
     
     # Optional boolean flags for garden characteristics
