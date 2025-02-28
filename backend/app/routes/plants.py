@@ -1,8 +1,12 @@
 from flask import Blueprint, request, jsonify
 from ..models.database import db
-from ..models.plant import Plant
+from ..models.plant import Plant, PlantSchema
 
 plants_bp = Blueprint("plants", __name__)
+
+# Creating instance of PlantSchema
+plant_schema = PlantSchema()
+plants_schema = PlantSchema(many=True) # For serializing multiple plants
 
 @plants_bp.route("/get_plants", methods=["GET"])
 def get_plants():
@@ -17,9 +21,10 @@ def get_plants():
     # Apply filters
     if hardiness_zone:
         query = query.filter(
-            Plant.hardiness_min <= int(hardiness_zone),
-            Plant.hardiness_max >= int(hardiness_zone),
+            Plant.hardiness_min <= hardiness_zone,
+            Plant.hardiness_max >= hardiness_zone,
         )
+    
     if greenhouse:
         query = query.filter(Plant.requires_greenhouse == True)
     
@@ -29,21 +34,75 @@ def get_plants():
     # Fetch filtered plants
     plants = query.all()
     
+    result = plants_schema.dump(plants)
+    
     # Format data for JSON response
-    plants_data = [
-        {
-            "id": plant.id,
-            "name": plant.name,
-            "description": plant.description if plant.description is not None else "No description available.",
-            "hardinessMin": plant.hardiness_min if plant.hardiness_min is not None else "N/A",
-            "hardinessMax": plant.hardiness_max if plant.hardiness_max is not None else "N/A",
-            "requiresGreenhouse": plant.requires_greenhouse if plant.requires_greenhouse is not None else False,
-            "suitableForContainers": plant.suitable_for_containers if plant.suitable_for_containers is not None else False,
-            "growingSeason": plant.growing_season if plant.growing_season is not None else "N/A",
-            "waterNeeds": plant.water_needs if plant.water_needs is not None else "N/A",
-            "sunlight": plant.sunlight if plant.sunlight is not None else "N/A",
-            "spaceRequired": plant.space_required if plant.space_required is not None else "N/A",
-        }
-        for plant in plants
-    ]
+    plants_data = []
+    for plant in result:
+        plants_data.append({
+            "id": plant.get("id"),
+            "name": plant.get("name"),
+            "description": plant.get("description", "No description available."),
+            "hardinessMin": plant.get("hardiness_min", "N/A"),
+            "hardinessMax": plant.get("hardiness_max", "N/A"),
+            "requiresGreenhouse": plant.get("requires_greenhouse", False),
+            "suitableForContainers": plant.get("suitable_for_containers", False),
+            "growingSeason": plant.get("growing_season", "N/A"),
+            "waterNeeds": plant.get("water_needs", "N/A"),
+            "sunlight": plant.get("sunlight", "N/A"),
+            "spaceRequired": plant.get("space_required", "N/A"),
+        })
+        
     return jsonify({"plants": plants_data})
+
+@plants_bp.route("/<int:plant_id>", methods=["GET"])
+def get_plant(plant_id):
+    """Retrieves a specific plant by ID."""
+    plant = Plant.query.get_or_404(plant_id)
+    
+    # Using schema to serialize a single plant
+    result = plant_schema.dump(plant)
+    
+    plant_data = {
+            "id": result.get("id"),
+            "name": result.get("name"),
+            "description": result.get("description", "No description available."),
+            "hardinessMin": result.get("hardiness_min", "N/A"),
+            "hardinessMax": result.get("hardiness_max", "N/A"),
+            "requiresGreenhouse": result.get("requires_greenhouse", False),
+            "suitableForContainers": result.get("suitable_for_containers", False),
+            "growingSeason": result.get("growing_season", "N/A"),
+            "waterNeeds": result.get("water_needs", "N/A"),
+            "sunlight": result.get("sunlight", "N/A"),
+            "spaceRequired": result.get("space_required", "N/A"),
+            "sowingMethod": result.get("sowing_method", "N/A"),
+            "spread": result.get("spread", None),
+            "rowSpacing": result.get("row_spacing", None),
+            "height": result.get("height", None),
+            "imageUrl": result.get("image_url", "N/A")
+    }
+    
+    return jsonify(plant_data)
+
+@plants_bp.route("", methods=["POST"])
+def add_plant():
+    """Adds a new plant to the database with schema validation."""
+    json_data = request.get_json()
+    if not json_data:
+        return jsonify({"error": "No input data provided"}), 400
+    
+    # Validating using schema
+    errors = plant_schema.validate(json_data)
+    if errors:
+        return jsonify({"error": "Validation failed", "details": errors}), 422
+    
+    try:
+        plant_data = plant_schema.load(json_data)
+        new_plant = Plant(**plant_data)
+        
+        db.session.add(new_plant)
+        db.session.commit()
+        return jsonify({"message": "Plant added successfully", "id":new_plant.id}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": "Failed to add plant", "details": str(e)}), 500
