@@ -20,20 +20,22 @@ def populate_garden_types():
         ]
             
         for garden in garden_types:
-            # Get the name value for querying
-            enum_name = garden["enum"].name
-            existing = GardenType.query.filter_by(name=enum_name).first()
+            # Get the value from the enum for inserting into the database
+            enum_value = garden["enum"].value  # This gets "Raised Bed" instead of "RAISED_BED"
+            
+            # Check if this garden type already exists
+            existing = GardenType.query.filter_by(name=enum_value).first()
             
             if not existing:
                 new_garden_type = GardenType(
-                    name=enum_name,
+                    name=garden["enum"],
                     description=garden["description"],
                     ideal_soil_type=garden["ideal_soil_type"],
                     space_requirements=garden["space_requirements"],
                     maintenance_level=garden["maintenance_level"]
                 )
                 db.session.add(new_garden_type)
-                print(f"Adding garden type: {enum_name}")
+                print(f"Adding garden type: {enum_value}")
 
         db.session.commit()
         print("Garden types have been added to the database!")
