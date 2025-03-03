@@ -850,4 +850,79 @@ Today's refactoring improves type safety and consistency for garden types and gr
 
 ---
 
+# Project Log - Gardening App
+
+## Date: 3/1/2025
+
+## 21. **Data Validation with Marshmallow Schemas**
+
+### **Purpose**
+
+Today, we focused on implementing comprehensive data validation throughout our application using Marshmallow schemas. This ensures data integrity, improves error handling, and creates a consistent approach to validating input before it reaches our database.
+
+### **Steps Taken**
+
+#### **1. Created Schema for Plant Model**
+
+-   Developed a `PlantSchema` class with detailed validation rules for all plant attributes.
+-   Implemented specific validation for categorical fields like `sunlight`, `growing_season`, and `water_needs`.
+-   Added length constraints and pattern validation for string fields.
+-   Modified the image URL field to accept both absolute and relative paths.
+
+#### **2. Created Schema for User Model**
+
+-   Implemented `UserSchema` with comprehensive password validation.
+-   Added strong security measures including checks for uppercase letters, lowercase letters, numbers, and special characters.
+-   Created password confirmation validation to ensure matching passwords during registration.
+-   Protected sensitive fields like passwords with `load_only=True` to prevent exposure in API responses.
+
+#### **3. Implemented Profile and Garden Plant Schemas**
+
+-   Created `UserProfileSchema` with validation for geographic information like zip codes.
+-   Implemented `UserGardenPlantSchema` with proper date validation and enum handling.
+-   Added custom validation methods for fields like plant hardiness zone format.
+
+#### **4. Updated API Routes to Use Schemas**
+
+-   Refactored the Plants API to validate incoming data and serialize responses.
+-   Updated User Gardens API to use the new validation schemas.
+-   Improved error handling to return specific validation errors to the client.
+-   Implemented consistent snake_case (backend) to camelCase (frontend) conversion.
+
+#### **5. Enhanced Data Import Scripts**
+
+-   Updated OpenFarm data import script to validate data against our schema.
+-   Added better error handling and tracking of import statistics.
+-   Implemented data sanitization to ensure compatibility with schema validation rules.
+-   Used transactions to ensure data consistency in the database.
+
+### **Testing**
+
+-   Validated plant data import process with schema validation.
+-   Tested garden creation and update endpoints with valid and invalid data.
+-   Verified proper error messages are returned for validation failures.
+-   Confirmed data consistency between frontend and backend with proper case conversions.
+
+### **Key Improvements**
+
+-   **Data Integrity**: All data now passes through validation before entering the database.
+-   **Error Handling**: Specific, user-friendly error messages for validation failures.
+-   **Consistent API Responses**: Standardized approach to data serialization.
+-   **Security**: Enhanced validation for sensitive operations like user registration.
+-   **Code Organization**: Clear separation of validation logic from request handling.
+
+### **Next Steps**
+
+-   Create comprehensive test suite for API endpoints.
+-   Expand frontend components to interact with validated endpoints.
+-   Implement utilities for consistent case conversion between frontend and backend.
+-   Add middleware for centralized error handling.
+-   Create API documentation with examples of valid requests and responses.
+
+---
+
+The implementation of schema validation significantly improves our application's robustness and reliability. By enforcing data integrity rules at the API level, we prevent invalid data from entering our system and provide clear feedback to users when validation fails. This foundational work will make future development more efficient and reduce the likelihood of data-related bugs.
+
+---
+
 This log serves as a detailed reference for backend and frontend setup, security improvements, and future development plans.
