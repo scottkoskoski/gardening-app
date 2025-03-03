@@ -852,7 +852,7 @@ Today's refactoring improves type safety and consistency for garden types and gr
 
 # Project Log - Gardening App
 
-## Date: 3/1/2025
+## Date: 3/1/2025 (approximately, worked on these over multiple days)
 
 ## 21. **Data Validation with Marshmallow Schemas**
 
