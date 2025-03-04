@@ -1,15 +1,47 @@
 import jwt
-import datetime
 import requests
+from datetime import datetime, timezone, timedelta
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from werkzeug.security import check_password_hash
 from sqlalchemy import or_
+from functools import wraps
 from ..models.database import db
-from ..models.user import User
+from ..models.user import User, UserSchema
 from ..models.profile import UserProfile
 
 users_bp = Blueprint("users", __name__)
+
+def admin_required():
+    """
+    Custom decorator that checks if the current user has admin privileges.
+    This combines JWT verification with admin role checking.
+    
+    Usage:
+        @users_bp.route("/admin_only", methods=["GET"])
+        @admin_required()
+        def admin_only_route():
+            # This function will only execute if the user is an admin
+            return jsonify({"messge": "Welcome, admin!"})
+    """
+    def wrapper(fn):
+        @wraps(fn)
+        @jwt_required() # First ensures the user is authenticated
+        def decorator(*args, **kwargs):
+            # Getting the authenticated user ID from the JWT
+            user_id = get_jwt_identity()
+            
+            # Finding the user in the database
+            user = User.query.get(user_id)
+            
+            # Checking if the user exists and has admin privileges
+            if not user or not user.is_admin:
+                return jsonify({"error": "Admin privileges required"}), 403
+            
+            # If the user is an admin, proceed with the original function
+            return fn(*args, **kwargs)
+        return decorator
+    return wrapper
 
 @users_bp.route("/login", methods=["POST"])
 def login():
@@ -24,13 +56,16 @@ def login():
 
     if not user or not check_password_hash(user.password_hash, password):
         return jsonify({"error": "Invalid username or password."}), 401
+    
+    # Recording the login timestamp
+    user.record_login()
 
     secret_key = current_app.config["SECRET_KEY"]
 
     token = jwt.encode(
         {
             "sub": str(user.id),
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)
+            "exp": datetime.now(timezone.utc) + timedelta(hours=24)
         },
         secret_key,
         algorithm="HS256",
@@ -75,14 +110,13 @@ def get_user():
 
     if not user:
         return jsonify({"error": "User not found."}), 404
+    
+    # Using UserSchema to properly serialize the user data
+    user_schema = UserSchema()
+    serialized_user = user_schema.dump(user)
+    
+    return jsonify(serialized_user), 200
 
-    return jsonify(
-        {
-            "id": user.id,
-            "username": user.username,
-            "email": user.email,
-        }
-    ), 200
 
 
 @users_bp.route("/profile", methods=["GET"])
@@ -166,3 +200,22 @@ def update_profile():
             "plant_hardiness_zone": profile.plant_hardiness_zone,
         }
     )
+
+@users_bp.route("/inactive_users", methods=["GET"])
+@admin_required()
+def get_inactive_users():
+    """Gets users who haven't logged in for over 30 days."""
+    
+    # Calculating the date 30 days ago
+    thirty_days_ago = datetime.now(timezone.utc) - timedelta(days=30)
+    
+    # Finding users who haven't logged in for 30 days
+    inactive_users = User.query.filter(
+        or_(User.last_login_at < thirty_days_ago, User.last_login_at == None)
+    ).all()
+    
+    # Serializing the users with schema
+    users_schema = UserSchema(many=True)
+    result = users_schema.dump(inactive_users)
+    
+    return jsonify(result), 200

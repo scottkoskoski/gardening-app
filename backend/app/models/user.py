@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from marshmallow import Schema, fields, validate, validates, ValidationError, validates_schema
 from .database import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -40,6 +41,13 @@ class UserSchema(Schema):
         ]
     )
     
+    # Admin status flag - determines if the user has admin privileges
+    # Default is False
+    is_admin = fields.Boolean(
+        dump_default=False, # Defaulting to non-admin when serializing
+        load_default=False # Defaulting to non-admin when deserializing if not specified
+    )
+    
     # Password confirmation field for registration
     password_confirm = fields.String(
         required=False,
@@ -48,6 +56,12 @@ class UserSchema(Schema):
     
     # Password hash is never exposed or loaded directly
     password_hash = fields.String(dump_only=True)
+    
+    # Creation timestamp (read-only)
+    created_at = fields.DateTime(dump_only=True)
+    
+    # Last login timestamp (read-only)
+    last_login_at = fields.DateTime(dump_only=True)
     
     @validates("password")
     def validate_password_strength(self, value):
@@ -81,14 +95,23 @@ class UserSchema(Schema):
     class Meta:
         """Meta options for the UserSchema."""
         # Fields to include by default in serialized output
-        fields = ("id", "username", "email")
+        fields = ("id", "username", "email", "is_admin", "created_at", "last_login_at")
 
 class User(db.Model):
     """User model for authentication & preferences."""
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    username = db.Column(db.String(100), unique=True, nullable=False, index=True)
+    email = db.Column(db.String(120), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
+    is_admin = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False,
+        server_default="0",
+        comment="Indicates whether the user has admin privileges"
+    )
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    last_login_at = db.Column(db.DateTime, nullable=True)
     
     def set_password(self, password):
         """Hashes the password and stores it."""
@@ -98,6 +121,21 @@ class User(db.Model):
         """Checks the password against the stored hash."""
         return check_password_hash(self.password_hash, password)
     
+    def record_login(self):
+        """Update the last login timestamp."""
+        self.last_login_at = datetime.now(timezone.utc)
+        db.session.commit()
+    
+    @property
+    def is_authenticated(self):
+        """Indicates if the user is authenticated."""
+        return True
+    
+    @property
+    def is_active(self):
+        """Indicates if the user account is active."""
+        return True
+    
     def __repr__(self):
-        return f"<User {self.username}>"
+        return f"<User id={self.id} username={self.username} is_admin={self.is_admin}>"
     
