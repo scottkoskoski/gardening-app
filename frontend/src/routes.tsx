@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
+import GardenView from "./pages/GardenView";
 
 const AppRoutes = () => (
     <Routes>
@@ -15,6 +16,14 @@ const AppRoutes = () => (
             element={
                 <ProtectedRoute>
                     <Profile />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/gardens"
+            element={
+                <ProtectedRoute>
+                    <GardenView />
                 </ProtectedRoute>
             }
         />
