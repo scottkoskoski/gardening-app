@@ -60,7 +60,7 @@ async function deleteRequest(endpoint: string, token?: string) {
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.error || `FAiled to delete ${endpoint}`);
+            throw new Error(errorData.error || `Failed to delete ${endpoint}`);
         }
         return response.json()
     } catch (error) {
@@ -94,6 +94,18 @@ async function createGarden(gardenData: Object, token: string) {
     return post("/user_gardens", gardenData, token);
 }
 
+async function addPlantToGarden(plantData: Object, token: string) {
+    return post("/user_garden_plants", plantData, token);
+}
+
+async function deleteGarden(gardenId: number, token: string) {
+    return deleteRequest(`/user_gardens/${gardenId}`, token);
+}
+
+async function removePlantFromGarden(plantId: number, token: string) {
+    return deleteRequest(`/user_garden_plants/${plantId}`, token);
+}
+
 
 export default {
     getPlants,
@@ -101,6 +113,9 @@ export default {
     getGardenTypes,
     getUserGardens,
     createGarden,
+    addPlantToGarden,
+    deleteGarden,
+    removePlantFromGarden,
     get,
     post,
     deleteRequest,
