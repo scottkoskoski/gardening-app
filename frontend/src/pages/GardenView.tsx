@@ -254,7 +254,7 @@ const GardenView = () => {
 
         try {
             setLoading(true);
-            await api.delete(`/user_gardens/${gardenId}`, token);
+            await api.deleteRequest(`/user_gardens/${gardenId}`, token);
 
             // Remove the garden from state
             setGardens((prevGardens) =>
@@ -281,7 +281,10 @@ const GardenView = () => {
 
         try {
             setLoading(true);
-            await api.delete(`/user_garden_plants/${gardenPlantId}`, token);
+            await api.deleteRequest(
+                `/user_garden_plants/${gardenPlantId}`,
+                token
+            );
 
             // Remove the plant from the garden in state
             setGardens((prevGardens) =>
