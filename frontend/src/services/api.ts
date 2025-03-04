@@ -7,12 +7,18 @@ async function get(endpoint: string, token?: string) {
         headers["Authorization"] = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${API_BASE_URL}/api${endpoint}`, { headers });
-    if (!response.ok) {
-        throw new Error(`Failed to fetch ${endpoint}`);
+    try {
+        const response = await fetch(`${API_BASE_URL}/api${endpoint}`, { headers });
+        if (!response.ok) {
+            throw new Error(`Failed to fetch ${endpoint}`);
+        }
+        return response.json();
+    } catch (error) {
+        console.error(`API GET Error (${endpoint}):`, error);
+        throw error;
     }
-    return response.json();
 }
+
 
 // Helper function to make POST requests
 async function post(endpoint: string, body: object, token?: string) {
@@ -21,15 +27,48 @@ async function post(endpoint: string, body: object, token?: string) {
         headers["Authorization"] = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${API_BASE_URL}/api${endpoint}`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(body),
-    });
+    try {
+        const response = await fetch(`${API_BASE_URL}/api${endpoint}`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(body),
+        });
 
-    if (!response.ok) throw new Error(`Failed to post ${endpoint}`);
-    return response.json();
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `Failed to post to ${endpoint}`);
+        }
+        return response.json();
+    } catch (error) {
+        console.error(`API POST Error (${endpoint}):`, error);
+        throw error;
+    }
 }
+
+// Helper function to make DELETE requests
+async function deleteRequest(endpoint: string, token?: string) {
+    const headers: HeadersInit = {};
+    if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api${endpoint}`, {
+            method: "DELETE",
+            headers,
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `FAiled to delete ${endpoint}`);
+        }
+        return response.json()
+    } catch (error) {
+        console.error(`API DELETE Error (${endpoint}):`, error);
+        throw error;
+    }
+}
+
 
 // Plant-related API calls
 async function getPlants() {
@@ -41,9 +80,28 @@ async function getHardinessZone(zip: string) {
     return get(`/hardiness/get_hardiness_zone?zip=${zip}`);
 }
 
+// Garden type API calls
+async function getGardenTypes() {
+    return get("/garden_types");
+}
+
+// User gardens API calls
+async function getUserGardens(token: string) {
+    return get("/user_gardens", token);
+}
+
+async function createGarden(gardenData: Object, token: string) {
+    return post("/user_gardens", gardenData, token);
+}
+
+
 export default {
     getPlants,
     getHardinessZone,
+    getGardenTypes,
+    getUserGardens,
+    createGarden,
     get,
     post,
+    deleteRequest,
 };
