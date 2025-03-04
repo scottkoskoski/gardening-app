@@ -12,7 +12,12 @@ const Navbar = () => {
         <nav className={styles["navbar"]}>
             <div className={styles["nav-links"]}>
                 <Link to="/">Home</Link>
-                {auth.isAuthenticated && <Link to="/profile">Profile</Link>}
+                {auth.isAuthenticated && (
+                    <>
+                        <Link to="/profile">Profile</Link>
+                        <Link to="/gardens">Gardens</Link>
+                    </>
+                )}
                 {auth.isAuthenticated ? (
                     <button
                         onClick={auth.logout}
