@@ -118,88 +118,109 @@ def get_user():
     return jsonify(serialized_user), 200
 
 
-
 @users_bp.route("/profile", methods=["GET"])
 @jwt_required()
 def get_profile():
     """Fetch the authenticated user's profile."""
-    user_id = get_jwt_identity()
-    print(f"Received GET /users/profile request for user_id: {user_id}")
+    try:
+        user_id = get_jwt_identity()
+        print(f"Received GET /users/profile request for user_id: {user_id}")
 
-    profile = UserProfile.query.filter_by(user_id=user_id).first()
+        profile = UserProfile.query.filter_by(user_id=user_id).first()
 
-    if not profile:
-        return jsonify(
-            {
-                "first_name": "",
-                "last_name": "",
+        if not profile:
+            return jsonify({
                 "zip_code": "",
                 "plant_hardiness_zone": "",
-            }
-        ), 200
+                "city": "",
+                "state": "",
+                "has_irrigation": False,
+                "sunlight_hours": None,
+                "soil_ph": None
+            }), 200
 
-    return jsonify(
-        {
-            "first_name": profile.first_name,
-            "last_name": profile.last_name,
+        return jsonify({
             "zip_code": profile.zip_code,
             "plant_hardiness_zone": profile.plant_hardiness_zone,
-        }
-    ), 200
+            "city": profile.city,
+            "state": profile.state,
+            "has_irrigation": profile.has_irrigation,
+            "sunlight_hours": profile.sunlight_hours,
+            "soil_ph": profile.soil_ph
+        }), 200
+    except Exception as e:
+        print(f"Error in get_profile: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": "An unexpected error occurred fetching profile"}), 500
 
 
 @users_bp.route("/profile", methods=["POST"])
 @jwt_required()
 def update_profile():
     """Create or update the authenticated user's profile."""
-    user_id = get_jwt_identity()
-    data = request.get_json()
+    try:
+        user_id = get_jwt_identity()
+        data = request.get_json()
 
-    print("Received profile update request:", data)
+        print("Received profile update request:", data)
 
-    if not data or not isinstance(data, dict):
-        return jsonify({"error": "Invalid JSON payload."}), 422
+        if not data or not isinstance(data, dict):
+            return jsonify({"error": "Invalid JSON payload."}), 422
 
-    # Convert frontend keys to match backend expectations
-    formatted_data = {
-        "first_name": data.get("first_name") or data.get("firstName", ""),
-        "last_name": data.get("last_name") or data.get("lastName", ""),
-        "zip_code": data.get("zip_code") or data.get("zipCode", ""),
-    }
-
-    profile = UserProfile.query.filter_by(user_id=user_id).first()
-
-    if not profile:
-        profile = UserProfile(user_id=user_id)
-        db.session.add(profile)
-
-    # Update fields
-    profile.first_name = formatted_data["first_name"]
-    profile.last_name = formatted_data["last_name"]
-
-    # Fetch hardiness zone if zip code is provided and changed
-    new_zip = formatted_data["zip_code"]
-    if new_zip and new_zip != profile.zip_code:
-        try:
-            base_url = current_app.config.get("BASE_URL", "http://127.0.0.1:5000")
-            hardiness_url = f"{base_url}/api/hardiness/get_hardiness_zone?zip={new_zip}"
-            response = requests.get(hardiness_url)
-
-            if response.status_code == 200:
-                hardiness_data = response.json()
-                profile.plant_hardiness_zone = hardiness_data.get("zone", profile.plant_hardiness_zone)
-        except Exception as e:
-            print(f"Failed to fetch hardiness zone: {e}")
-
-    profile.zip_code = new_zip
-
-    db.session.commit()
-    return jsonify(
-        {
-            "message": "Profile updated successfully.",
-            "plant_hardiness_zone": profile.plant_hardiness_zone,
+        # Convert frontend keys to match backend expectations
+        formatted_data = {
+            "zip_code": data.get("zip_code", ""),
+            "city": data.get("city", ""),
+            "state": data.get("state", ""),
+            "has_irrigation": data.get("has_irrigation", False),
+            "sunlight_hours": data.get("sunlight_hours"),
+            "soil_ph": data.get("soil_ph")
         }
-    )
+
+        profile = UserProfile.query.filter_by(user_id=user_id).first()
+
+        if not profile:
+            profile = UserProfile(user_id=user_id)
+            db.session.add(profile)
+
+        # Update fields
+        profile.zip_code = formatted_data["zip_code"]
+        profile.city = formatted_data["city"]
+        profile.state = formatted_data["state"]
+        profile.has_irrigation = formatted_data["has_irrigation"]
+        profile.sunlight_hours = formatted_data["sunlight_hours"]
+        profile.soil_ph = formatted_data["soil_ph"]
+
+        # Fetch hardiness zone if zip code is provided and changed
+        new_zip = formatted_data["zip_code"]
+        if new_zip and new_zip != profile.zip_code:
+            try:
+                base_url = current_app.config.get("BASE_URL", "http://127.0.0.1:5000")
+                hardiness_url = f"{base_url}/api/hardiness/get_hardiness_zone?zip={new_zip}"
+                response = requests.get(hardiness_url)
+
+                if response.status_code == 200:
+                    hardiness_data = response.json()
+                    profile.plant_hardiness_zone = hardiness_data.get("zone", profile.plant_hardiness_zone)
+            except Exception as e:
+                print(f"Failed to fetch hardiness zone: {e}")
+
+        db.session.commit()
+        return jsonify(
+            {
+                "message": "Profile updated successfully.",
+                "plant_hardiness_zone": profile.plant_hardiness_zone,
+            }
+        )
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error in update_profile: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": "An unexpected error occurred updating profile"}), 500
+
+
 
 @users_bp.route("/inactive_users", methods=["GET"])
 @admin_required()

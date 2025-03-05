@@ -10,10 +10,13 @@ const Profile = () => {
         : undefined;
 
     const [profile, setProfile] = useState({
-        firstName: "",
-        lastName: "",
         zipCode: "",
         plantHardinessZone: "",
+        city: "",
+        state: "",
+        hasIrrigation: false,
+        sunlightHours: null as number | null,
+        soilPh: null as number | null,
     });
 
     const [loading, setLoading] = useState(true);
@@ -67,10 +70,13 @@ const Profile = () => {
                     );
                 } else {
                     setProfile({
-                        firstName: response.first_name || "",
-                        lastName: response.last_name || "",
                         zipCode: response.zip_code || "",
                         plantHardinessZone: response.plant_hardiness_zone || "",
+                        city: response.city || "",
+                        state: response.state || "",
+                        hasIrrigation: response.has_irrigation || false,
+                        sunlightHours: response.sunlight_hours,
+                        soilPh: response.soil_ph,
                     });
                 }
             } catch (error) {
@@ -92,11 +98,14 @@ const Profile = () => {
 
         try {
             const response = await api.post(
-                "/users/profile",
+                "users/profile",
                 {
-                    first_name: profile.firstName,
-                    last_name: profile.lastName,
                     zip_code: profile.zipCode,
+                    city: profile.city,
+                    state: profile.state,
+                    has_irrigation: profile.hasIrrigation,
+                    sunlight_hours: profile.sunlightHours,
+                    soil_ph: profile.soilPh,
                 },
                 token
             );
@@ -125,26 +134,6 @@ const Profile = () => {
 
             <form onSubmit={handleSubmit} className={styles.profileForm}>
                 <label>
-                    First Name:
-                    <input
-                        type="text"
-                        name="firstName"
-                        value={profile.firstName}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Last Name:
-                    <input
-                        type="text"
-                        name="lastName"
-                        value={profile.lastName}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
                     Zip Code:
                     <input
                         type="text"
@@ -152,8 +141,71 @@ const Profile = () => {
                         value={profile.zipCode}
                         onChange={handleChange}
                         required
+                        pattern="\d{5}(-\d{4})?"
+                        placeholder="12345 or 12345-6789"
                     />
                 </label>
+
+                <label>
+                    City:
+                    <input
+                        type="text"
+                        name="city"
+                        value={profile.city || ""}
+                        onChange={handleChange}
+                    />
+                </label>
+
+                <label>
+                    State:
+                    <input
+                        type="text"
+                        name="state"
+                        value={profile.state || ""}
+                        onChange={handleChange}
+                    />
+                </label>
+
+                <label className={styles.checkboxLabel}>
+                    <input
+                        type="checkbox"
+                        name="hasIrrigation"
+                        checked={profile.hasIrrigation || false}
+                        onChange={handleChange}
+                    />
+                    Has Irrigation System
+                </label>
+
+                <label>
+                    Daily Sunlight Hours:
+                    <input
+                        type="number"
+                        name="sunlightHours"
+                        value={
+                            profile.sunlightHours === null
+                                ? ""
+                                : profile.sunlightHours
+                        }
+                        onChange={handleChange}
+                        min="0"
+                        max="24"
+                        step="0.5"
+                    />
+                </label>
+
+                <label>
+                    Soil pH:
+                    <input
+                        type="number"
+                        name="soilPh"
+                        value={profile.soilPh === null ? "" : profile.soilPh}
+                        onChange={handleChange}
+                        min="0"
+                        max="14"
+                        step="0.1"
+                    />
+                </label>
+
                 <label>
                     Plant Hardiness Zone:
                     <input
@@ -163,6 +215,7 @@ const Profile = () => {
                         disabled
                     />
                 </label>
+
                 <button type="submit" className={styles.profileButton}>
                     Save Profile
                 </button>
