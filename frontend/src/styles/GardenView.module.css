@@ -147,6 +147,8 @@
     font-style: italic;
     text-align: center;
     margin: 20px 0;
+    grid-column: 1 / -1;
+    width: 100%;
 }
 
 .plantsGrid {
