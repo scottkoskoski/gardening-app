@@ -13,6 +13,7 @@ from .routes.plants import plants_bp
 from .routes.users import users_bp
 from .routes.user_gardens import user_gardens_bp
 from .routes.user_garden_plants import user_garden_plants_bp
+from .routes.garden_types import garden_types_bp
 
 # Load environment variables
 load_dotenv()
@@ -51,6 +52,7 @@ def create_app():
     app.register_blueprint(users_bp, url_prefix="/api/users")
     app.register_blueprint(user_gardens_bp, url_prefix="/api/user_gardens")
     app.register_blueprint(user_garden_plants_bp, url_prefix="/api/user_garden_plants")
+    app.register_blueprint(garden_types_bp, url_prefix="/api")
     
     @app.route("/")
     def home():
