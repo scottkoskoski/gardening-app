@@ -149,6 +149,31 @@ async function getProfile(token: string) {
     return get("/users/profile", token);
 }
 
+// Garden map API calls
+async function getGardenMap(gardenId: number, token: string) {
+    return get(`/user_gardens/${gardenId}/map`, token);
+}
+
+async function resizeGardenGrid(gardenId: number, gridData: { grid_rows: number; grid_cols: number }, token: string) {
+    return put(`/user_gardens/${gardenId}/map/resize`, gridData, token);
+}
+
+async function placePlantOnMap(gardenId: number, plantData: { plant_id: number; row: number; col: number; growth_stage?: string }, token: string) {
+    return post(`/user_gardens/${gardenId}/map/place`, plantData, token);
+}
+
+async function removePlantFromMap(gardenId: number, gardenPlantId: number, token: string) {
+    return deleteRequest(`/user_gardens/${gardenId}/map/${gardenPlantId}`, token);
+}
+
+async function getPlantMapInfo(gardenId: number, gardenPlantId: number, token: string) {
+    return get(`/user_gardens/${gardenId}/map/${gardenPlantId}/info`, token);
+}
+
+async function getPlantDetails(plantId: number) {
+    return get(`/plants/${plantId}`);
+}
+
 export default {
     getPlants,
     getHardinessZone,
@@ -162,6 +187,12 @@ export default {
     getWeather,
     getUser,
     getProfile,
+    getGardenMap,
+    resizeGardenGrid,
+    placePlantOnMap,
+    removePlantFromMap,
+    getPlantMapInfo,
+    getPlantDetails,
     get,
     post,
     put,

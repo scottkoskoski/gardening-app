@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import GardenView from "./pages/GardenView";
 import Dashboard from "./pages/Dashboard";
+import GardenMap from "./pages/GardenMap";
 
 const AppRoutes = () => (
     <Routes>
@@ -25,6 +26,14 @@ const AppRoutes = () => (
             element={
                 <ProtectedRoute>
                     <GardenView />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/gardens/:gardenId/map"
+            element={
+                <ProtectedRoute>
+                    <GardenMap />
                 </ProtectedRoute>
             }
         />

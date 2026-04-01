@@ -1,0 +1,509 @@
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.headerLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.backLink {
+    font-size: 0.9rem;
+    color: var(--primary-green);
+}
+
+.pageTitle {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--primary-green);
+}
+
+.headerActions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.modeButton,
+.resizeButton {
+    padding: 8px 16px;
+    border: 2px solid var(--primary-green);
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: white;
+    color: var(--primary-green);
+}
+
+.modeButton:hover,
+.resizeButton:hover {
+    background-color: var(--primary-green);
+    color: white;
+    transform: none;
+}
+
+.modeActive {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+/* Error */
+.errorMessage {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.errorMessage p {
+    margin: 0;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+/* Resize Form */
+.resizeForm {
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.resizeForm label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.resizeForm input {
+    width: 80px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.applyButton {
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.applyButton:hover {
+    background-color: var(--secondary-green);
+    transform: none;
+}
+
+.cancelButton {
+    background-color: #999;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.cancelButton:hover {
+    background-color: #777;
+    transform: none;
+}
+
+/* Layout: palette + grid */
+.mapLayout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+/* Plant Palette */
+.palette {
+    width: 220px;
+    flex-shrink: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 16px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.paletteTitle {
+    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+    color: var(--primary-green);
+}
+
+.paletteHint {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 0 0 12px 0;
+}
+
+.plantList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.plantOption {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px 10px;
+    border: none;
+    border-left: 4px solid #ccc;
+    background: #f9f9f9;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    text-align: left;
+    width: 100%;
+}
+
+.plantOption:hover {
+    background-color: #e8f5e9;
+    transform: none;
+}
+
+.plantSelected {
+    background-color: #c8e6c9;
+    border-left-width: 4px;
+    font-weight: 600;
+}
+
+.plantName {
+    font-size: 13px;
+    color: var(--text-dark);
+}
+
+.plantMeta {
+    font-size: 11px;
+    color: #888;
+}
+
+/* Grid */
+.gridWrapper {
+    flex: 1;
+    min-width: 0;
+}
+
+.grid {
+    display: grid;
+    gap: 2px;
+    background-color: #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #bbb;
+}
+
+.cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s, transform 0.1s;
+    position: relative;
+    min-width: 0;
+    min-height: 40px;
+}
+
+.cellEmpty {
+    background-color: #f0ead6;
+}
+
+.cellEmpty:hover {
+    background-color: #e5dfc5;
+}
+
+.cellPlaceable {
+    background-color: #e8f5e9;
+    border: 1px dashed #81c784;
+}
+
+.cellPlaceable:hover {
+    background-color: #c8e6c9;
+}
+
+.cellOccupied {
+    color: white;
+}
+
+.cellOccupied:hover {
+    filter: brightness(1.1);
+    transform: scale(1.05);
+    z-index: 1;
+}
+
+.cellContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+}
+
+.cellLabel {
+    font-size: 10px;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+.gridLegend {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 4px;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Info Panel (Modal) */
+.infoPanelBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 60px;
+    z-index: 200;
+    overflow-y: auto;
+}
+
+.infoPanel {
+    background: white;
+    border-radius: 12px;
+    padding: 28px;
+    width: 90%;
+    max-width: 550px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    margin-bottom: 40px;
+}
+
+.infoPanelHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.infoPanelHeader h2 {
+    margin: 0;
+    color: var(--primary-green);
+    font-size: 1.6rem;
+}
+
+.scientificName {
+    color: #888;
+    margin: 0 0 16px 0;
+}
+
+.plantImage {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.description {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.infoSection {
+    margin-bottom: 20px;
+}
+
+.infoSection h3 {
+    color: var(--primary-green);
+    font-size: 1.1rem;
+    margin: 0 0 10px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e8f5e9;
+}
+
+.detailsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.detailItem {
+    display: flex;
+    flex-direction: column;
+}
+
+.detailLabel {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detailValue {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.spacingList {
+    margin: 0;
+    padding-left: 20px;
+    color: #555;
+}
+
+.spacingList li {
+    margin-bottom: 4px;
+}
+
+/* Companion planting */
+.companionGroup {
+    margin-bottom: 12px;
+}
+
+.companionLabel {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.companionTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tagGood {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.tagBad {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.noCompanions {
+    color: #888;
+    font-style: italic;
+}
+
+.companionTip {
+    font-size: 0.9rem;
+    color: #555;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 3px solid var(--primary-green);
+    margin-top: 8px;
+}
+
+/* Remove button */
+.removeButton {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background-color 0.2s;
+}
+
+.removeButton:hover {
+    background-color: #b71c1c;
+    transform: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mapLayout {
+        flex-direction: column;
+    }
+
+    .palette {
+        width: 100%;
+        max-height: none;
+    }
+
+    .plantList {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .plantOption {
+        width: auto;
+    }
+
+    .cell {
+        min-height: 32px;
+    }
+
+    .cellLabel {
+        font-size: 8px;
+    }
+
+    .detailsGrid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -66,7 +66,19 @@ class UserGardenSchema(Schema):
     # Plant tracking fields
     preferred_plants = fields.String(required=False, allow_none=True)
     current_plants = fields.String(required=False, allow_none=True)
-    
+
+    # Grid dimensions for garden map
+    grid_rows = fields.Integer(
+        required=False,
+        allow_none=True,
+        validate=validate.Range(min=1, max=50, error="Grid rows must be between 1 and 50.")
+    )
+    grid_cols = fields.Integer(
+        required=False,
+        allow_none=True,
+        validate=validate.Range(min=1, max=50, error="Grid columns must be between 1 and 50.")
+    )
+
     # Timestamp fields (read-only, managed by database)
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)
@@ -103,6 +115,10 @@ class UserGarden(db.Model):
     # Plant tracking
     preferred_plants = db.Column(db.Text, nullable=True)
     current_plants = db.Column(db.Text, nullable=True)
+
+    # Grid dimensions for interactive garden map
+    grid_rows = db.Column(db.Integer, nullable=True, default=8)
+    grid_cols = db.Column(db.Integer, nullable=True, default=10)
     
     # Timestamp management with timezone awareness
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
