@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import api from "../services/api";
+import WeatherAlerts from "../components/WeatherAlerts";
 import styles from "../styles/Dashboard.module.css";
 
 type Garden = {
@@ -27,6 +28,14 @@ type ProfileData = {
     plant_hardiness_zone: string;
     city: string;
     state: string;
+};
+
+type FrostData = {
+    zone: string;
+    last_frost: string | null;
+    first_frost: string | null;
+    growing_season_days: number;
+    year_round: boolean;
 };
 
 const weatherDescriptions: Record<number, string> = {
@@ -60,7 +69,9 @@ const Dashboard = () => {
     const [profile, setProfile] = useState<ProfileData | null>(null);
     const [gardens, setGardens] = useState<Garden[]>([]);
     const [weather, setWeather] = useState<WeatherData | null>(null);
+    const [frostData, setFrostData] = useState<FrostData | null>(null);
     const [username, setUsername] = useState("");
+    const [highPriorityTasks, setHighPriorityTasks] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -84,7 +95,17 @@ const Dashboard = () => {
                 const gardensResponse = await api.getUserGardens(token);
                 setGardens(Array.isArray(gardensResponse) ? gardensResponse : []);
 
-                // Fetch weather if zip code exists
+                // Fetch tasks summary
+                try {
+                    const tasksResponse = await api.getTasks(token);
+                    if (tasksResponse.summary) {
+                        setHighPriorityTasks(tasksResponse.summary.high || 0);
+                    }
+                } catch {
+                    console.warn("Could not fetch tasks data");
+                }
+
+                // Fetch weather and frost dates if zip code exists
                 if (profileResponse.zip_code) {
                     try {
                         const weatherResponse = await api.getWeather(profileResponse.zip_code);
@@ -94,6 +115,13 @@ const Dashboard = () => {
                     } catch {
                         // Weather is non-critical, don't block dashboard
                         console.warn("Could not fetch weather data");
+                    }
+
+                    try {
+                        const frostResponse = await api.getFrostDates(profileResponse.zip_code);
+                        setFrostData(frostResponse);
+                    } catch {
+                        console.warn("Could not fetch frost date data");
                     }
                 }
             } catch (err: any) {
@@ -127,6 +155,8 @@ const Dashboard = () => {
             </h1>
 
             {error && <p className={styles.errorMessage}>{error}</p>}
+
+            {token && <WeatherAlerts token={token} />}
 
             <div className={styles.grid}>
                 {/* Weather Card */}
@@ -184,6 +214,51 @@ const Dashboard = () => {
                     )}
                 </div>
 
+                {/* Frost Dates Card */}
+                <div className={styles.card}>
+                    <h2 className={styles.cardTitle}>Frost Dates</h2>
+                    {frostData ? (
+                        <div className={styles.zoneContent}>
+                            {frostData.year_round ? (
+                                <p>
+                                    Your area (Zone {frostData.zone}) enjoys
+                                    year-round growing conditions with no
+                                    typical frost dates.
+                                </p>
+                            ) : (
+                                <>
+                                    <p>
+                                        <strong>Last Frost (Spring):</strong>{" "}
+                                        {frostData.last_frost
+                                            ? new Date(frostData.last_frost + "T00:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })
+                                            : "N/A"}
+                                    </p>
+                                    <p>
+                                        <strong>First Frost (Fall):</strong>{" "}
+                                        {frostData.first_frost
+                                            ? new Date(frostData.first_frost + "T00:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })
+                                            : "N/A"}
+                                    </p>
+                                    <p>
+                                        <strong>Growing Season:</strong>{" "}
+                                        {frostData.growing_season_days} days
+                                    </p>
+                                </>
+                            )}
+                        </div>
+                    ) : (
+                        <p className={styles.emptyState}>
+                            {profile?.zip_code
+                                ? "Frost date data unavailable."
+                                : "Set your ZIP code in your "}
+                            {!profile?.zip_code && (
+                                <Link to="/profile">profile</Link>
+                            )}
+                            {!profile?.zip_code && " to see frost dates."}
+                        </p>
+                    )}
+                </div>
+
                 {/* Garden Summary Card */}
                 <div className={styles.card}>
                     <h2 className={styles.cardTitle}>Garden Summary</h2>
@@ -214,6 +289,16 @@ const Dashboard = () => {
                             <Link to="/gardens" className={styles.cardLink}>
                                 View Gardens
                             </Link>
+                            {highPriorityTasks > 0 && (
+                                <div className={styles.taskAlert}>
+                                    <Link to="/tasks" className={styles.taskAlertLink}>
+                                        <span className={styles.taskAlertBadge}>
+                                            {highPriorityTasks}
+                                        </span>
+                                        {" "}high-priority {highPriorityTasks === 1 ? "task" : "tasks"} needing attention
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <p className={styles.emptyState}>

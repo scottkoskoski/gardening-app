@@ -1,0 +1,274 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.pageTitle {
+    color: var(--primary-green);
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 2.2rem;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Summary Bar */
+.summaryBar {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.summaryItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: white;
+    border-radius: 50px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.summaryDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dotHigh {
+    background-color: #d32f2f;
+}
+
+.dotMedium {
+    background-color: #f57c00;
+}
+
+.dotLow {
+    background-color: #4caf50;
+}
+
+/* Filter Tabs */
+.filterTabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.filterTab {
+    padding: 8px 20px;
+    border: 2px solid var(--primary-green);
+    border-radius: 50px;
+    background: white;
+    color: var(--primary-green);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.filterTab:hover {
+    background-color: #e8f5e9;
+}
+
+.filterTabActive {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+.filterTabActive:hover {
+    background-color: var(--secondary-green);
+}
+
+/* Task List */
+.taskList {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Task Card */
+.taskCard {
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+
+.taskCard:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.taskBorder {
+    width: 5px;
+    flex-shrink: 0;
+}
+
+.borderHigh {
+    background-color: #d32f2f;
+}
+
+.borderMedium {
+    background-color: #f57c00;
+}
+
+.borderLow {
+    background-color: #4caf50;
+}
+
+.taskContent {
+    flex: 1;
+    padding: 16px 20px;
+}
+
+.taskHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+}
+
+.taskTitle {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.priorityBadge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border-radius: 50px;
+    color: white;
+}
+
+.badgeHigh {
+    background-color: #d32f2f;
+}
+
+.badgeMedium {
+    background-color: #f57c00;
+}
+
+.badgeLow {
+    background-color: #4caf50;
+}
+
+.typeBadge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border-radius: 50px;
+    background-color: #e8f5e9;
+    color: var(--primary-green);
+}
+
+.taskDescription {
+    color: #555;
+    font-size: 0.92rem;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+}
+
+.taskMeta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+    color: #888;
+}
+
+.taskMeta a {
+    color: var(--primary-green);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.taskMeta a:hover {
+    text-decoration: underline;
+}
+
+.dueBadge {
+    font-weight: 600;
+}
+
+.dueToday {
+    color: #d32f2f;
+}
+
+.dueWeek {
+    color: #f57c00;
+}
+
+.dueUpcoming {
+    color: #4caf50;
+}
+
+/* Empty State */
+.emptyState {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+}
+
+.emptyState h2 {
+    color: var(--primary-green);
+    margin-bottom: 8px;
+}
+
+.emptyState a {
+    color: var(--primary-green);
+    font-weight: 600;
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+}
+
+.errorMessage {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .summaryBar {
+        gap: 10px;
+    }
+
+    .summaryItem {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+    }
+
+    .taskContent {
+        padding: 12px 14px;
+    }
+
+    .taskMeta {
+        gap: 10px;
+    }
+}

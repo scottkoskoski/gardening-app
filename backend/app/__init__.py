@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 from .models.database import db, create_database
 from .models.plant import Plant
+from .models.journal_entry import JournalEntry
 from .routes.hardiness import hardiness_bp
 from .routes.weather import weather_bp
 from .routes.plants import plants_bp
@@ -15,6 +16,15 @@ from .routes.user_gardens import user_gardens_bp
 from .routes.user_garden_plants import user_garden_plants_bp
 from .routes.garden_types import garden_types_bp
 from .routes.garden_map import garden_map_bp
+from .routes.frost_dates import frost_dates_bp
+from .routes.journal import journal_bp
+from .routes.planting_calendar import planting_calendar_bp
+from .routes.recommendations import recommendations_bp
+from .routes.tasks import tasks_bp
+from .routes.weather_alerts import weather_alerts_bp
+from .models.harvest import Harvest
+from .routes.harvests import harvests_bp
+from .routes.soil import soil_bp
 
 # Load environment variables
 load_dotenv()
@@ -55,6 +65,14 @@ def create_app():
     app.register_blueprint(user_garden_plants_bp, url_prefix="/api/user_garden_plants")
     app.register_blueprint(garden_types_bp, url_prefix="/api")
     app.register_blueprint(garden_map_bp, url_prefix="/api/user_gardens")
+    app.register_blueprint(frost_dates_bp, url_prefix="/api/frost_dates")
+    app.register_blueprint(journal_bp, url_prefix="/api/journal")
+    app.register_blueprint(planting_calendar_bp, url_prefix="/api/planting_calendar")
+    app.register_blueprint(recommendations_bp, url_prefix="/api/recommendations")
+    app.register_blueprint(tasks_bp, url_prefix="/api/tasks")
+    app.register_blueprint(weather_alerts_bp, url_prefix="/api/weather_alerts")
+    app.register_blueprint(harvests_bp, url_prefix="/api/harvests")
+    app.register_blueprint(soil_bp, url_prefix="/api/soil")
     
     @app.route("/")
     def home():

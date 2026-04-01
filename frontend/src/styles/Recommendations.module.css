@@ -1,0 +1,367 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.pageTitle {
+    color: var(--primary-green);
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+}
+
+.zoneBadge {
+    display: inline-block;
+    background-color: var(--primary-green);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-top: 4px;
+}
+
+.errorMessage {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profilePrompt {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.profilePrompt h2 {
+    color: var(--primary-green);
+    margin-bottom: 12px;
+}
+
+.profilePrompt p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.profileLink {
+    display: inline-block;
+    background-color: var(--primary-green);
+    color: white;
+    padding: 10px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.profileLink:hover {
+    background-color: var(--secondary-green);
+    color: white;
+}
+
+/* Seasonal section */
+.sectionTitle {
+    color: var(--primary-green);
+    font-size: 1.5rem;
+    margin: 32px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e8f5e9;
+}
+
+.seasonalGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.seasonalCard {
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.seasonalCard:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.seasonalImage {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background-color: #e8f5e9;
+}
+
+.seasonalInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.seasonalInfo h4 {
+    margin: 0 0 4px;
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+.activityBadge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background-color: #e8f5e9;
+    color: var(--primary-green);
+}
+
+.activityBadge.indoor {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+/* Main recommendations grid */
+.recGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+}
+
+.plantCard {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.plantCard:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+    transform: translateY(-2px);
+}
+
+.plantImageWrapper {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background-color: #e8f5e9;
+}
+
+.plantImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.plantImagePlaceholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 3rem;
+}
+
+.scoreBadge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--primary-green);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.plantBody {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.plantName {
+    margin: 0 0 2px;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+.scientificName {
+    font-style: italic;
+    color: #888;
+    font-size: 0.85rem;
+    margin: 0 0 12px;
+}
+
+/* Score bar */
+.scoreBarWrapper {
+    margin-bottom: 12px;
+}
+
+.scoreBarTrack {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.scoreBarFill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.scoreBarLabel {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 4px;
+    text-align: right;
+}
+
+/* Reasons and warnings */
+.matchList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+}
+
+.matchList li {
+    font-size: 0.85rem;
+    padding: 3px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.matchList li::before {
+    flex-shrink: 0;
+    font-size: 0.85rem;
+}
+
+.reason {
+    color: #2e7d32;
+}
+
+.reason::before {
+    content: "\2713";
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.warning {
+    color: #f57f17;
+}
+
+.warning::before {
+    content: "\26A0";
+    color: #f57f17;
+}
+
+/* Growing details */
+.growingDetails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.detailTag {
+    font-size: 0.78rem;
+    padding: 4px 10px;
+    border-radius: 14px;
+    background-color: #f5f5f5;
+    color: #555;
+    white-space: nowrap;
+}
+
+/* Actions */
+.cardActions {
+    margin-top: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.viewButton,
+.gardenButton {
+    flex: 1;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.viewButton {
+    background-color: #e8f5e9;
+    color: var(--primary-green);
+}
+
+.viewButton:hover {
+    background-color: #c8e6c9;
+}
+
+.gardenButton {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+.gardenButton:hover {
+    background-color: var(--secondary-green);
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+    font-size: 1.1rem;
+}
+
+/* Empty state */
+.emptyState {
+    text-align: center;
+    padding: 40px 20px;
+    color: #888;
+}
+
+@media (max-width: 768px) {
+    .recGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .seasonalGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .pageTitle {
+        font-size: 1.6rem;
+    }
+}

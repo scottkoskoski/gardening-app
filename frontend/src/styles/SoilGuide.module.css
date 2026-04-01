@@ -1,0 +1,421 @@
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.pageTitle {
+    color: var(--primary-green);
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: var(--text-dark);
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+.loading {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.errorMessage {
+    color: #c62828;
+    text-align: center;
+    padding: 16px;
+    background: #ffebee;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Profile prompt */
+.profilePrompt {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--background-cream);
+    border-radius: 12px;
+    border: 2px dashed var(--accent-brown);
+}
+
+.profilePrompt h2 {
+    color: var(--primary-green);
+    margin-bottom: 12px;
+}
+
+.profilePrompt p {
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+
+.profileLink {
+    display: inline-block;
+    background: var(--primary-green);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.profileLink:hover {
+    background: var(--secondary-green);
+}
+
+/* pH Scale Visualization */
+.phScaleSection {
+    margin-bottom: 32px;
+    padding: 24px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.phScaleSection h2 {
+    color: var(--primary-green);
+    margin-bottom: 16px;
+    font-size: 1.3rem;
+}
+
+.phScaleWrapper {
+    position: relative;
+    padding: 30px 0 20px;
+}
+
+.phScaleBar {
+    height: 28px;
+    border-radius: 14px;
+    background: linear-gradient(
+        to right,
+        #d32f2f 0%,
+        #ef6c00 15%,
+        #f9a825 25%,
+        #c0ca33 35%,
+        #4caf50 42%,
+        #2e7d32 50%,
+        #4caf50 57%,
+        #c0ca33 65%,
+        #f9a825 75%,
+        #ef6c00 85%,
+        #d32f2f 100%
+    );
+    position: relative;
+}
+
+.phScaleLabels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+    padding: 0 2px;
+}
+
+.phMarker {
+    position: absolute;
+    top: -8px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+.phMarkerArrow {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 14px solid var(--text-dark);
+}
+
+.phMarkerLabel {
+    background: var(--text-dark);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+    white-space: nowrap;
+}
+
+.phValue {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-green);
+    margin-bottom: 4px;
+}
+
+.overallStatus {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.statusOptimal {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.statusAcceptable {
+    background: #fff8e1;
+    color: #f57f17;
+}
+
+.statusNeedsAttention {
+    background: #fbe9e7;
+    color: #d84315;
+}
+
+.statusNoPlants {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+/* Section titles */
+.sectionTitle {
+    color: var(--primary-green);
+    font-size: 1.3rem;
+    margin: 28px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--secondary-green);
+}
+
+/* Plant analysis cards */
+.plantGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.plantCard {
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    border-left: 4px solid #ccc;
+}
+
+.plantCardOptimal {
+    border-left-color: #4caf50;
+}
+
+.plantCardAcceptable {
+    border-left-color: #fbc02d;
+}
+
+.plantCardTooAcidic {
+    border-left-color: #ef6c00;
+}
+
+.plantCardTooAlkaline {
+    border-left-color: #7b1fa2;
+}
+
+.plantCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.plantName {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.gardenLabel {
+    font-size: 0.8rem;
+    color: var(--text-dark);
+    opacity: 0.6;
+}
+
+.statusBadge {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badgeOptimal {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badgeAcceptable {
+    background: #fff8e1;
+    color: #f57f17;
+}
+
+.badgeTooAcidic {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.badgeTooAlkaline {
+    background: #f3e5f5;
+    color: #6a1b9a;
+}
+
+.phRange {
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    opacity: 0.8;
+    margin-bottom: 6px;
+}
+
+.recommendation {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    background: var(--background-cream);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+/* Amendment cards */
+.amendmentList {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.amendmentCard {
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.amendmentName {
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: var(--primary-green);
+    margin-bottom: 6px;
+}
+
+.amendmentAction {
+    font-size: 0.85rem;
+    color: var(--secondary-green);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.amendmentDetail {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin: 4px 0;
+}
+
+.amendmentDetail strong {
+    color: var(--primary-green);
+}
+
+.forPlants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.plantTag {
+    background: var(--background-cream);
+    color: var(--accent-brown);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Tips */
+.tipsList {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 28px;
+}
+
+.tipsList li {
+    padding: 10px 14px;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    border-left: 3px solid var(--secondary-green);
+}
+
+/* Reference table */
+.referenceSection {
+    margin-top: 36px;
+}
+
+.referenceTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.referenceTable th {
+    background: var(--primary-green);
+    color: #fff;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.referenceTable td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.referenceTable tr:last-child td {
+    border-bottom: none;
+}
+
+.referenceTable tr:hover td {
+    background: var(--background-cream);
+}
+
+/* Empty / no plants */
+.emptyState {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--background-cream);
+    border-radius: 12px;
+    color: var(--text-dark);
+    margin-bottom: 28px;
+}
+
+.emptyState p {
+    margin-bottom: 12px;
+}
+
+.gardenLink {
+    color: var(--primary-green);
+    font-weight: bold;
+    text-decoration: underline;
+}

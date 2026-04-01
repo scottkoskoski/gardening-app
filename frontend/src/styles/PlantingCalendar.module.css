@@ -1,0 +1,402 @@
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.pageTitle {
+    color: var(--primary-green);
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 2.2rem;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 24px;
+    font-size: 1rem;
+}
+
+.errorMessage {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Zone selector */
+.zoneSelector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.zoneSelector label {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.zoneSelect {
+    padding: 8px 16px;
+    border: 2px solid var(--primary-green);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-dark);
+    background: white;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.zoneSelect:focus {
+    border-color: var(--secondary-green);
+    box-shadow: 0 0 0 3px rgba(79, 121, 66, 0.15);
+}
+
+.userZoneBadge {
+    display: inline-block;
+    background-color: var(--primary-green);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+
+/* Current month summary */
+.currentMonthSummary {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    color: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 12px rgba(79, 121, 66, 0.25);
+}
+
+.currentMonthSummary h2 {
+    margin: 0 0 16px 0;
+    font-size: 1.5rem;
+}
+
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.summaryCategory {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.summaryCategoryTitle {
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    opacity: 0.9;
+}
+
+.summaryPlantList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.summaryPlantList li {
+    padding: 2px 0;
+    font-size: 0.95rem;
+}
+
+.noActivities {
+    opacity: 0.8;
+    font-style: italic;
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 28px;
+    padding: 16px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.88rem;
+    color: var(--text-dark);
+}
+
+.legendColor {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+/* Calendar grid */
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 6px;
+    margin-bottom: 32px;
+}
+
+.monthColumn {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    min-width: 0;
+    transition: box-shadow 0.2s;
+}
+
+.monthColumn:hover {
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.currentMonth {
+    box-shadow: 0 0 0 3px var(--primary-green), 0 4px 12px rgba(79, 121, 66, 0.2);
+}
+
+.monthHeader {
+    background-color: var(--background-cream);
+    padding: 10px 8px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--text-dark);
+    border-bottom: 2px solid #eee;
+}
+
+.currentMonth .monthHeader {
+    background: var(--primary-green);
+    color: white;
+    border-bottom-color: var(--primary-green);
+}
+
+.monthBody {
+    padding: 6px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Activity bars */
+.activityBar {
+    display: block;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    line-height: 1.3;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.activityBar:hover {
+    opacity: 0.85;
+    transform: scale(1.03);
+    color: white;
+}
+
+.categoryPlanning {
+    background-color: #9e9e9e;
+}
+
+.categoryStartIndoors {
+    background-color: #9c27b0;
+}
+
+.categoryDirectSow {
+    background-color: #4caf50;
+}
+
+.categoryTransplant {
+    background-color: #2196f3;
+}
+
+.categoryHarvest {
+    background-color: #ff9800;
+}
+
+.categoryMaintenance {
+    background-color: #795548;
+}
+
+.activityPlant {
+    font-weight: 600;
+}
+
+.activityLabel {
+    opacity: 0.9;
+    font-size: 0.62rem;
+}
+
+/* Empty month */
+.emptyMonth {
+    color: #bbb;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 20px 4px;
+    font-style: italic;
+}
+
+/* Mobile: single month view */
+.mobileNav {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.mobileNavButton {
+    background: var(--primary-green);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.mobileNavButton:hover {
+    background: var(--secondary-green);
+}
+
+.mobileNavButton:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.mobileMonthName {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    min-width: 140px;
+    text-align: center;
+}
+
+.mobileCalendar {
+    display: none;
+}
+
+.mobileMonthCard {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.mobileMonthHeader {
+    background-color: var(--background-cream);
+    padding: 14px 16px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    border-bottom: 2px solid #eee;
+}
+
+.mobileCurrentMonth .mobileMonthHeader {
+    background: var(--primary-green);
+    color: white;
+}
+
+.mobileMonthBody {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mobileActivityBar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.mobileActivityBar:hover {
+    opacity: 0.9;
+    color: white;
+}
+
+.mobileActivityPlant {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.mobileActivityLabel {
+    font-size: 0.82rem;
+    opacity: 0.9;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1200px) {
+    .calendarGrid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .calendarGrid {
+        display: none;
+    }
+
+    .mobileNav {
+        display: flex;
+    }
+
+    .mobileCalendar {
+        display: block;
+    }
+
+    .summaryGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .legend {
+        gap: 10px;
+    }
+
+    .pageTitle {
+        font-size: 1.6rem;
+    }
+}

@@ -12,11 +12,16 @@ const Navbar = () => {
         <nav className={styles["navbar"]}>
             <div className={styles["nav-links"]}>
                 <Link to="/">Home</Link>
+                <Link to="/calendar">Calendar</Link>
                 {auth.isAuthenticated && (
                     <>
                         <Link to="/dashboard">Dashboard</Link>
+                        <Link to="/recommendations">Recommendations</Link>
                         <Link to="/profile">Profile</Link>
                         <Link to="/gardens">Gardens</Link>
+                        <Link to="/tasks">Tasks</Link>
+                        <Link to="/harvests">Harvests</Link>
+                        <Link to="/soil">Soil</Link>
                     </>
                 )}
                 {auth.isAuthenticated ? (

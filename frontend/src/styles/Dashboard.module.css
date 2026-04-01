@@ -134,6 +134,42 @@
     color: white;
 }
 
+/* Task alert in garden summary */
+.taskAlert {
+    margin-top: 14px;
+    padding: 10px 16px;
+    background-color: #fff3e0;
+    border-radius: 8px;
+    border-left: 4px solid #d32f2f;
+    font-size: 0.9rem;
+}
+
+.taskAlertLink {
+    color: var(--text-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.taskAlertLink:hover {
+    text-decoration: underline;
+    color: #d32f2f;
+}
+
+.taskAlertBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d32f2f;
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+}
+
 /* Garden list styles */
 .gardenList {
     display: flex;
