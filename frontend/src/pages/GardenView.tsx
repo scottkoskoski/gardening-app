@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import api from "../services/api";
 import styles from "../styles/GardenView.module.css";
@@ -434,6 +435,12 @@ const GardenView = () => {
                             <div className={styles.gardenHeader}>
                                 <h2>{garden.garden_name}</h2>
                                 <div className={styles.gardenActions}>
+                                    <Link
+                                        to={`/gardens/${garden.id}/map`}
+                                        className={styles.addButton}
+                                    >
+                                        Map
+                                    </Link>
                                     <button
                                         onClick={() =>
                                             toggleAddPlantForm(garden.id)

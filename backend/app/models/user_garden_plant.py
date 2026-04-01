@@ -40,7 +40,11 @@ class UserGardenPlantSchema(Schema):
         by_value=True,
         default=GrowthStage.SEEDLING
     )
-    
+
+    # Grid position for garden map placement
+    row = fields.Integer(required=False, allow_none=True)
+    col = fields.Integer(required=False, allow_none=True)
+
     @validates("expected_harvest_date")
     def validate_harvest_date(self, value):
         """Validates that expected harvest date is in the future."""
@@ -49,7 +53,7 @@ class UserGardenPlantSchema(Schema):
     
     class Meta:
         """Meta options for UserGardenPlantSchema."""
-        fields = ("id", "garden_id", "plant_id", "planted_at", "expected_harvest_date", "growth_stage")
+        fields = ("id", "garden_id", "plant_id", "planted_at", "expected_harvest_date", "growth_stage", "row", "col")
 
 class UserGardenPlant(db.Model):
     __tablename__ = "user_garden_plant"
@@ -60,7 +64,11 @@ class UserGardenPlant(db.Model):
     planted_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     expected_harvest_date = db.Column(db.DateTime, nullable=True)
     growth_stage = db.Column(db.Enum(GrowthStage), nullable=False, default=GrowthStage.SEEDLING)
-    
+
+    # Grid position for garden map placement (nullable = not yet placed on map)
+    row = db.Column(db.Integer, nullable=True)
+    col = db.Column(db.Integer, nullable=True)
+
     garden = db.relationship("UserGarden", backref="garden_plants", lazy="joined")
     plant = db.relationship("Plant", backref="plant_gardens")
     

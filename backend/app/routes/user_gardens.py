@@ -93,7 +93,9 @@ def get_user_gardens():
                 "plant_id": gp.plant_id,
                 "plant_name": gp.plant.name,
                 "growth_stage": gp.growth_stage.value,
-                "expected_harvest_date": gp.expected_harvest_date.isoformat() if gp.expected_harvest_date else None
+                "expected_harvest_date": gp.expected_harvest_date.isoformat() if gp.expected_harvest_date else None,
+                "row": gp.row,
+                "col": gp.col
             })
 
         garden_dict = {
@@ -110,6 +112,8 @@ def get_user_gardens():
             "plant_hardiness_zone": garden.plant_hardiness_zone,
             "preferred_plants": garden.preferred_plants.split(",") if garden.preferred_plants else [],
             "current_plants": garden.current_plants.split(",") if garden.current_plants else [],
+            "grid_rows": garden.grid_rows or 8,
+            "grid_cols": garden.grid_cols or 10,
             "garden_plants": garden_plants
         }
         garden_list.append(garden_dict)
