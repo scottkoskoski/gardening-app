@@ -14,6 +14,7 @@ const Navbar = () => {
                 <Link to="/">Home</Link>
                 {auth.isAuthenticated && (
                     <>
+                        <Link to="/dashboard">Dashboard</Link>
                         <Link to="/profile">Profile</Link>
                         <Link to="/gardens">Gardens</Link>
                     </>

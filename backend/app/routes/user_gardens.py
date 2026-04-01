@@ -83,29 +83,37 @@ def get_user_gardens():
     user_id = get_jwt_identity()
     gardens = UserGarden.query.filter_by(user_id=user_id).all()
     
-    # Using schema to serialize the gardens
-    result = gardens_schema.dump(gardens)
-    
-    # Processing comma-separated plants back into lists
     garden_list = []
-    for garden in result:
+    for garden in gardens:
+        # Serialize garden plants
+        garden_plants = []
+        for gp in garden.garden_plants:
+            garden_plants.append({
+                "id": gp.id,
+                "plant_id": gp.plant_id,
+                "plant_name": gp.plant.name,
+                "growth_stage": gp.growth_stage.value,
+                "expected_harvest_date": gp.expected_harvest_date.isoformat() if gp.expected_harvest_date else None
+            })
+
         garden_dict = {
-            "id": garden["id"],
-            "gardenName": garden["garden_name"],
-            "gardenType": garden.get("garden_type_name", None),
-            "isCommunityGarden": garden["is_community_garden"],
-            "isRooftopGarden": garden["is_rooftop_garden"],
-            "gardenSize": garden["garden_size"],
-            "gardenDimensions": garden["garden_dimensions"],
-            "soilType": garden["soil_type"],
-            "waterSource": garden["water_source"],
-            "pestProtection": garden["pest_protection"],
-            "plantHardinessZone": garden["plant_hardiness_zone"],
-            "preferredPlants": garden["preferred_plants"].split(",") if garden.get("preferred_plants") else [],
-            "currentPlants": garden["current_plants"].split(",") if garden.get("current_plants") else []
+            "id": garden.id,
+            "garden_name": garden.garden_name,
+            "garden_type": garden.garden_type.name.value if garden.garden_type else None,
+            "is_community_garden": garden.is_community_garden,
+            "is_rooftop_garden": garden.is_rooftop_garden,
+            "garden_size": garden.garden_size,
+            "garden_dimensions": garden.garden_dimensions,
+            "soil_type": garden.soil_type,
+            "water_source": garden.water_source,
+            "pest_protection": garden.pest_protection,
+            "plant_hardiness_zone": garden.plant_hardiness_zone,
+            "preferred_plants": garden.preferred_plants.split(",") if garden.preferred_plants else [],
+            "current_plants": garden.current_plants.split(",") if garden.current_plants else [],
+            "garden_plants": garden_plants
         }
         garden_list.append(garden_dict)
-    
+
     return jsonify(garden_list), 200
     
 
@@ -119,26 +127,34 @@ def get_garden_by_id(garden_id):
     if not garden:
         return jsonify({"error": "Garden not found"}), 404
     
-    # Using schema to serialize the garden
-    result = garden_schema.dump(garden)
-    
-    # Converting to camelCase for frontend and handling plant lists
+    # Serialize garden plants
+    garden_plants = []
+    for gp in garden.garden_plants:
+        garden_plants.append({
+            "id": gp.id,
+            "plant_id": gp.plant_id,
+            "plant_name": gp.plant.name,
+            "growth_stage": gp.growth_stage.value,
+            "expected_harvest_date": gp.expected_harvest_date.isoformat() if gp.expected_harvest_date else None
+        })
+
     garden_data = {
-        "id": result["id"],
-        "gardenName": result["garden_name"],
-        "gardenType": result.get("garden_type_name", None),
-        "isCommunityGarden": result["is_community_garden"],
-        "isRooftopGarden": result["is_rooftop_garden"],
-        "gardenSize": result["garden_size"],
-        "gardenDimensions": result["garden_dimensions"],
-        "soilType": result["soil_type"],
-        "waterSource": result["water_source"],
-        "pestProtection": result["pest_protection"],
-        "plantHardinessZone": result["plant_hardiness_zone"],
-        "preferredPlants": result["preferred_plants"].split(",") if result.get("preferred_plants") else [],
-        "currentPlants": result["current_plants"].split(",") if result.get("current_plants") else []
+        "id": garden.id,
+        "garden_name": garden.garden_name,
+        "garden_type": garden.garden_type.name.value if garden.garden_type else None,
+        "is_community_garden": garden.is_community_garden,
+        "is_rooftop_garden": garden.is_rooftop_garden,
+        "garden_size": garden.garden_size,
+        "garden_dimensions": garden.garden_dimensions,
+        "soil_type": garden.soil_type,
+        "water_source": garden.water_source,
+        "pest_protection": garden.pest_protection,
+        "plant_hardiness_zone": garden.plant_hardiness_zone,
+        "preferred_plants": garden.preferred_plants.split(",") if garden.preferred_plants else [],
+        "current_plants": garden.current_plants.split(",") if garden.current_plants else [],
+        "garden_plants": garden_plants
     }
-    
+
     return jsonify(garden_data), 200
     
 

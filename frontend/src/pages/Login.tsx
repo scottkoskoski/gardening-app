@@ -55,7 +55,7 @@ const Login = () => {
             }
 
             auth.login(data.token);
-            navigate("/"); // Redirect to home after login
+            navigate("/dashboard"); // Redirect to dashboard after login
         } catch (err: any) {
             setError(err?.message || "Something went wrong. Please try again.");
         } finally {
