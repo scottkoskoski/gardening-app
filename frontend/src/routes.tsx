@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import GardenView from "./pages/GardenView";
+import Dashboard from "./pages/Dashboard";
 
 const AppRoutes = () => (
     <Routes>
@@ -27,12 +28,11 @@ const AppRoutes = () => (
                 </ProtectedRoute>
             }
         />
-        {/* Protect future routes */}
         <Route
             path="/dashboard"
             element={
                 <ProtectedRoute>
-                    <h2>Dashboard (Protected)</h2>
+                    <Dashboard />
                 </ProtectedRoute>
             }
         />

@@ -42,8 +42,9 @@ const Profile = () => {
 
     // Handle input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setProfile((prev) => ({ ...prev, [name]: value }));
+        const { name, value, type, checked } = e.target;
+        const newValue = type === "checkbox" ? checked : value;
+        setProfile((prev) => ({ ...prev, [name]: newValue }));
 
         // Fetch plant hardiness zone when zip code changes
         if (name === "zipCode" && value.length === 5) {

@@ -45,6 +45,31 @@ async function post(endpoint: string, body: object, token?: string) {
     }
 }
 
+// Helper function to make PUT requests
+async function put(endpoint: string, body: object, token?: string) {
+    const headers: HeadersInit = { "Content-Type": "application/json" };
+    if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api${endpoint}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `Failed to update ${endpoint}`);
+        }
+        return response.json();
+    } catch (error) {
+        console.error(`API PUT Error (${endpoint}):`, error);
+        throw error;
+    }
+}
+
 // Helper function to make DELETE requests
 async function deleteRequest(endpoint: string, token?: string) {
     const headers: HeadersInit = {};
@@ -106,6 +131,23 @@ async function removePlantFromGarden(plantId: number, token: string) {
     return deleteRequest(`/user_garden_plants/${plantId}`, token);
 }
 
+async function updateGarden(gardenId: number, gardenData: object, token: string) {
+    return put(`/user_gardens/${gardenId}`, gardenData, token);
+}
+
+// Weather API call
+async function getWeather(zip: string) {
+    return get(`/weather/get_weather?zip=${zip}`);
+}
+
+// User API calls
+async function getUser(token: string) {
+    return get("/users/get_user", token);
+}
+
+async function getProfile(token: string) {
+    return get("/users/profile", token);
+}
 
 export default {
     getPlants,
@@ -116,7 +158,12 @@ export default {
     addPlantToGarden,
     deleteGarden,
     removePlantFromGarden,
+    updateGarden,
+    getWeather,
+    getUser,
+    getProfile,
     get,
     post,
+    put,
     deleteRequest,
 };
