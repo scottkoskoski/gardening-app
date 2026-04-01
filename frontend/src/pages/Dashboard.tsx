@@ -29,6 +29,14 @@ type ProfileData = {
     state: string;
 };
 
+type FrostData = {
+    zone: string;
+    last_frost: string | null;
+    first_frost: string | null;
+    growing_season_days: number;
+    year_round: boolean;
+};
+
 const weatherDescriptions: Record<number, string> = {
     0: "Clear sky",
     1: "Mainly clear",
@@ -60,6 +68,7 @@ const Dashboard = () => {
     const [profile, setProfile] = useState<ProfileData | null>(null);
     const [gardens, setGardens] = useState<Garden[]>([]);
     const [weather, setWeather] = useState<WeatherData | null>(null);
+    const [frostData, setFrostData] = useState<FrostData | null>(null);
     const [username, setUsername] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -84,7 +93,7 @@ const Dashboard = () => {
                 const gardensResponse = await api.getUserGardens(token);
                 setGardens(Array.isArray(gardensResponse) ? gardensResponse : []);
 
-                // Fetch weather if zip code exists
+                // Fetch weather and frost dates if zip code exists
                 if (profileResponse.zip_code) {
                     try {
                         const weatherResponse = await api.getWeather(profileResponse.zip_code);
@@ -94,6 +103,13 @@ const Dashboard = () => {
                     } catch {
                         // Weather is non-critical, don't block dashboard
                         console.warn("Could not fetch weather data");
+                    }
+
+                    try {
+                        const frostResponse = await api.getFrostDates(profileResponse.zip_code);
+                        setFrostData(frostResponse);
+                    } catch {
+                        console.warn("Could not fetch frost date data");
                     }
                 }
             } catch (err: any) {
@@ -180,6 +196,51 @@ const Dashboard = () => {
                         <p className={styles.emptyState}>
                             Update your <Link to="/profile">profile</Link> with
                             a ZIP code to see your hardiness zone.
+                        </p>
+                    )}
+                </div>
+
+                {/* Frost Dates Card */}
+                <div className={styles.card}>
+                    <h2 className={styles.cardTitle}>Frost Dates</h2>
+                    {frostData ? (
+                        <div className={styles.zoneContent}>
+                            {frostData.year_round ? (
+                                <p>
+                                    Your area (Zone {frostData.zone}) enjoys
+                                    year-round growing conditions with no
+                                    typical frost dates.
+                                </p>
+                            ) : (
+                                <>
+                                    <p>
+                                        <strong>Last Frost (Spring):</strong>{" "}
+                                        {frostData.last_frost
+                                            ? new Date(frostData.last_frost + "T00:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })
+                                            : "N/A"}
+                                    </p>
+                                    <p>
+                                        <strong>First Frost (Fall):</strong>{" "}
+                                        {frostData.first_frost
+                                            ? new Date(frostData.first_frost + "T00:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })
+                                            : "N/A"}
+                                    </p>
+                                    <p>
+                                        <strong>Growing Season:</strong>{" "}
+                                        {frostData.growing_season_days} days
+                                    </p>
+                                </>
+                            )}
+                        </div>
+                    ) : (
+                        <p className={styles.emptyState}>
+                            {profile?.zip_code
+                                ? "Frost date data unavailable."
+                                : "Set your ZIP code in your "}
+                            {!profile?.zip_code && (
+                                <Link to="/profile">profile</Link>
+                            )}
+                            {!profile?.zip_code && " to see frost dates."}
                         </p>
                     )}
                 </div>

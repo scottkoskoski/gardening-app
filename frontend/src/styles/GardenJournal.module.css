@@ -1,0 +1,365 @@
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    color: var(--primary-green);
+    font-size: 2rem;
+    margin: 0;
+}
+
+.headerActions {
+    display: flex;
+    gap: 10px;
+}
+
+.backLink {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 16px;
+    border: 1px solid var(--primary-green);
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.backLink:hover {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+.newEntryButton {
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.newEntryButton:hover {
+    background-color: var(--secondary-green);
+}
+
+/* Form Styles */
+.formContainer {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.formContainer h2 {
+    color: var(--primary-green);
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.form {
+    display: grid;
+    gap: 15px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.formGroup label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.formGroup textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.formActions {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.submitButton {
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+    background-color: var(--secondary-green);
+}
+
+.cancelButton {
+    background-color: #9e9e9e;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cancelButton:hover {
+    background-color: #757575;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--primary-green);
+    border-radius: 2px;
+}
+
+.timelineEntry {
+    position: relative;
+    margin-bottom: 24px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 18px;
+    transition: box-shadow 0.3s ease;
+}
+
+.timelineEntry:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.timelineEntry::before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 22px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--primary-green);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--primary-green);
+}
+
+.entryHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.entryMeta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.entryDate {
+    color: #757575;
+    font-size: 13px;
+}
+
+.entryTitle {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 4px 0 8px;
+}
+
+.entryNotes {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.entryNotesCollapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.expandButton {
+    background: none;
+    border: none;
+    color: var(--primary-green);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 0;
+    margin-top: 4px;
+}
+
+.expandButton:hover {
+    text-decoration: underline;
+}
+
+.deleteEntryButton {
+    background: none;
+    border: none;
+    color: #d32f2f;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 2px 6px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.deleteEntryButton:hover {
+    background-color: #ffebee;
+}
+
+/* Entry Type Badges */
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: white;
+}
+
+.badgeWatering {
+    background-color: #2196f3;
+}
+
+.badgeFertilizing {
+    background-color: var(--accent-brown);
+}
+
+.badgePruning {
+    background-color: #7b1fa2;
+}
+
+.badgePlanting {
+    background-color: var(--primary-green);
+}
+
+.badgeHarvesting {
+    background-color: #ff9800;
+}
+
+.badgePestControl {
+    background-color: #f44336;
+}
+
+.badgeObservation {
+    background-color: #00897b;
+}
+
+.badgeOther {
+    background-color: #607d8b;
+}
+
+/* Empty State */
+.emptyState {
+    text-align: center;
+    padding: 60px 20px;
+    color: #757575;
+}
+
+.emptyState p {
+    font-size: 18px;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.emptyState span {
+    font-size: 14px;
+}
+
+/* Error */
+.errorMessage {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: #c62828;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .headerActions {
+        width: 100%;
+    }
+
+    .newEntryButton,
+    .backLink {
+        flex: 1;
+        text-align: center;
+    }
+
+    .timeline {
+        padding-left: 24px;
+    }
+
+    .timelineEntry::before {
+        left: -20px;
+        width: 10px;
+        height: 10px;
+    }
+
+    .entryHeader {
+        flex-direction: column;
+        gap: 8px;
+    }
+}

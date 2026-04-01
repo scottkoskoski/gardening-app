@@ -96,8 +96,10 @@ async function deleteRequest(endpoint: string, token?: string) {
 
 
 // Plant-related API calls
-async function getPlants() {
-    return get("/plants/get_plants");
+async function getPlants(filters?: Record<string, string>) {
+    const params = new URLSearchParams(filters || {}).toString();
+    const query = params ? `?${params}` : "";
+    return get(`/plants/get_plants${query}`);
 }
 
 // Fetch plant hardiness zone
@@ -140,6 +142,15 @@ async function getWeather(zip: string) {
     return get(`/weather/get_weather?zip=${zip}`);
 }
 
+// Frost dates API calls
+async function getFrostDates(zip: string) {
+    return get(`/frost_dates?zip=${zip}`);
+}
+
+async function getFrostDatesByZone(zone: string) {
+    return get(`/frost_dates?zone=${zone}`);
+}
+
 // User API calls
 async function getUser(token: string) {
     return get("/users/get_user", token);
@@ -174,6 +185,23 @@ async function getPlantDetails(plantId: number) {
     return get(`/plants/${plantId}`);
 }
 
+// Journal API calls
+async function getJournalEntries(gardenId: number, token: string) {
+    return get(`/journal/${gardenId}`, token);
+}
+
+async function getRecentJournalEntries(gardenId: number, token: string) {
+    return get(`/journal/${gardenId}/recent`, token);
+}
+
+async function createJournalEntry(data: object, token: string) {
+    return post("/journal", data, token);
+}
+
+async function deleteJournalEntry(entryId: number, token: string) {
+    return deleteRequest(`/journal/${entryId}`, token);
+}
+
 export default {
     getPlants,
     getHardinessZone,
@@ -185,6 +213,8 @@ export default {
     removePlantFromGarden,
     updateGarden,
     getWeather,
+    getFrostDates,
+    getFrostDatesByZone,
     getUser,
     getProfile,
     getGardenMap,
@@ -193,6 +223,10 @@ export default {
     removePlantFromMap,
     getPlantMapInfo,
     getPlantDetails,
+    getJournalEntries,
+    getRecentJournalEntries,
+    createJournalEntry,
+    deleteJournalEntry,
     get,
     post,
     put,

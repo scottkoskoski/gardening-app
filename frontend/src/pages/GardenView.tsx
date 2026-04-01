@@ -441,6 +441,12 @@ const GardenView = () => {
                                     >
                                         Map
                                     </Link>
+                                    <Link
+                                        to={`/gardens/${garden.id}/journal`}
+                                        className={styles.addButton}
+                                    >
+                                        Journal
+                                    </Link>
                                     <button
                                         onClick={() =>
                                             toggleAddPlantForm(garden.id)
