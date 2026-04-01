@@ -21,6 +21,10 @@ from .routes.journal import journal_bp
 from .routes.planting_calendar import planting_calendar_bp
 from .routes.recommendations import recommendations_bp
 from .routes.tasks import tasks_bp
+from .routes.weather_alerts import weather_alerts_bp
+from .models.harvest import Harvest
+from .routes.harvests import harvests_bp
+from .routes.soil import soil_bp
 
 # Load environment variables
 load_dotenv()
@@ -66,6 +70,9 @@ def create_app():
     app.register_blueprint(planting_calendar_bp, url_prefix="/api/planting_calendar")
     app.register_blueprint(recommendations_bp, url_prefix="/api/recommendations")
     app.register_blueprint(tasks_bp, url_prefix="/api/tasks")
+    app.register_blueprint(weather_alerts_bp, url_prefix="/api/weather_alerts")
+    app.register_blueprint(harvests_bp, url_prefix="/api/harvests")
+    app.register_blueprint(soil_bp, url_prefix="/api/soil")
     
     @app.route("/")
     def home():

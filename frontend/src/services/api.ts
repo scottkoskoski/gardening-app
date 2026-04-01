@@ -212,6 +212,11 @@ async function getTasks(token: string) {
     return get("/tasks", token);
 }
 
+// Weather alerts API calls
+async function getWeatherAlerts(token: string) {
+    return get("/weather_alerts", token);
+}
+
 // Recommendations API calls
 async function getRecommendations(token: string) {
     return get("/recommendations", token);
@@ -219,6 +224,32 @@ async function getRecommendations(token: string) {
 
 async function getSeasonalRecommendations(token: string) {
     return get("/recommendations/seasonal", token);
+}
+
+// Harvest API calls
+async function logHarvest(data: object, token: string) {
+    return post("/harvests", data, token);
+}
+
+async function getHarvests(gardenId: number, token: string) {
+    return get(`/harvests/${gardenId}`, token);
+}
+
+async function getHarvestSummary(token: string) {
+    return get("/harvests/summary", token);
+}
+
+async function deleteHarvest(harvestId: number, token: string) {
+    return deleteRequest(`/harvests/${harvestId}`, token);
+}
+
+// Soil API calls
+async function getSoilRecommendations(token: string) {
+    return get("/soil/recommendations", token);
+}
+
+async function getPhGuide() {
+    return get("/soil/ph-guide");
 }
 
 export default {
@@ -248,8 +279,15 @@ export default {
     deleteJournalEntry,
     getPlantingCalendar,
     getTasks,
+    getWeatherAlerts,
     getRecommendations,
     getSeasonalRecommendations,
+    logHarvest,
+    getHarvests,
+    getHarvestSummary,
+    deleteHarvest,
+    getSoilRecommendations,
+    getPhGuide,
     get,
     post,
     put,

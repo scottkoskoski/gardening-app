@@ -20,6 +20,8 @@ const Navbar = () => {
                         <Link to="/profile">Profile</Link>
                         <Link to="/gardens">Gardens</Link>
                         <Link to="/tasks">Tasks</Link>
+                        <Link to="/harvests">Harvests</Link>
+                        <Link to="/soil">Soil</Link>
                     </>
                 )}
                 {auth.isAuthenticated ? (

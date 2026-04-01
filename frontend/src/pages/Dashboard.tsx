@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import api from "../services/api";
+import WeatherAlerts from "../components/WeatherAlerts";
 import styles from "../styles/Dashboard.module.css";
 
 type Garden = {
@@ -154,6 +155,8 @@ const Dashboard = () => {
             </h1>
 
             {error && <p className={styles.errorMessage}>{error}</p>}
+
+            {token && <WeatherAlerts token={token} />}
 
             <div className={styles.grid}>
                 {/* Weather Card */}

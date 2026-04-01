@@ -12,6 +12,9 @@ import GardenJournal from "./pages/GardenJournal";
 import PlantingCalendar from "./pages/PlantingCalendar";
 import Recommendations from "./pages/Recommendations";
 import Tasks from "./pages/Tasks";
+import HarvestLog from "./pages/HarvestLog";
+import HarvestSummary from "./pages/HarvestSummary";
+import SoilGuide from "./pages/SoilGuide";
 
 const AppRoutes = () => (
     <Routes>
@@ -73,6 +76,30 @@ const AppRoutes = () => (
             element={
                 <ProtectedRoute>
                     <Tasks />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/harvests"
+            element={
+                <ProtectedRoute>
+                    <HarvestSummary />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/gardens/:gardenId/harvests"
+            element={
+                <ProtectedRoute>
+                    <HarvestLog />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/soil"
+            element={
+                <ProtectedRoute>
+                    <SoilGuide />
                 </ProtectedRoute>
             }
         />
