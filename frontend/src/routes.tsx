@@ -9,10 +9,14 @@ import GardenView from "./pages/GardenView";
 import Dashboard from "./pages/Dashboard";
 import GardenMap from "./pages/GardenMap";
 import GardenJournal from "./pages/GardenJournal";
+import PlantingCalendar from "./pages/PlantingCalendar";
+import Recommendations from "./pages/Recommendations";
+import Tasks from "./pages/Tasks";
 
 const AppRoutes = () => (
     <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/calendar" element={<PlantingCalendar />} />
         <Route path="/plants/:plantId" element={<PlantDetail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -53,6 +57,22 @@ const AppRoutes = () => (
             element={
                 <ProtectedRoute>
                     <Dashboard />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/recommendations"
+            element={
+                <ProtectedRoute>
+                    <Recommendations />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/tasks"
+            element={
+                <ProtectedRoute>
+                    <Tasks />
                 </ProtectedRoute>
             }
         />

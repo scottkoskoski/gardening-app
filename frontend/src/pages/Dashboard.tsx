@@ -70,6 +70,7 @@ const Dashboard = () => {
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [frostData, setFrostData] = useState<FrostData | null>(null);
     const [username, setUsername] = useState("");
+    const [highPriorityTasks, setHighPriorityTasks] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -92,6 +93,16 @@ const Dashboard = () => {
                 // Fetch gardens
                 const gardensResponse = await api.getUserGardens(token);
                 setGardens(Array.isArray(gardensResponse) ? gardensResponse : []);
+
+                // Fetch tasks summary
+                try {
+                    const tasksResponse = await api.getTasks(token);
+                    if (tasksResponse.summary) {
+                        setHighPriorityTasks(tasksResponse.summary.high || 0);
+                    }
+                } catch {
+                    console.warn("Could not fetch tasks data");
+                }
 
                 // Fetch weather and frost dates if zip code exists
                 if (profileResponse.zip_code) {
@@ -275,6 +286,16 @@ const Dashboard = () => {
                             <Link to="/gardens" className={styles.cardLink}>
                                 View Gardens
                             </Link>
+                            {highPriorityTasks > 0 && (
+                                <div className={styles.taskAlert}>
+                                    <Link to="/tasks" className={styles.taskAlertLink}>
+                                        <span className={styles.taskAlertBadge}>
+                                            {highPriorityTasks}
+                                        </span>
+                                        {" "}high-priority {highPriorityTasks === 1 ? "task" : "tasks"} needing attention
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <p className={styles.emptyState}>

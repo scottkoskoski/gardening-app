@@ -18,6 +18,9 @@ from .routes.garden_types import garden_types_bp
 from .routes.garden_map import garden_map_bp
 from .routes.frost_dates import frost_dates_bp
 from .routes.journal import journal_bp
+from .routes.planting_calendar import planting_calendar_bp
+from .routes.recommendations import recommendations_bp
+from .routes.tasks import tasks_bp
 
 # Load environment variables
 load_dotenv()
@@ -60,6 +63,9 @@ def create_app():
     app.register_blueprint(garden_map_bp, url_prefix="/api/user_gardens")
     app.register_blueprint(frost_dates_bp, url_prefix="/api/frost_dates")
     app.register_blueprint(journal_bp, url_prefix="/api/journal")
+    app.register_blueprint(planting_calendar_bp, url_prefix="/api/planting_calendar")
+    app.register_blueprint(recommendations_bp, url_prefix="/api/recommendations")
+    app.register_blueprint(tasks_bp, url_prefix="/api/tasks")
     
     @app.route("/")
     def home():

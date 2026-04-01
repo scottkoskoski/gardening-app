@@ -202,6 +202,25 @@ async function deleteJournalEntry(entryId: number, token: string) {
     return deleteRequest(`/journal/${entryId}`, token);
 }
 
+// Planting calendar API calls
+async function getPlantingCalendar(zone: string) {
+    return get(`/planting_calendar?zone=${zone}`);
+}
+
+// Tasks API calls
+async function getTasks(token: string) {
+    return get("/tasks", token);
+}
+
+// Recommendations API calls
+async function getRecommendations(token: string) {
+    return get("/recommendations", token);
+}
+
+async function getSeasonalRecommendations(token: string) {
+    return get("/recommendations/seasonal", token);
+}
+
 export default {
     getPlants,
     getHardinessZone,
@@ -227,6 +246,10 @@ export default {
     getRecentJournalEntries,
     createJournalEntry,
     deleteJournalEntry,
+    getPlantingCalendar,
+    getTasks,
+    getRecommendations,
+    getSeasonalRecommendations,
     get,
     post,
     put,
