@@ -93,14 +93,13 @@ class PlantSchema(Schema):
     description = fields.String(required=False, allow_none=True)
     image_url = fields.String(
         required=False,
-        allow_none=True,
-        validate=validate.Length(max=255)
+        allow_none=True
     )
 
 class Plant(db.Model):
     """Represents a plant and its growing requirements."""
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), nullable=False, index=True)
     scientific_name = db.Column(db.String(200))
     hardiness_min = db.Column(db.String(10))
     hardiness_max = db.Column(db.String(10))
@@ -119,7 +118,7 @@ class Plant(db.Model):
     row_spacing = db.Column(db.Float) # Row spacing in inches/cm
     height = db.Column(db.Float) # Height in inches/cm
     description = db.Column(db.Text) # Description of the plant
-    image_url = db.Column(db.String(255)) # URL to the plant image
+    image_url = db.Column(db.Text) # URL to the plant image
     
     def __repr__(self):
         return f"<Plant {self.name}>"

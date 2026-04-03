@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-xl);
     width: 100%;
 }
 
@@ -10,42 +10,43 @@
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
-    padding: 1rem 1.25rem;
-    border-radius: 8px;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
     border-left: 4px solid;
     position: relative;
+    animation: fadeInUp 0.3s ease;
 }
 
 .alertCritical {
-    background-color: #ffebee;
-    border-left-color: #d32f2f;
+    background-color: #fef2f2;
+    border-left-color: #dc2626;
 }
 
 .alertWarning {
-    background-color: #fff3e0;
-    border-left-color: #f57c00;
+    background-color: var(--sun-light);
+    border-left-color: var(--terracotta);
 }
 
 .alertInfo {
-    background-color: #e3f2fd;
-    border-left-color: #1976d2;
+    background-color: var(--sky);
+    border-left-color: var(--water-blue);
 }
 
 .alertPositive {
-    background-color: #e8f5e9;
-    border-left-color: #4caf50;
+    background-color: var(--mint);
+    border-left-color: var(--secondary-green);
 }
 
 .severityBadge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     padding: 0.2rem 0.5rem;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     color: #fff;
     white-space: nowrap;
     flex-shrink: 0;
@@ -53,19 +54,19 @@
 }
 
 .badgeCritical {
-    background-color: #d32f2f;
+    background-color: #dc2626;
 }
 
 .badgeWarning {
-    background-color: #f57c00;
+    background-color: var(--terracotta);
 }
 
 .badgeInfo {
-    background-color: #1976d2;
+    background-color: var(--water-blue);
 }
 
 .badgePositive {
-    background-color: #4caf50;
+    background-color: var(--secondary-green);
 }
 
 .alertBody {
@@ -74,17 +75,18 @@
 }
 
 .alertTitle {
-    font-size: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
     font-weight: 600;
-    color: var(--text-dark, #2e2e2e);
+    color: var(--text-dark);
     margin: 0 0 0.25rem 0;
 }
 
 .alertMessage {
-    font-size: 0.9rem;
-    color: var(--text-dark, #2e2e2e);
+    font-size: 0.88rem;
+    color: var(--text-dark);
     margin: 0 0 0.35rem 0;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .affectedPlants {
@@ -95,17 +97,18 @@
 }
 
 .plantTag {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
+    font-weight: 600;
     background-color: rgba(0, 0, 0, 0.06);
-    color: var(--text-dark, #2e2e2e);
+    color: var(--text-dark);
     padding: 0.15rem 0.5rem;
-    border-radius: 12px;
+    border-radius: var(--radius-full);
 }
 
 .alertAction {
     font-size: 0.8rem;
     font-style: italic;
-    color: #666;
+    color: var(--text-muted);
     margin: 0;
 }
 
@@ -115,19 +118,23 @@
     cursor: pointer;
     font-size: 1.25rem;
     line-height: 1;
-    color: #999;
+    color: var(--text-muted);
     padding: 0;
     flex-shrink: 0;
     margin-top: 0.1rem;
-    transition: color 0.15s;
+    transition: color var(--transition-fast);
+    opacity: 0.6;
 }
 
 .dismissButton:hover {
-    color: var(--text-dark, #2e2e2e);
+    color: var(--text-dark);
+    opacity: 1;
+    transform: none;
+    background: none;
 }
 
 .loading {
-    font-size: 0.9rem;
-    color: #888;
-    padding: 0.5rem 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    padding: var(--space-sm) 0;
 }

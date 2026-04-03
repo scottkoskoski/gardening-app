@@ -1,7 +1,28 @@
+/* Page Header */
+.pageHeader {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 50%, var(--primary-green-light) 100%);
+    padding: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.pageHeader::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(149,213,178,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
 .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 20px;
+    padding: var(--space-xl);
+    animation: fadeInUp 0.4s ease;
 }
 
 /* Header */
@@ -9,9 +30,9 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 20px;
+    margin-bottom: var(--space-lg);
     flex-wrap: wrap;
-    gap: 12px;
+    gap: var(--space-md);
 }
 
 .headerLeft {
@@ -21,14 +42,25 @@
 }
 
 .backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
     font-size: 0.9rem;
+    transition: color var(--transition-fast);
+}
+
+.backLink:hover {
     color: var(--primary-green);
 }
 
 .pageTitle {
     margin: 0;
-    font-size: 1.8rem;
-    color: var(--primary-green);
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    color: var(--primary-green-dark);
 }
 
 .headerActions {
@@ -39,38 +71,45 @@
 
 .modeButton,
 .resizeButton {
-    padding: 8px 16px;
-    border: 2px solid var(--primary-green);
-    border-radius: 6px;
-    font-size: 14px;
+    padding: 0.5rem 1rem;
+    border: 1.5px solid var(--primary-green);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-    background-color: white;
+    transition: all var(--transition-fast);
+    background-color: var(--card-white);
     color: var(--primary-green);
 }
 
 .modeButton:hover,
 .resizeButton:hover {
-    background-color: var(--primary-green);
-    color: white;
+    background-color: var(--mint);
     transform: none;
 }
 
 .modeActive {
-    background-color: var(--primary-green);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+    color: white;
+    border-color: transparent;
+}
+
+.modeActive:hover {
+    background: linear-gradient(135deg, var(--primary-green-light) 0%, var(--primary-green) 100%);
     color: white;
 }
 
 /* Error */
 .errorMessage {
-    background-color: #ffebee;
-    color: #c62828;
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 16px;
+    background: #fef2f2;
+    color: #991b1b;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid #fecaca;
 }
 
 .errorMessage p {
@@ -81,21 +120,27 @@
     background: none;
     border: none;
     color: inherit;
-    font-size: 22px;
+    font-size: 1.5rem;
     cursor: pointer;
     padding: 0;
     line-height: 1;
 }
 
+.closeButton:hover {
+    transform: none;
+    background: none;
+}
+
 /* Resize Form */
 .resizeForm {
-    background: white;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    background: var(--card-white);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    margin-bottom: var(--space-lg);
     display: flex;
-    gap: 16px;
+    gap: var(--space-md);
     align-items: flex-end;
     flex-wrap: wrap;
 }
@@ -105,50 +150,64 @@
     flex-direction: column;
     gap: 4px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 0.85rem;
+    color: var(--text-dark);
 }
 
 .resizeForm input {
     width: 80px;
-    padding: 6px 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border-light);
+    font-size: 0.9rem;
+    transition: border-color var(--transition-fast);
+}
+
+.resizeForm input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
 }
 
 .applyButton {
-    background-color: var(--primary-green);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
     color: white;
     border: none;
-    padding: 8px 20px;
-    border-radius: 6px;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    font-size: 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all var(--transition-base);
 }
 
 .applyButton:hover {
-    background-color: var(--secondary-green);
-    transform: none;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
 }
 
 .cancelButton {
-    background-color: #999;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 6px;
+    background: var(--background-warm);
+    color: var(--text-muted);
+    border: 1.5px solid var(--border-light);
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    font-size: 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
 }
 
 .cancelButton:hover {
-    background-color: #777;
+    background: var(--border-light);
+    color: var(--text-dark);
     transform: none;
 }
 
 /* Layout: palette + grid */
 .mapLayout {
     display: flex;
-    gap: 24px;
+    gap: var(--space-xl);
     align-items: flex-start;
 }
 
@@ -156,24 +215,47 @@
 .palette {
     width: 220px;
     flex-shrink: 0;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    padding: 16px;
+    background: var(--card-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    padding: var(--space-lg);
     max-height: calc(100vh - 200px);
     overflow-y: auto;
+    position: sticky;
+    top: 80px;
 }
 
 .paletteTitle {
-    margin: 0 0 8px 0;
-    font-size: 1.2rem;
-    color: var(--primary-green);
+    margin: 0 0 var(--space-sm) 0;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--primary-green-dark);
 }
 
 .paletteHint {
     font-size: 0.8rem;
-    color: #888;
-    margin: 0 0 12px 0;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-md) 0;
+    line-height: 1.5;
+}
+
+.paletteSearch {
+    width: 100%;
+    padding: var(--space-sm) 10px;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-md);
+    background-color: var(--background-cream);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.paletteSearch:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
+    background-color: var(--card-white);
 }
 
 .plantList {
@@ -186,36 +268,36 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 8px 10px;
+    padding: var(--space-sm) 10px;
     border: none;
-    border-left: 4px solid #ccc;
-    background: #f9f9f9;
-    border-radius: 0 6px 6px 0;
+    border-left: 4px solid var(--border-medium);
+    background: var(--background-cream);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     cursor: pointer;
-    transition: background-color 0.15s;
+    transition: background-color var(--transition-fast);
     text-align: left;
     width: 100%;
 }
 
 .plantOption:hover {
-    background-color: #e8f5e9;
+    background-color: var(--mint);
     transform: none;
 }
 
 .plantSelected {
-    background-color: #c8e6c9;
+    background-color: var(--mint);
     border-left-width: 4px;
     font-weight: 600;
 }
 
 .plantName {
-    font-size: 13px;
+    font-size: 0.82rem;
     color: var(--text-dark);
 }
 
 .plantMeta {
-    font-size: 11px;
-    color: #888;
+    font-size: 0.7rem;
+    color: var(--text-muted);
 }
 
 /* Grid */
@@ -227,10 +309,10 @@
 .grid {
     display: grid;
     gap: 2px;
-    background-color: #ddd;
-    border-radius: 8px;
+    background-color: var(--border-medium);
+    border-radius: var(--radius-md);
     overflow: hidden;
-    border: 2px solid #bbb;
+    border: 2px solid var(--border-medium);
 }
 
 .cell {
@@ -239,27 +321,27 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.15s, transform 0.1s;
+    transition: background-color var(--transition-fast), transform 0.1s;
     position: relative;
     min-width: 0;
     min-height: 40px;
 }
 
 .cellEmpty {
-    background-color: #f0ead6;
+    background-color: var(--background-warm);
 }
 
 .cellEmpty:hover {
-    background-color: #e5dfc5;
+    background-color: var(--border-light);
 }
 
 .cellPlaceable {
-    background-color: #e8f5e9;
-    border: 1px dashed #81c784;
+    background-color: var(--mint);
+    border: 1px dashed var(--sage);
 }
 
 .cellPlaceable:hover {
-    background-color: #c8e6c9;
+    background-color: var(--sage);
 }
 
 .cellOccupied {
@@ -295,9 +377,9 @@
 .gridLegend {
     display: flex;
     justify-content: space-between;
-    padding: 8px 4px;
+    padding: var(--space-sm) 4px;
     font-size: 0.85rem;
-    color: #888;
+    color: var(--text-muted);
 }
 
 /* Info Panel (Modal) */
@@ -314,104 +396,121 @@
     padding-top: 60px;
     z-index: 200;
     overflow-y: auto;
+    animation: fadeIn 0.2s ease;
 }
 
 .infoPanel {
-    background: white;
-    border-radius: 12px;
-    padding: 28px;
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
     width: 90%;
     max-width: 550px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-xl);
     margin-bottom: 40px;
+    animation: fadeInUp 0.3s ease;
 }
 
 .infoPanelHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-sm);
 }
 
 .infoPanelHeader h2 {
     margin: 0;
-    color: var(--primary-green);
-    font-size: 1.6rem;
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
+    font-size: 1.5rem;
 }
 
 .scientificName {
-    color: #888;
-    margin: 0 0 16px 0;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: 0 0 var(--space-lg) 0;
 }
 
 .plantImage {
     width: 100%;
     max-height: 250px;
     object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 16px;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-lg);
 }
 
 .description {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 16px;
+    color: var(--text-dark);
+    line-height: 1.7;
+    margin-bottom: var(--space-lg);
+    font-size: 0.92rem;
 }
 
 .infoSection {
-    margin-bottom: 20px;
+    margin-bottom: var(--space-lg);
 }
 
 .infoSection h3 {
-    color: var(--primary-green);
-    font-size: 1.1rem;
-    margin: 0 0 10px 0;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #e8f5e9;
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
+    font-size: 1.05rem;
+    margin: 0 0 var(--space-sm) 0;
+    padding-bottom: var(--space-xs);
+    border-bottom: 2px solid var(--mint);
 }
 
 .detailsGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: var(--space-sm);
 }
 
 .detailItem {
     display: flex;
     flex-direction: column;
+    padding: var(--space-sm);
+    background: var(--background-cream);
+    border-radius: var(--radius-sm);
 }
 
 .detailLabel {
-    font-size: 0.8rem;
-    color: #888;
+    font-size: 0.7rem;
+    color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.06em;
+    font-weight: 700;
 }
 
 .detailValue {
     font-weight: 600;
     color: var(--text-dark);
+    font-size: 0.92rem;
 }
 
 .spacingList {
     margin: 0;
     padding-left: 20px;
-    color: #555;
+    color: var(--text-dark);
 }
 
 .spacingList li {
     margin-bottom: 4px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.spacingList li::marker {
+    color: var(--secondary-green);
 }
 
 /* Companion planting */
 .companionGroup {
-    margin-bottom: 12px;
+    margin-bottom: var(--space-md);
 }
 
 .companionLabel {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #555;
+    color: var(--text-dark);
     display: block;
     margin-bottom: 6px;
 }
@@ -423,55 +522,61 @@
 }
 
 .tagGood {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
+    background-color: var(--mint);
+    color: var(--primary-green-dark);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: 1px solid var(--sage);
 }
 
 .tagBad {
-    background-color: #ffebee;
-    color: #c62828;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
+    background-color: #fef2f2;
+    color: #991b1b;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: 1px solid #fecaca;
 }
 
 .noCompanions {
-    color: #888;
+    color: var(--text-muted);
     font-style: italic;
+    font-size: 0.9rem;
 }
 
 .companionTip {
-    font-size: 0.9rem;
-    color: #555;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 6px;
-    border-left: 3px solid var(--primary-green);
-    margin-top: 8px;
+    font-size: 0.88rem;
+    color: var(--text-dark);
+    background-color: var(--sun-light);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--sun-yellow);
+    margin-top: var(--space-sm);
+    line-height: 1.5;
 }
 
 /* Remove button */
 .removeButton {
     display: block;
     width: 100%;
-    padding: 12px;
-    background-color: #d32f2f;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
+    padding: 0.75rem;
+    background: transparent;
+    color: var(--coral);
+    border: 1.5px solid var(--coral);
+    border-radius: var(--radius-md);
+    font-size: 0.92rem;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 8px;
-    transition: background-color 0.2s;
+    margin-top: var(--space-sm);
+    transition: all var(--transition-fast);
 }
 
 .removeButton:hover {
-    background-color: #b71c1c;
+    background: var(--coral);
+    color: white;
     transform: none;
 }
 
@@ -484,6 +589,7 @@
     .palette {
         width: 100%;
         max-height: none;
+        position: static;
     }
 
     .plantList {
@@ -505,5 +611,13 @@
 
     .detailsGrid {
         grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: var(--space-md);
+    }
+
+    .pageTitle {
+        font-size: 1.4rem;
     }
 }

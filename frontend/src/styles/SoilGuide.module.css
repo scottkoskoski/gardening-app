@@ -1,88 +1,123 @@
+/* Page Header */
+.pageHeader {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 50%, var(--primary-green-light) 100%);
+    padding: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.pageHeader::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(149,213,178,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
 .container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 30px 20px;
+    padding: var(--space-xl);
+    animation: fadeInUp 0.4s ease;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: var(--space-xl);
 }
 
 .pageTitle {
-    color: var(--primary-green);
+    font-family: var(--font-serif);
+    color: white;
     font-size: 2rem;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-sm);
+    position: relative;
+    z-index: 1;
 }
 
 .subtitle {
-    color: var(--text-dark);
-    font-size: 1rem;
-    opacity: 0.7;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
+    margin: 0;
 }
 
 .loading {
     text-align: center;
-    padding: 60px 20px;
-    font-size: 1.1rem;
-    color: var(--text-dark);
+    padding: var(--space-3xl) var(--space-xl);
+    font-size: 1rem;
+    color: var(--text-muted);
 }
 
 .errorMessage {
-    color: #c62828;
+    background: #fef2f2;
+    color: #991b1b;
     text-align: center;
-    padding: 16px;
-    background: #ffebee;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
+    border: 1px solid #fecaca;
 }
 
 /* Profile prompt */
 .profilePrompt {
     text-align: center;
-    padding: 40px 20px;
-    background: var(--background-cream);
-    border-radius: 12px;
-    border: 2px dashed var(--accent-brown);
+    padding: var(--space-3xl) var(--space-xl);
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
+    border: 2px dashed var(--border-medium);
+    box-shadow: var(--shadow-sm);
 }
 
 .profilePrompt h2 {
-    color: var(--primary-green);
-    margin-bottom: 12px;
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
+    margin-bottom: var(--space-md);
 }
 
 .profilePrompt p {
-    color: var(--text-dark);
-    margin-bottom: 20px;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xl);
+    line-height: 1.6;
 }
 
 .profileLink {
     display: inline-block;
-    background: var(--primary-green);
-    color: #fff;
-    padding: 10px 24px;
-    border-radius: 6px;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+    color: white;
+    padding: 0.7rem 1.75rem;
+    border-radius: var(--radius-full);
     text-decoration: none;
-    font-weight: bold;
-    transition: background 0.3s;
+    font-weight: 600;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
 }
 
 .profileLink:hover {
-    background: var(--secondary-green);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: white;
 }
 
 /* pH Scale Visualization */
 .phScaleSection {
-    margin-bottom: 32px;
-    padding: 24px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: var(--space-xl);
+    padding: var(--space-xl);
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
 }
 
 .phScaleSection h2 {
-    color: var(--primary-green);
-    margin-bottom: 16px;
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
+    margin-bottom: var(--space-md);
     font-size: 1.3rem;
 }
 
@@ -116,8 +151,7 @@
     justify-content: space-between;
     margin-top: 6px;
     font-size: 0.75rem;
-    color: var(--text-dark);
-    opacity: 0.7;
+    color: var(--text-muted);
     padding: 0 2px;
 }
 
@@ -141,86 +175,94 @@
 
 .phMarkerLabel {
     background: var(--text-dark);
-    color: #fff;
+    color: white;
     padding: 2px 8px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-size: 0.85rem;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 4px;
     white-space: nowrap;
 }
 
 .phValue {
+    font-family: var(--font-serif);
     font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary-green);
+    font-weight: 700;
+    color: var(--primary-green-dark);
     margin-bottom: 4px;
 }
 
 .overallStatus {
     display: inline-block;
     padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: var(--space-md);
 }
 
 .statusOptimal {
-    background: #e8f5e9;
-    color: #2e7d32;
+    background: var(--mint);
+    color: var(--primary-green-dark);
 }
 
 .statusAcceptable {
-    background: #fff8e1;
-    color: #f57f17;
+    background: var(--sun-light);
+    color: #92400e;
 }
 
 .statusNeedsAttention {
-    background: #fbe9e7;
-    color: #d84315;
+    background: var(--peach);
+    color: var(--bark);
 }
 
 .statusNoPlants {
-    background: #e3f2fd;
-    color: #1565c0;
+    background: var(--sky);
+    color: #1e4f6e;
 }
 
 /* Section titles */
 .sectionTitle {
-    color: var(--primary-green);
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
     font-size: 1.3rem;
-    margin: 28px 0 16px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--secondary-green);
+    margin: var(--space-xl) 0 var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--mint);
 }
 
 /* Plant analysis cards */
 .plantGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    margin-bottom: 28px;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
 }
 
 .plantCard {
-    background: #fff;
-    border-radius: 10px;
-    padding: 18px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-    border-left: 4px solid #ccc;
+    background: var(--card-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--border-medium);
+    transition: all var(--transition-base);
+}
+
+.plantCard:hover {
+    box-shadow: var(--shadow-md);
 }
 
 .plantCardOptimal {
-    border-left-color: #4caf50;
+    border-left-color: var(--secondary-green);
 }
 
 .plantCardAcceptable {
-    border-left-color: #fbc02d;
+    border-left-color: var(--sun-yellow);
 }
 
 .plantCardTooAcidic {
-    border-left-color: #ef6c00;
+    border-left-color: var(--terracotta);
 }
 
 .plantCardTooAlkaline {
@@ -231,42 +273,42 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 10px;
+    margin-bottom: var(--space-sm);
 }
 
 .plantName {
-    font-size: 1.1rem;
-    font-weight: bold;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 600;
     color: var(--text-dark);
 }
 
 .gardenLabel {
-    font-size: 0.8rem;
-    color: var(--text-dark);
-    opacity: 0.6;
+    font-size: 0.78rem;
+    color: var(--text-muted);
 }
 
 .statusBadge {
     padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.72rem;
     font-weight: 600;
     white-space: nowrap;
 }
 
 .badgeOptimal {
-    background: #e8f5e9;
-    color: #2e7d32;
+    background: var(--mint);
+    color: var(--primary-green-dark);
 }
 
 .badgeAcceptable {
-    background: #fff8e1;
-    color: #f57f17;
+    background: var(--sun-light);
+    color: #92400e;
 }
 
 .badgeTooAcidic {
-    background: #fff3e0;
-    color: #e65100;
+    background: var(--peach);
+    color: var(--bark);
 }
 
 .badgeTooAlkaline {
@@ -276,39 +318,41 @@
 
 .phRange {
     font-size: 0.85rem;
-    color: var(--text-dark);
-    opacity: 0.8;
+    color: var(--text-muted);
     margin-bottom: 6px;
 }
 
 .recommendation {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--text-dark);
     background: var(--background-cream);
-    padding: 8px 12px;
-    border-radius: 6px;
-    margin-top: 8px;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-sm);
+    line-height: 1.5;
 }
 
 /* Amendment cards */
 .amendmentList {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    margin-bottom: 28px;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
 }
 
 .amendmentCard {
-    background: #fff;
-    border-radius: 10px;
-    padding: 18px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    background: var(--card-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
 }
 
 .amendmentName {
+    font-family: var(--font-serif);
     font-size: 1.05rem;
-    font-weight: bold;
-    color: var(--primary-green);
+    font-weight: 600;
+    color: var(--primary-green-dark);
     margin-bottom: 6px;
 }
 
@@ -316,32 +360,33 @@
     font-size: 0.85rem;
     color: var(--secondary-green);
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-sm);
 }
 
 .amendmentDetail {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--text-dark);
     margin: 4px 0;
+    line-height: 1.5;
 }
 
 .amendmentDetail strong {
-    color: var(--primary-green);
+    color: var(--primary-green-dark);
 }
 
 .forPlants {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin-top: 8px;
+    margin-top: var(--space-sm);
 }
 
 .plantTag {
-    background: var(--background-cream);
-    color: var(--accent-brown);
+    background: var(--background-warm);
+    color: var(--soil);
     padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
     font-weight: 600;
 }
 
@@ -349,46 +394,49 @@
 .tipsList {
     list-style: none;
     padding: 0;
-    margin-bottom: 28px;
+    margin-bottom: var(--space-xl);
 }
 
 .tipsList li {
-    padding: 10px 14px;
-    background: #fff;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-    font-size: 0.95rem;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--card-white);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-sm);
+    box-shadow: var(--shadow-sm);
+    font-size: 0.92rem;
     color: var(--text-dark);
     border-left: 3px solid var(--secondary-green);
+    line-height: 1.5;
 }
 
 /* Reference table */
 .referenceSection {
-    margin-top: 36px;
+    margin-top: var(--space-2xl);
 }
 
 .referenceTable {
     width: 100%;
     border-collapse: collapse;
-    background: #fff;
-    border-radius: 10px;
+    background: var(--card-white);
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
 }
 
 .referenceTable th {
-    background: var(--primary-green);
-    color: #fff;
-    padding: 12px 16px;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+    color: white;
+    padding: var(--space-sm) var(--space-md);
     text-align: left;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
 .referenceTable td {
-    padding: 10px 16px;
-    border-bottom: 1px solid #eee;
-    font-size: 0.9rem;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.88rem;
     color: var(--text-dark);
 }
 
@@ -403,19 +451,41 @@
 /* Empty / no plants */
 .emptyState {
     text-align: center;
-    padding: 40px 20px;
-    background: var(--background-cream);
-    border-radius: 12px;
-    color: var(--text-dark);
-    margin-bottom: 28px;
+    padding: var(--space-3xl) var(--space-xl);
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-light);
+    color: var(--text-muted);
+    margin-bottom: var(--space-xl);
 }
 
 .emptyState p {
-    margin-bottom: 12px;
+    margin-bottom: var(--space-md);
+    line-height: 1.6;
 }
 
 .gardenLink {
     color: var(--primary-green);
-    font-weight: bold;
+    font-weight: 600;
     text-decoration: underline;
+    text-decoration-color: var(--sage);
+    text-underline-offset: 2px;
+}
+
+.gardenLink:hover {
+    text-decoration-color: var(--primary-green);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: var(--space-md);
+    }
+
+    .pageTitle {
+        font-size: 1.6rem;
+    }
+
+    .plantGrid {
+        grid-template-columns: 1fr;
+    }
 }

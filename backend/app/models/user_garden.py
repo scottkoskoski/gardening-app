@@ -94,7 +94,7 @@ class UserGarden(db.Model):
     
     # Primary key and user association
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), index=True)
     
     # Garden identification and classification
     garden_name = db.Column(db.String(100))

@@ -68,27 +68,47 @@ const HarvestSummary = () => {
 
     if (loading) {
         return (
-            <div className={styles.container}>
-                <p className={styles.noData}>Loading harvest summary...</p>
-            </div>
+            <>
+                <div className={styles.pageHeader}>
+                    <h1 className={styles.pageTitle}>Harvest Summary</h1>
+                    <p className={styles.pageSubtitle}>Track your garden's productivity</p>
+                </div>
+                <div className={styles.container}>
+                    <div style={{ display: "flex", gap: "var(--space-lg)", marginBottom: "var(--space-xl)" }}>
+                        {[1, 2, 3].map((i) => (
+                            <div key={i} className="skeleton" style={{ height: "100px", flex: 1, borderRadius: "var(--radius-xl)" }} />
+                        ))}
+                    </div>
+                </div>
+            </>
         );
     }
 
     if (error) {
         return (
-            <div className={styles.container}>
-                <h1 className={styles.pageTitle}>Harvest Summary</h1>
-                <p className={styles.noData}>{error}</p>
-            </div>
+            <>
+                <div className={styles.pageHeader}>
+                    <h1 className={styles.pageTitle}>Harvest Summary</h1>
+                    <p className={styles.pageSubtitle}>Track your garden's productivity</p>
+                </div>
+                <div className={styles.container}>
+                    <p className={styles.noData}>{error}</p>
+                </div>
+            </>
         );
     }
 
     if (!summary) {
         return (
-            <div className={styles.container}>
-                <h1 className={styles.pageTitle}>Harvest Summary</h1>
-                <p className={styles.noData}>No harvest data available.</p>
-            </div>
+            <>
+                <div className={styles.pageHeader}>
+                    <h1 className={styles.pageTitle}>Harvest Summary</h1>
+                    <p className={styles.pageSubtitle}>Track your garden's productivity</p>
+                </div>
+                <div className={styles.container}>
+                    <p className={styles.noData}>No harvest data available.</p>
+                </div>
+            </>
         );
     }
 
@@ -113,8 +133,12 @@ const HarvestSummary = () => {
             : 1;
 
     return (
-        <div className={styles.container}>
+        <>
+        <div className={styles.pageHeader}>
             <h1 className={styles.pageTitle}>Harvest Summary</h1>
+            <p className={styles.pageSubtitle}>Track your garden's productivity</p>
+        </div>
+        <div className={styles.container}>
 
             {/* Summary Stats */}
             <div className={styles.statsRow}>
@@ -244,6 +268,7 @@ const HarvestSummary = () => {
                 </div>
             )}
         </div>
+        </>
     );
 };
 

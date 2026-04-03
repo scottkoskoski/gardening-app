@@ -95,38 +95,57 @@ const Recommendations = () => {
 
     if (loading) {
         return (
-            <div className={styles.container}>
-                <p className={styles.loading}>Loading recommendations...</p>
-            </div>
+            <>
+                <div className={styles.pageHeader}>
+                    <h1 className={styles.pageTitle}>Recommended for You</h1>
+                    <p className={styles.pageSubtitle}>Personalized plant suggestions for your garden</p>
+                </div>
+                <div className={styles.container}>
+                    <div className="skeleton" style={{ height: "1.5rem", width: "200px", marginBottom: "var(--space-lg)" }} />
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "var(--space-md)" }}>
+                        {[1, 2, 3].map((i) => (
+                            <div key={i} className="skeleton" style={{ height: "80px", borderRadius: "var(--radius-lg)" }} />
+                        ))}
+                    </div>
+                </div>
+            </>
         );
     }
 
     if (profileIncomplete) {
         return (
-            <div className={styles.container}>
-                <div className={styles.header}>
+            <>
+                <div className={styles.pageHeader}>
                     <h1 className={styles.pageTitle}>Recommended for You</h1>
+                    <p className={styles.pageSubtitle}>Personalized plant suggestions for your garden</p>
                 </div>
-                <div className={styles.profilePrompt}>
-                    <h2>Complete Your Profile</h2>
-                    <p>
-                        We need your ZIP code and hardiness zone to provide
-                        personalized plant recommendations.
-                    </p>
-                    <Link to="/profile" className={styles.profileLink}>
-                        Go to Profile
-                    </Link>
+                <div className={styles.container}>
+                    <div className={styles.profilePrompt}>
+                        <h2>Complete Your Profile</h2>
+                        <p>
+                            We need your ZIP code and hardiness zone to provide
+                            personalized plant recommendations.
+                        </p>
+                        <Link to="/profile" className={styles.profileLink}>
+                            Go to Profile
+                        </Link>
+                    </div>
                 </div>
-            </div>
+            </>
         );
     }
 
     return (
+        <>
+        <div className={styles.pageHeader}>
+            <h1 className={styles.pageTitle}>Recommended for You</h1>
+            <p className={styles.pageSubtitle}>
+                Personalized plant suggestions for your garden
+                {zone ? ` in Zone ${zone}` : ""}
+            </p>
+            {zone && <span className={styles.zoneBadge}>Zone {zone}</span>}
+        </div>
         <div className={styles.container}>
-            <div className={styles.header}>
-                <h1 className={styles.pageTitle}>Recommended for You</h1>
-                {zone && <span className={styles.zoneBadge}>Zone {zone}</span>}
-            </div>
 
             {error && <p className={styles.errorMessage}>{error}</p>}
 
@@ -138,35 +157,7 @@ const Recommendations = () => {
                     </h2>
                     <div className={styles.seasonalGrid}>
                         {seasonal.map((plant) => (
-                            <Link
-                                key={plant.plant_id}
-                                to={`/plants/${plant.plant_id}`}
-                                className={styles.seasonalCard}
-                            >
-                                {plant.image_url ? (
-                                    <img
-                                        src={plant.image_url}
-                                        alt={plant.name}
-                                        className={styles.seasonalImage}
-                                    />
-                                ) : (
-                                    <div className={styles.seasonalImage} />
-                                )}
-                                <div className={styles.seasonalInfo}>
-                                    <h4>{plant.name}</h4>
-                                    {plant.activity && (
-                                        <span
-                                            className={`${styles.activityBadge} ${
-                                                plant.activity === "Start indoors"
-                                                    ? styles.indoor
-                                                    : ""
-                                            }`}
-                                        >
-                                            {plant.activity}
-                                        </span>
-                                    )}
-                                </div>
-                            </Link>
+                            <SeasonalCard key={plant.plant_id} plant={plant} />
                         ))}
                     </div>
                 </>
@@ -176,121 +167,181 @@ const Recommendations = () => {
             <h2 className={styles.sectionTitle}>Personalized Recommendations</h2>
             {recommendations.length > 0 ? (
                 <div className={styles.recGrid}>
-                    {recommendations.map((plant) => {
-                        const pct = Math.round(
-                            (plant.score / plant.max_score) * 100
-                        );
-                        return (
-                            <div key={plant.plant_id} className={styles.plantCard}>
-                                <div className={styles.plantImageWrapper}>
-                                    {plant.image_url ? (
-                                        <img
-                                            src={plant.image_url}
-                                            alt={plant.name}
-                                            className={styles.plantImage}
-                                        />
-                                    ) : (
-                                        <div className={styles.plantImagePlaceholder}>
-                                            🌱
-                                        </div>
-                                    )}
-                                    <div className={styles.scoreBadge}>
-                                        {pct}% match
-                                    </div>
-                                </div>
-
-                                <div className={styles.plantBody}>
-                                    <h3 className={styles.plantName}>
-                                        {plant.name}
-                                    </h3>
-                                    {plant.scientific_name && (
-                                        <p className={styles.scientificName}>
-                                            {plant.scientific_name}
-                                        </p>
-                                    )}
-
-                                    {/* Score bar */}
-                                    <div className={styles.scoreBarWrapper}>
-                                        <div className={styles.scoreBarTrack}>
-                                            <div
-                                                className={styles.scoreBarFill}
-                                                style={{
-                                                    width: `${pct}%`,
-                                                    backgroundColor: scoreColor(
-                                                        plant.score,
-                                                        plant.max_score
-                                                    ),
-                                                }}
-                                            />
-                                        </div>
-                                        <div className={styles.scoreBarLabel}>
-                                            {plant.score}/{plant.max_score} pts
-                                        </div>
-                                    </div>
-
-                                    {/* Reasons and warnings */}
-                                    <ul className={styles.matchList}>
-                                        {plant.reasons.map((r, i) => (
-                                            <li key={`r-${i}`} className={styles.reason}>
-                                                {r}
-                                            </li>
-                                        ))}
-                                        {plant.warnings.map((w, i) => (
-                                            <li key={`w-${i}`} className={styles.warning}>
-                                                {w}
-                                            </li>
-                                        ))}
-                                    </ul>
-
-                                    {/* Growing details */}
-                                    <div className={styles.growingDetails}>
-                                        {plant.growing_season && (
-                                            <span className={styles.detailTag}>
-                                                {plant.growing_season}
-                                            </span>
-                                        )}
-                                        {plant.sunlight && (
-                                            <span className={styles.detailTag}>
-                                                {plant.sunlight}
-                                            </span>
-                                        )}
-                                        {plant.water_needs && (
-                                            <span className={styles.detailTag}>
-                                                Water: {plant.water_needs}
-                                            </span>
-                                        )}
-                                        {plant.space_required && (
-                                            <span className={styles.detailTag}>
-                                                Space: {plant.space_required}
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    {/* Actions */}
-                                    <div className={styles.cardActions}>
-                                        <Link
-                                            to={`/plants/${plant.plant_id}`}
-                                            className={styles.viewButton}
-                                        >
-                                            View Details
-                                        </Link>
-                                        <Link
-                                            to="/gardens"
-                                            className={styles.gardenButton}
-                                        >
-                                            Add to Garden
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
+                    {recommendations.map((plant) => (
+                        <RecPlantCard
+                            key={plant.plant_id}
+                            plant={plant}
+                            scoreColor={scoreColor}
+                        />
+                    ))}
                 </div>
             ) : (
                 <div className={styles.emptyState}>
                     <p>No recommendations available yet. Check back soon!</p>
                 </div>
             )}
+        </div>
+        </>
+    );
+};
+
+const PlaceholderIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="32" height="32" style={{ opacity: 0.5 }}>
+        <path d="M7 20h10" />
+        <path d="M12 20v-6" />
+        <path d="M12 14c-3 0-5.5-2.5-5.5-5.5C6.5 5 9 3 12 3s5.5 2 5.5 5.5C17.5 11.5 15 14 12 14z" />
+    </svg>
+);
+
+const SeasonalCard = ({ plant }: { plant: PlantRecommendation }) => {
+    const [imgError, setImgError] = useState(false);
+
+    return (
+        <Link
+            to={`/plants/${plant.plant_id}`}
+            className={styles.seasonalCard}
+        >
+            {plant.image_url && !imgError ? (
+                <img
+                    src={plant.image_url}
+                    alt={plant.name}
+                    className={styles.seasonalImage}
+                    onError={() => setImgError(true)}
+                />
+            ) : (
+                <div className={styles.seasonalImagePlaceholder}>
+                    <PlaceholderIcon />
+                </div>
+            )}
+            <div className={styles.seasonalInfo}>
+                <h4>{plant.name}</h4>
+                {plant.activity && (
+                    <span
+                        className={`${styles.activityBadge} ${
+                            plant.activity === "Start indoors"
+                                ? styles.indoor
+                                : ""
+                        }`}
+                    >
+                        {plant.activity}
+                    </span>
+                )}
+            </div>
+        </Link>
+    );
+};
+
+const RecPlantCard = ({
+    plant,
+    scoreColor,
+}: {
+    plant: PlantRecommendation;
+    scoreColor: (score: number, maxScore: number) => string;
+}) => {
+    const [imgError, setImgError] = useState(false);
+    const pct = Math.round((plant.score / plant.max_score) * 100);
+
+    return (
+        <div className={styles.plantCard}>
+            <div className={styles.plantImageWrapper}>
+                {plant.image_url && !imgError ? (
+                    <img
+                        src={plant.image_url}
+                        alt={plant.name}
+                        className={styles.plantImage}
+                        onError={() => setImgError(true)}
+                    />
+                ) : (
+                    <div className={styles.plantImagePlaceholder}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="48" height="48" style={{ opacity: 0.4 }}>
+                            <path d="M7 20h10" />
+                            <path d="M12 20v-6" />
+                            <path d="M12 14c-3 0-5.5-2.5-5.5-5.5C6.5 5 9 3 12 3s5.5 2 5.5 5.5C17.5 11.5 15 14 12 14z" />
+                        </svg>
+                    </div>
+                )}
+                <div className={styles.scoreBadge}>
+                    {pct}% match
+                </div>
+            </div>
+
+            <div className={styles.plantBody}>
+                <h3 className={styles.plantName}>{plant.name}</h3>
+                {plant.scientific_name && (
+                    <p className={styles.scientificName}>
+                        {plant.scientific_name}
+                    </p>
+                )}
+
+                <div className={styles.scoreBarWrapper}>
+                    <div className={styles.scoreBarTrack}>
+                        <div
+                            className={styles.scoreBarFill}
+                            style={{
+                                width: `${pct}%`,
+                                backgroundColor: scoreColor(
+                                    plant.score,
+                                    plant.max_score
+                                ),
+                            }}
+                        />
+                    </div>
+                    <div className={styles.scoreBarLabel}>
+                        {plant.score}/{plant.max_score} pts
+                    </div>
+                </div>
+
+                <ul className={styles.matchList}>
+                    {plant.reasons.map((r, i) => (
+                        <li key={`r-${i}`} className={styles.reason}>
+                            {r}
+                        </li>
+                    ))}
+                    {plant.warnings.map((w, i) => (
+                        <li key={`w-${i}`} className={styles.warning}>
+                            {w}
+                        </li>
+                    ))}
+                </ul>
+
+                <div className={styles.growingDetails}>
+                    {plant.growing_season && (
+                        <span className={styles.detailTag}>
+                            {plant.growing_season}
+                        </span>
+                    )}
+                    {plant.sunlight && (
+                        <span className={styles.detailTag}>
+                            {plant.sunlight}
+                        </span>
+                    )}
+                    {plant.water_needs && (
+                        <span className={styles.detailTag}>
+                            Water: {plant.water_needs}
+                        </span>
+                    )}
+                    {plant.space_required && (
+                        <span className={styles.detailTag}>
+                            Space: {plant.space_required}
+                        </span>
+                    )}
+                </div>
+
+                <div className={styles.cardActions}>
+                    <Link
+                        to={`/plants/${plant.plant_id}`}
+                        className={styles.viewButton}
+                    >
+                        View Details
+                    </Link>
+                    <Link
+                        to="/gardens"
+                        className={styles.gardenButton}
+                    >
+                        Add to Garden
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 };

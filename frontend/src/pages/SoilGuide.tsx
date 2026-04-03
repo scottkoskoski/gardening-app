@@ -154,20 +154,26 @@ const SoilGuide = () => {
 
     if (loading) {
         return (
-            <div className={styles.container}>
-                <p className={styles.loading}>Loading soil guide...</p>
-            </div>
+            <>
+                <div className={styles.pageHeader}>
+                    <h1 className={styles.pageTitle}>Soil Amendment Guide</h1>
+                    <p className={styles.subtitle}>Optimize your soil pH for healthier plants</p>
+                </div>
+                <div className={styles.container}>
+                    <div className="skeleton" style={{ height: "200px", borderRadius: "var(--radius-xl)", marginBottom: "var(--space-lg)" }} />
+                    <div className="skeleton" style={{ height: "120px", borderRadius: "var(--radius-xl)" }} />
+                </div>
+            </>
         );
     }
 
     return (
+        <>
+        <div className={styles.pageHeader}>
+            <h1 className={styles.pageTitle}>Soil Amendment Guide</h1>
+            <p className={styles.subtitle}>Optimize your soil pH for healthier plants</p>
+        </div>
         <div className={styles.container}>
-            <div className={styles.header}>
-                <h1 className={styles.pageTitle}>Soil Amendment Guide</h1>
-                <p className={styles.subtitle}>
-                    Optimize your soil pH for healthier plants
-                </p>
-            </div>
 
             {error && <p className={styles.errorMessage}>{error}</p>}
 
@@ -408,6 +414,7 @@ const SoilGuide = () => {
                 </div>
             )}
         </div>
+        </>
     );
 };
 

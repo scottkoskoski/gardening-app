@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import GoogleSignInButton from "../components/GoogleSignInButton";
 import styles from "../styles/Login.module.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -64,43 +65,61 @@ const Login = () => {
     };
 
     return (
-        <div className={styles["login-container"]}>
-            <h2>Login</h2>
-            {error && <p className={styles["error-message"]}>{error}</p>}
-            <form onSubmit={handleLogin} className={styles["login-form"]}>
-                <label>Username:</label>
-                <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
+        <div className={styles.pageWrapper}>
+            <div className={styles["login-container"]}>
+                <h2>Welcome Back</h2>
+                <p className={styles.subtitle}>Sign in to manage your gardens</p>
+                {error && <p className={styles["error-message"]}>{error}</p>}
+                <form onSubmit={handleLogin} className={styles["login-form"]}>
+                    <label htmlFor="login-username">Username</label>
+                    <input
+                        id="login-username"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Enter your username"
+                        required
+                    />
 
-                <label>Password:</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
+                    <label htmlFor="login-password">Password</label>
+                    <input
+                        id="login-password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter your password"
+                        required
+                    />
 
-                <button
-                    type="submit"
-                    className={styles["login-button"]}
-                    disabled={loading}
-                >
-                    {loading ? "Loading..." : "Login"}
-                </button>
-            </form>
+                    <button
+                        type="submit"
+                        className={styles["login-button"]}
+                        disabled={loading}
+                    >
+                        {loading ? "Signing in..." : "Sign In"}
+                    </button>
+                </form>
 
-            <div className={styles.linkContainer}>
-                <p>
-                    <Link to="/">Back to Home</Link>
-                </p>
-                <p>
-                    Don't have an account?{" "}
-                    <Link to="/register">Register here</Link>
-                </p>
+                <div className={styles.divider}>
+                    <span>or</span>
+                </div>
+
+                <div className={styles.googleButtonWrapper}>
+                    <GoogleSignInButton
+                        onError={(msg) => setError(msg)}
+                        text="signin_with"
+                    />
+                </div>
+
+                <div className={styles.linkContainer}>
+                    <p>
+                        Don't have an account?{" "}
+                        <Link to="/register">Create one</Link>
+                    </p>
+                    <p>
+                        <Link to="/">Back to Plant Catalog</Link>
+                    </p>
+                </div>
             </div>
         </div>
     );

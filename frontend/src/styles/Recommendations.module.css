@@ -1,114 +1,175 @@
+/* Page Header */
+.pageHeader {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 50%, var(--primary-green-light) 100%);
+    padding: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.pageHeader::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(149,213,178,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: var(--space-xl);
+    animation: fadeInUp 0.4s ease;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: var(--space-xl);
 }
 
 .pageTitle {
-    color: var(--primary-green);
-    font-size: 2.2rem;
-    margin-bottom: 8px;
+    font-family: var(--font-serif);
+    color: white;
+    font-size: 2rem;
+    margin-bottom: var(--space-sm);
+    position: relative;
+    z-index: 1;
+}
+
+.pageSubtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
+    margin: 0;
 }
 
 .zoneBadge {
     display: inline-block;
-    background-color: var(--primary-green);
+    background: rgba(255, 255, 255, 0.2);
     color: white;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
     padding: 6px 18px;
-    border-radius: 50px;
-    margin-top: 4px;
+    border-radius: var(--radius-full);
+    margin-top: var(--space-sm);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 1;
 }
 
 .errorMessage {
-    background-color: #ffebee;
-    color: #c62828;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    background: #fef2f2;
+    color: #991b1b;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
     text-align: center;
+    border: 1px solid #fecaca;
 }
 
 .profilePrompt {
-    background: white;
-    border-radius: 12px;
-    padding: 40px;
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-3xl);
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .profilePrompt h2 {
-    color: var(--primary-green);
-    margin-bottom: 12px;
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
+    margin-bottom: var(--space-md);
 }
 
 .profilePrompt p {
-    color: #666;
-    margin-bottom: 20px;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xl);
+    line-height: 1.6;
 }
 
 .profileLink {
     display: inline-block;
-    background-color: var(--primary-green);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
     color: white;
-    padding: 10px 24px;
-    border-radius: 8px;
+    padding: 0.7rem 1.75rem;
+    border-radius: var(--radius-full);
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    font-weight: 600;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
 }
 
 .profileLink:hover {
-    background-color: var(--secondary-green);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
     color: white;
 }
 
 /* Seasonal section */
 .sectionTitle {
-    color: var(--primary-green);
-    font-size: 1.5rem;
-    margin: 32px 0 16px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #e8f5e9;
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
+    font-size: 1.35rem;
+    margin: var(--space-xl) 0 var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--mint);
 }
 
 .seasonalGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    margin-bottom: 32px;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
 }
 
 .seasonalCard {
-    background: white;
-    border-radius: 10px;
-    padding: 16px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    background: var(--card-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
     display: flex;
     align-items: center;
     gap: 14px;
-    transition: box-shadow 0.3s ease;
+    transition: all var(--transition-base);
     cursor: pointer;
     text-decoration: none;
     color: inherit;
 }
 
 .seasonalCard:hover {
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: var(--sage);
+    color: inherit;
 }
 
 .seasonalImage {
     width: 60px;
     height: 60px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     object-fit: cover;
     flex-shrink: 0;
-    background-color: #e8f5e9;
+    background: linear-gradient(135deg, var(--mint) 0%, var(--background-warm) 100%);
+}
+
+.seasonalImagePlaceholder {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--mint) 0%, var(--background-warm) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-green-light);
 }
 
 .seasonalInfo {
@@ -119,44 +180,47 @@
 .seasonalInfo h4 {
     margin: 0 0 4px;
     color: var(--text-dark);
+    font-family: var(--font-serif);
     font-size: 1rem;
+    font-weight: 600;
 }
 
 .activityBadge {
     display: inline-block;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     padding: 3px 10px;
-    border-radius: 12px;
-    background-color: #e8f5e9;
-    color: var(--primary-green);
+    border-radius: var(--radius-full);
+    background-color: var(--mint);
+    color: var(--primary-green-dark);
 }
 
 .activityBadge.indoor {
-    background-color: #fff3e0;
-    color: #e65100;
+    background-color: var(--sun-light);
+    color: #92400e;
 }
 
 /* Main recommendations grid */
 .recGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 24px;
+    gap: var(--space-lg);
 }
 
 .plantCard {
-    background: white;
-    border-radius: 12px;
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-base);
     display: flex;
     flex-direction: column;
 }
 
 .plantCard:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
-    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
 }
 
 .plantImageWrapper {
@@ -164,13 +228,18 @@
     width: 100%;
     height: 180px;
     overflow: hidden;
-    background-color: #e8f5e9;
+    background: linear-gradient(135deg, var(--mint) 0%, var(--background-warm) 100%);
 }
 
 .plantImage {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.plantCard:hover .plantImage {
+    transform: scale(1.05);
 }
 
 .plantImagePlaceholder {
@@ -179,7 +248,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #aaa;
+    color: var(--primary-green-light);
     font-size: 3rem;
 }
 
@@ -188,16 +257,17 @@
     top: 12px;
     right: 12px;
     background: rgba(255, 255, 255, 0.95);
-    border-radius: 8px;
-    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    padding: 6px 14px;
     font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--primary-green);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    font-size: 0.85rem;
+    color: var(--primary-green-dark);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(4px);
 }
 
 .plantBody {
-    padding: 16px;
+    padding: var(--space-md) var(--space-lg);
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -205,39 +275,41 @@
 
 .plantName {
     margin: 0 0 2px;
-    font-size: 1.2rem;
-    color: var(--text-dark);
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--primary-green-dark);
+    font-weight: 600;
 }
 
 .scientificName {
     font-style: italic;
-    color: #888;
+    color: var(--text-muted);
     font-size: 0.85rem;
-    margin: 0 0 12px;
+    margin: 0 0 var(--space-md);
 }
 
 /* Score bar */
 .scoreBarWrapper {
-    margin-bottom: 12px;
+    margin-bottom: var(--space-md);
 }
 
 .scoreBarTrack {
     width: 100%;
     height: 8px;
-    background-color: #e0e0e0;
-    border-radius: 4px;
+    background-color: var(--background-warm);
+    border-radius: var(--radius-full);
     overflow: hidden;
 }
 
 .scoreBarFill {
     height: 100%;
-    border-radius: 4px;
+    border-radius: var(--radius-full);
     transition: width 0.5s ease;
 }
 
 .scoreBarLabel {
-    font-size: 0.8rem;
-    color: #888;
+    font-size: 0.78rem;
+    color: var(--text-muted);
     margin-top: 4px;
     text-align: right;
 }
@@ -246,7 +318,7 @@
 .matchList {
     list-style: none;
     padding: 0;
-    margin: 0 0 12px;
+    margin: 0 0 var(--space-md);
 }
 
 .matchList li {
@@ -263,39 +335,41 @@
 }
 
 .reason {
-    color: #2e7d32;
+    color: var(--primary-green-dark);
 }
 
 .reason::before {
     content: "\2713";
-    color: #2e7d32;
+    color: var(--secondary-green);
     font-weight: bold;
 }
 
 .warning {
-    color: #f57f17;
+    color: #92400e;
 }
 
 .warning::before {
     content: "\26A0";
-    color: #f57f17;
+    color: var(--terracotta);
 }
 
 /* Growing details */
 .growingDetails {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 14px;
+    gap: 6px;
+    margin-bottom: var(--space-md);
 }
 
 .detailTag {
-    font-size: 0.78rem;
-    padding: 4px 10px;
-    border-radius: 14px;
-    background-color: #f5f5f5;
-    color: #555;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    background-color: var(--background-warm);
+    color: var(--text-muted);
     white-space: nowrap;
+    letter-spacing: 0.02em;
 }
 
 /* Actions */
@@ -308,48 +382,55 @@
 .viewButton,
 .gardenButton {
     flex: 1;
-    padding: 8px 14px;
-    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius-md);
     text-align: center;
     font-size: 0.85rem;
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all var(--transition-base);
     border: none;
 }
 
 .viewButton {
-    background-color: #e8f5e9;
-    color: var(--primary-green);
+    background-color: var(--mint);
+    color: var(--primary-green-dark);
 }
 
 .viewButton:hover {
-    background-color: #c8e6c9;
+    background-color: var(--sage);
 }
 
 .gardenButton {
-    background-color: var(--primary-green);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
     color: white;
 }
 
 .gardenButton:hover {
-    background-color: var(--secondary-green);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    color: white;
 }
 
 /* Loading */
 .loading {
     text-align: center;
-    padding: 60px 20px;
-    color: #888;
-    font-size: 1.1rem;
+    padding: var(--space-3xl) var(--space-xl);
+    color: var(--text-muted);
+    font-size: 1rem;
 }
 
 /* Empty state */
 .emptyState {
     text-align: center;
-    padding: 40px 20px;
-    color: #888;
+    padding: var(--space-3xl) var(--space-xl);
+    color: var(--text-muted);
+}
+
+.emptyState p {
+    font-size: 1.05rem;
+    line-height: 1.6;
 }
 
 @media (max-width: 768px) {
@@ -363,5 +444,9 @@
 
     .pageTitle {
         font-size: 1.6rem;
+    }
+
+    .container {
+        padding: var(--space-md);
     }
 }

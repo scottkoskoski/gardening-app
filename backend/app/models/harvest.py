@@ -45,10 +45,10 @@ class Harvest(db.Model):
     __tablename__ = "harvest"
 
     id = db.Column(db.Integer, primary_key=True)
-    garden_id = db.Column(db.Integer, db.ForeignKey("user_garden.id"), nullable=False)
-    plant_id = db.Column(db.Integer, db.ForeignKey("plant.id"), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    harvest_date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    garden_id = db.Column(db.Integer, db.ForeignKey("user_garden.id"), nullable=False, index=True)
+    plant_id = db.Column(db.Integer, db.ForeignKey("plant.id"), nullable=False, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, index=True)
+    harvest_date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), index=True)
     quantity = db.Column(db.Float, nullable=False)
     unit = db.Column(db.String(20), nullable=False)
     quality = db.Column(db.String(20), nullable=True)

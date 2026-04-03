@@ -1,3 +1,4 @@
+import logging
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from marshmallow import ValidationError
@@ -9,6 +10,7 @@ from ..models.user_garden import UserGarden
 from ..models.plant import Plant
 
 harvests_bp = Blueprint("harvests", __name__)
+logger = logging.getLogger(__name__)
 
 harvest_schema = HarvestSchema()
 harvests_schema = HarvestSchema(many=True)
@@ -62,7 +64,8 @@ def log_harvest():
         return jsonify({"error": "Validation error", "details": err.messages}), 422
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
+        logger.error("Error logging harvest: %s", e, exc_info=True)
+        return jsonify({"error": "An unexpected error occurred."}), 500
 
 
 @harvests_bp.route("/<int:garden_id>", methods=["GET"])
@@ -180,4 +183,5 @@ def delete_harvest(harvest_id):
         return jsonify({"message": "Harvest deleted successfully"}), 200
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": f"Failed to delete harvest: {str(e)}"}), 500
+        logger.error("Error deleting harvest_id=%s: %s", harvest_id, e, exc_info=True)
+        return jsonify({"error": "Failed to delete harvest."}), 500

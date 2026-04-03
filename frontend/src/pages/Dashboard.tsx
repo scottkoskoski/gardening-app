@@ -142,17 +142,35 @@ const Dashboard = () => {
 
     if (loading) {
         return (
-            <div className={styles.container}>
-                <p>Loading dashboard...</p>
-            </div>
+            <>
+                <div className={styles.dashboardHeader}>
+                    <h1 className={styles.pageTitle}>Welcome back!</h1>
+                    <p className={styles.pageSubtitle}>Loading your garden data...</p>
+                </div>
+                <div className={styles.container}>
+                    <div className={styles.grid}>
+                        {[1, 2, 3, 4].map((i) => (
+                            <div key={i} className={styles.card}>
+                                <div className="skeleton" style={{ height: "1.2rem", width: "50%", marginBottom: "var(--space-md)" }} />
+                                <div className="skeleton" style={{ height: "3rem", width: "60%", margin: "0 auto var(--space-sm)" }} />
+                                <div className="skeleton" style={{ height: "0.9rem", width: "80%", margin: "0 auto" }} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </>
         );
     }
 
     return (
-        <div className={styles.container}>
+        <>
+        <div className={styles.dashboardHeader}>
             <h1 className={styles.pageTitle}>
                 Welcome back{username ? `, ${username}` : ""}!
             </h1>
+            <p className={styles.pageSubtitle}>Here's what's happening in your garden</p>
+        </div>
+        <div className={styles.container}>
 
             {error && <p className={styles.errorMessage}>{error}</p>}
 
@@ -344,6 +362,7 @@ const Dashboard = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

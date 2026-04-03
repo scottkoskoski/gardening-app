@@ -1,41 +1,76 @@
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+/* Dashboard Header */
+.dashboardHeader {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 50%, var(--primary-green-light) 100%);
+    padding: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboardHeader::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(149,213,178,0.12) 0%, transparent 70%);
+    border-radius: 50%;
 }
 
 .pageTitle {
-    color: var(--primary-green);
+    font-family: var(--font-serif);
+    color: white;
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 2.2rem;
+    margin-bottom: var(--space-sm);
+    font-size: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.pageSubtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-xl);
+    animation: fadeInUp 0.4s ease;
 }
 
 .errorMessage {
-    background-color: #ffebee;
-    color: #c62828;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    background: #fef2f2;
+    color: #991b1b;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
     text-align: center;
+    border: 1px solid #fecaca;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 24px;
+    gap: var(--space-lg);
 }
 
 .card {
-    background: white;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.3s ease;
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    transition: box-shadow var(--transition-base), transform var(--transition-base);
 }
 
 .card:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .wideCard {
@@ -43,54 +78,59 @@
 }
 
 .cardTitle {
-    color: var(--primary-green);
-    font-size: 1.3rem;
-    margin: 0 0 16px 0;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #e8f5e9;
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
+    font-size: 1.2rem;
+    margin: 0 0 var(--space-md) 0;
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--mint);
 }
 
-/* Weather styles */
+/* Weather */
 .weatherContent {
     text-align: center;
 }
 
 .temperature {
+    font-family: var(--font-serif);
     font-size: 3rem;
-    font-weight: bold;
-    color: var(--primary-green);
-    margin-bottom: 4px;
+    font-weight: 700;
+    color: var(--primary-green-dark);
+    margin-bottom: 2px;
+    line-height: 1;
 }
 
 .weatherDescription {
-    font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 8px;
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-sm);
 }
 
 .location {
-    color: #888;
-    font-size: 0.9rem;
-    margin-top: 8px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: var(--space-sm);
 }
 
-/* Zone styles */
+/* Zone */
 .zoneContent {
     text-align: center;
 }
 
 .zoneBadge {
     display: inline-block;
-    background-color: var(--primary-green);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
     color: white;
-    font-size: 1.6rem;
-    font-weight: bold;
-    padding: 16px 32px;
-    border-radius: 50px;
-    margin-bottom: 12px;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: var(--space-md) var(--space-2xl);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-md);
+    box-shadow: var(--shadow-sm);
 }
 
-/* Summary styles */
+/* Summary */
 .summaryContent {
     text-align: center;
 }
@@ -98,8 +138,8 @@
 .statRow {
     display: flex;
     justify-content: center;
-    gap: 48px;
-    margin-bottom: 16px;
+    gap: var(--space-3xl);
+    margin-bottom: var(--space-lg);
 }
 
 .stat {
@@ -109,38 +149,44 @@
 }
 
 .statNumber {
+    font-family: var(--font-serif);
     font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--primary-green);
+    font-weight: 700;
+    color: var(--primary-green-dark);
+    line-height: 1;
 }
 
 .statLabel {
-    font-size: 0.95rem;
-    color: #666;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 4px;
 }
 
 .cardLink {
     display: inline-block;
-    background-color: var(--primary-green);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
     color: white;
-    padding: 10px 24px;
-    border-radius: 8px;
+    padding: 0.6rem 1.5rem;
+    border-radius: var(--radius-full);
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all var(--transition-base);
 }
 
 .cardLink:hover {
-    background-color: var(--secondary-green);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
     color: white;
 }
 
-/* Task alert in garden summary */
+/* Task alert */
 .taskAlert {
-    margin-top: 14px;
-    padding: 10px 16px;
-    background-color: #fff3e0;
-    border-radius: 8px;
-    border-left: 4px solid #d32f2f;
+    margin-top: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--peach);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--coral);
     font-size: 0.9rem;
 }
 
@@ -149,70 +195,86 @@
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
 
 .taskAlertLink:hover {
-    text-decoration: underline;
-    color: #d32f2f;
+    color: var(--coral);
 }
 
 .taskAlertBadge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #d32f2f;
+    background: var(--coral);
     color: white;
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     width: 22px;
     height: 22px;
     border-radius: 50%;
 }
 
-/* Garden list styles */
+/* Garden list */
 .gardenList {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--space-sm);
 }
 
 .gardenItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    border-left: 4px solid var(--primary-green);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--background-cream);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--secondary-green);
+    transition: background var(--transition-fast);
+}
+
+.gardenItem:hover {
+    background: var(--mint);
 }
 
 .gardenInfo h3 {
-    margin: 0 0 4px 0;
+    margin: 0 0 2px 0;
     color: var(--text-dark);
-    font-size: 1.1rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .gardenType {
-    font-size: 0.85rem;
-    color: #888;
+    font-size: 0.82rem;
+    color: var(--text-muted);
 }
 
 .gardenPlantCount {
     color: var(--primary-green);
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
+    font-size: 0.9rem;
 }
 
 .emptyState {
-    color: #888;
+    color: var(--text-muted);
     text-align: center;
-    padding: 16px 0;
+    padding: var(--space-lg) 0;
+    line-height: 1.7;
+    font-size: 0.92rem;
 }
 
 .emptyState a {
     color: var(--primary-green);
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--sage);
+    text-underline-offset: 2px;
+}
+
+.emptyState a:hover {
+    text-decoration-color: var(--primary-green);
 }
 
 @media (max-width: 768px) {
@@ -221,10 +283,18 @@
     }
 
     .statRow {
-        gap: 24px;
+        gap: var(--space-xl);
     }
 
     .temperature {
         font-size: 2.5rem;
+    }
+
+    .pageTitle {
+        font-size: 1.6rem;
+    }
+
+    .container {
+        padding: var(--space-md);
     }
 }

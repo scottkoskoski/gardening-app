@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import api from "../services/api";
 import styles from "../styles/GardenJournal.module.css";
 
@@ -43,6 +44,7 @@ const formatEntryType = (type: string) =>
 const GardenJournal = () => {
     const { gardenId } = useParams<{ gardenId: string }>();
     const auth = useContext(AuthContext);
+    const { showToast } = useToast();
     const token = auth?.isAuthenticated
         ? localStorage.getItem("token") ?? undefined
         : undefined;
@@ -113,6 +115,7 @@ const GardenJournal = () => {
                 setEntries((prev) => [response.entry, ...prev]);
             }
             setShowForm(false);
+            showToast("Journal entry saved!");
             setFormData({
                 entry_type: "observation",
                 title: "",
@@ -132,6 +135,7 @@ const GardenJournal = () => {
         try {
             await api.deleteJournalEntry(entryId, token);
             setEntries((prev) => prev.filter((e) => e.id !== entryId));
+            showToast("Journal entry deleted.");
         } catch (err: any) {
             setError(err.message || "Failed to delete journal entry");
         }
@@ -151,27 +155,40 @@ const GardenJournal = () => {
 
     if (loading) {
         return (
-            <div className={styles.container}>
-                <p>Loading journal...</p>
-            </div>
+            <>
+                <div className={styles.pageHeader}>
+                    <h1 className={styles.pageTitleWhite}>Garden Journal</h1>
+                    <p className={styles.pageSubtitle}>Record your garden activities and observations</p>
+                </div>
+                <div className={styles.container}>
+                    <div className="skeleton" style={{ height: "3rem", width: "180px", borderRadius: "9999px", margin: "0 auto var(--space-xl)" }} />
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className="skeleton" style={{ height: "100px", borderRadius: "var(--radius-lg)", marginBottom: "var(--space-md)", marginLeft: "30px" }} />
+                    ))}
+                </div>
+            </>
         );
     }
 
     return (
+        <>
+        <div className={styles.pageHeader}>
+            <h1 className={styles.pageTitleWhite}>
+                {gardenName ? `${gardenName} Journal` : "Garden Journal"}
+            </h1>
+            <p className={styles.pageSubtitle}>Record your garden activities and observations</p>
+        </div>
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1>{gardenName ? `${gardenName} Journal` : "Garden Journal"}</h1>
-                <div className={styles.headerActions}>
-                    <Link to="/gardens" className={styles.backLink}>
-                        Back to Gardens
-                    </Link>
-                    <button
-                        onClick={() => setShowForm(!showForm)}
-                        className={styles.newEntryButton}
-                    >
-                        {showForm ? "Cancel" : "New Entry"}
-                    </button>
-                </div>
+                <Link to="/gardens" className={styles.backLink}>
+                    &larr; Back to Gardens
+                </Link>
+                <button
+                    onClick={() => setShowForm(!showForm)}
+                    className={styles.newEntryButton}
+                >
+                    {showForm ? "Cancel" : "New Entry"}
+                </button>
             </div>
 
             {error && (
@@ -345,6 +362,7 @@ const GardenJournal = () => {
                 </div>
             )}
         </div>
+        </>
     );
 };
 

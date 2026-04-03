@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import api from "../services/api";
 import styles from "../styles/HarvestLog.module.css";
 
@@ -30,6 +31,7 @@ const QUALITIES = ["excellent", "good", "fair", "poor"];
 const HarvestLog = () => {
     const { gardenId } = useParams<{ gardenId: string }>();
     const auth = useContext(AuthContext);
+    const { showToast } = useToast();
     const token = auth?.isAuthenticated
         ? localStorage.getItem("token") ?? undefined
         : undefined;
@@ -122,6 +124,7 @@ const HarvestLog = () => {
             setHarvests(harvestRes.harvests || []);
 
             setShowForm(false);
+            showToast("Harvest logged successfully!");
             setFormData({
                 plant_id:
                     gardenPlants.length > 0 ? gardenPlants[0].plant_id : 0,
@@ -149,6 +152,7 @@ const HarvestLog = () => {
         try {
             await api.deleteHarvest(harvestId, token);
             setHarvests((prev) => prev.filter((h) => h.id !== harvestId));
+            showToast("Harvest entry deleted.");
         } catch (err: any) {
             console.error("Error deleting harvest:", err);
             setError(err.message || "Failed to delete harvest");
@@ -183,26 +187,38 @@ const HarvestLog = () => {
 
     if (loading) {
         return (
-            <div className={styles.container}>
-                <p>Loading harvest data...</p>
-            </div>
+            <>
+                <div className={styles.pageHeader}>
+                    <h1 className={styles.pageTitle}>Harvest Log</h1>
+                    <p className={styles.pageSubtitle}>Track and manage your harvests</p>
+                </div>
+                <div className={styles.container}>
+                    <div style={{ display: "flex", gap: "var(--space-lg)", marginBottom: "var(--space-xl)" }}>
+                        {[1, 2].map((i) => (
+                            <div key={i} className="skeleton" style={{ height: "80px", flex: 1, borderRadius: "var(--radius-xl)" }} />
+                        ))}
+                    </div>
+                    <div className="skeleton" style={{ height: "3rem", width: "160px", margin: "0 auto var(--space-xl)", borderRadius: "9999px" }} />
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className="skeleton" style={{ height: "48px", borderRadius: "var(--radius-sm)", marginBottom: "var(--space-sm)" }} />
+                    ))}
+                </div>
+            </>
         );
     }
 
     return (
-        <div className={styles.container}>
-            <Link to="/gardens" className={styles.backLink}>
-                Back to Gardens
-            </Link>
-
+        <>
+        <div className={styles.pageHeader}>
             <h1 className={styles.pageTitle}>
                 {gardenName ? `${gardenName} - Harvests` : "Harvest Log"}
             </h1>
-            {gardenName && (
-                <p className={styles.gardenSubtitle}>
-                    Track and manage your harvests
-                </p>
-            )}
+            <p className={styles.pageSubtitle}>Track and manage your harvests</p>
+        </div>
+        <div className={styles.container}>
+            <Link to="/gardens" className={styles.backLink}>
+                &larr; Back to Gardens
+            </Link>
 
             {error && (
                 <div className={styles.errorMessage}>
@@ -408,6 +424,7 @@ const HarvestLog = () => {
                 </table>
             )}
         </div>
+        </>
     );
 };
 

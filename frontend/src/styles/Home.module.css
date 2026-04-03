@@ -1,89 +1,141 @@
-/* Container */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Header */
-.header {
+/* ===== Hero Section ===== */
+.hero {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 50%, var(--primary-green-light) 100%);
+    padding: var(--space-3xl) var(--space-xl) 4.5rem;
     text-align: center;
-    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
 }
 
-.title {
-    font-size: 2rem;
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(149,213,178,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(82,183,136,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.heroTitle {
+    font-family: var(--font-serif);
+    font-size: 2.75rem;
     font-weight: 700;
-    color: var(--primary-green, #4f7942);
-    margin: 0 0 4px;
+    color: white;
+    margin: 0 0 0.75rem;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -0.02em;
 }
 
-.subtitle {
-    font-size: 1rem;
-    color: var(--text-dark, #2e2e2e);
-    opacity: 0.7;
+.heroSubtitle {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.8);
     margin: 0;
+    position: relative;
+    z-index: 1;
+    font-weight: 400;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-/* Search bar */
+/* ===== Search Section ===== */
+.searchSection {
+    max-width: 640px;
+    margin: -1.75rem auto 0;
+    padding: 0 var(--space-xl);
+    position: relative;
+    z-index: 2;
+}
+
 .searchBar {
     position: relative;
-    max-width: 600px;
-    margin: 0 auto 16px;
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
 }
 
 .searchIcon {
     position: absolute;
-    left: 14px;
+    left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    color: #999;
+    width: 20px;
+    height: 20px;
+    color: var(--text-muted);
     pointer-events: none;
 }
 
 .searchInput {
     width: 100%;
-    padding: 12px 16px 12px 42px;
+    padding: 1rem 1.25rem 1rem 3rem;
     font-size: 1rem;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
     outline: none;
-    transition: border-color 0.2s;
-    background: #fff;
+    background: var(--card-white);
+    color: var(--text-dark);
     box-sizing: border-box;
+    transition: border-color var(--transition-fast);
 }
 
 .searchInput:focus {
-    border-color: var(--primary-green, #4f7942);
+    border-color: var(--primary-green);
+    box-shadow: none;
 }
 
-/* Filter toggle row */
+.searchInput::placeholder {
+    color: var(--text-muted);
+}
+
+/* ===== Container ===== */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: var(--space-lg) var(--space-xl) var(--space-2xl);
+}
+
+/* ===== Filter Row ===== */
 .filterToggleRow {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: var(--space-lg);
+    margin-top: var(--space-lg);
 }
 
 .filterToggleBtn {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    background: var(--background-cream, #faf3e0);
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    gap: 8px;
+    padding: 0.5rem 1rem;
+    background: var(--card-white);
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-full);
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
-    color: var(--text-dark, #2e2e2e);
-    transition: background 0.2s;
+    color: var(--text-dark);
+    transition: all var(--transition-fast);
 }
 
 .filterToggleBtn:hover {
-    background: #f0e8d0;
+    border-color: var(--primary-green);
+    color: var(--primary-green);
+    background: var(--mint);
+    transform: none;
 }
 
 .filterBadge {
@@ -93,17 +145,17 @@
     min-width: 20px;
     height: 20px;
     padding: 0 6px;
-    background: var(--primary-green, #4f7942);
-    color: #fff;
-    border-radius: 10px;
-    font-size: 0.75rem;
+    background: var(--primary-green);
+    color: white;
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
     font-weight: 700;
 }
 
 .chevron {
     width: 16px;
     height: 16px;
-    transition: transform 0.2s;
+    transition: transform var(--transition-fast);
 }
 
 .chevronOpen {
@@ -111,149 +163,161 @@
 }
 
 .clearBtn {
-    padding: 8px 16px;
+    padding: 0.5rem 1rem;
     background: transparent;
-    border: 1px solid var(--accent-brown, #a67b5b);
-    border-radius: 6px;
+    border: 1.5px solid var(--coral);
+    border-radius: var(--radius-full);
     cursor: pointer;
-    font-size: 0.85rem;
-    color: var(--accent-brown, #a67b5b);
+    font-size: 0.8rem;
+    color: var(--coral);
     font-weight: 600;
-    transition: background 0.2s, color 0.2s;
+    transition: all var(--transition-fast);
 }
 
 .clearBtn:hover {
-    background: var(--accent-brown, #a67b5b);
-    color: #fff;
+    background: var(--coral);
+    color: white;
+    transform: none;
 }
 
-/* Layout: sidebar + main */
+/* ===== Layout ===== */
 .layout {
     display: flex;
-    gap: 24px;
+    gap: var(--space-xl);
     align-items: flex-start;
 }
 
-/* Filter panel */
+/* ===== Filter Panel ===== */
 .filterPanel {
-    width: 240px;
+    width: 260px;
     flex-shrink: 0;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 16px;
+    background: var(--card-white);
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--space-md);
+    position: sticky;
+    top: 80px;
 }
 
 .filterGroup {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 }
 
 .filterLabel {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-dark, #2e2e2e);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.06em;
 }
 
 .filterSelect {
-    padding: 8px 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    background: #fff;
-    color: var(--text-dark, #2e2e2e);
+    padding: 0.5rem 0.75rem;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    background: var(--card-white);
+    color: var(--text-dark);
     cursor: pointer;
     outline: none;
+    transition: border-color var(--transition-fast);
 }
 
 .filterSelect:focus {
-    border-color: var(--primary-green, #4f7942);
+    border-color: var(--primary-green);
+    box-shadow: none;
 }
 
 .checkboxLabel {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: var(--text-dark, #2e2e2e);
+    gap: 10px;
+    font-size: 0.875rem;
+    color: var(--text-dark);
     cursor: pointer;
+    font-weight: 500;
 }
 
 .checkboxLabel input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: var(--primary-green, #4f7942);
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-green);
     cursor: pointer;
 }
 
-/* Main content */
+/* ===== Main Content ===== */
 .mainContent {
     flex: 1;
     min-width: 0;
 }
 
 .resultCount {
-    font-size: 0.9rem;
-    color: var(--text-dark, #2e2e2e);
-    opacity: 0.7;
-    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
     font-weight: 500;
+    margin-left: auto;
 }
 
 .error {
-    color: #c0392b;
-    background: #fdecea;
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 12px;
+    color: var(--coral);
+    background: var(--peach);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+    font-weight: 500;
+    border: 1px solid var(--terracotta-light);
 }
 
 .emptyState {
     text-align: center;
-    padding: 48px 24px;
-    color: var(--text-dark, #2e2e2e);
-    opacity: 0.7;
+    padding: var(--space-3xl) var(--space-xl);
+    color: var(--text-muted);
 }
 
 .emptyState p {
-    margin-bottom: 16px;
-    font-size: 1rem;
+    margin-bottom: var(--space-md);
+    font-size: 1.05rem;
 }
 
-/* Plant grid */
+/* ===== Plant Grid ===== */
 .plantGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: var(--space-lg);
+    animation: fadeInUp 0.4s ease;
 }
 
 .plantCardLink {
     text-decoration: none;
     color: inherit;
     display: block;
-    border-radius: 10px;
-    transition: transform 0.15s, box-shadow 0.15s;
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
 .plantCardLink:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
 }
 
 .plantCard {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
+    background: var(--card-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
     overflow: hidden;
     height: 100%;
     display: flex;
     flex-direction: column;
+    transition: border-color var(--transition-fast);
+}
+
+.plantCardLink:hover .plantCard {
+    border-color: var(--sage);
 }
 
 /* Plant image */
@@ -261,7 +325,8 @@
     width: 100%;
     aspect-ratio: 4 / 3;
     overflow: hidden;
-    background: var(--background-cream, #faf3e0);
+    background: var(--background-warm);
+    position: relative;
 }
 
 .plantImage {
@@ -269,6 +334,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.5s ease;
+}
+
+.plantCardLink:hover .plantImage {
+    transform: scale(1.08);
 }
 
 .plantImagePlaceholder {
@@ -277,30 +347,32 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--background-cream, #faf3e0);
-    color: var(--secondary-green, #6b8e23);
+    background: linear-gradient(135deg, var(--mint) 0%, var(--background-warm) 100%);
+    color: var(--primary-green-light);
 }
 
 .placeholderIcon {
-    width: 48px;
-    height: 48px;
-    opacity: 0.5;
+    width: 56px;
+    height: 56px;
+    opacity: 0.4;
 }
 
 /* Plant card body */
 .plantCardBody {
-    padding: 12px 14px 14px;
+    padding: var(--space-md) var(--space-md) calc(var(--space-md) + 2px);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     flex: 1;
 }
 
 .plantName {
-    font-size: 1.05rem;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
     font-weight: 600;
-    color: var(--primary-green, #4f7942);
+    color: var(--primary-green-dark);
     margin: 0;
+    line-height: 1.3;
 }
 
 /* Tags */
@@ -312,41 +384,45 @@
 
 .tag {
     display: inline-block;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
     font-weight: 600;
     white-space: nowrap;
+    letter-spacing: 0.02em;
 }
 
 .tagSeason {
-    background: #e8f5e9;
-    color: #2e7d32;
+    background: var(--mint);
+    color: var(--primary-green-dark);
 }
 
 .tagSunlight {
-    background: #fff8e1;
-    color: #f57f17;
+    background: var(--sun-light);
+    color: #92400e;
 }
 
 .tagWater {
-    background: #e3f2fd;
-    color: #1565c0;
+    background: var(--sky);
+    color: #1e4f6e;
 }
 
 .tagSpace {
-    background: #fce4ec;
-    color: #ad1457;
+    background: var(--peach);
+    color: var(--bark);
 }
 
-/* Responsive: tablet */
-@media (max-width: 960px) {
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
     .plantGrid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .heroTitle {
+        font-size: 2.25rem;
+    }
 }
 
-/* Responsive: mobile */
 @media (max-width: 700px) {
     .layout {
         flex-direction: column;
@@ -355,6 +431,7 @@
     .filterPanel {
         display: none;
         width: 100%;
+        position: static;
     }
 
     .filterPanelOpen {
@@ -362,21 +439,39 @@
     }
 
     .plantGrid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
     }
 
-    .title {
-        font-size: 1.5rem;
+    .heroTitle {
+        font-size: 1.75rem;
+    }
+
+    .heroSubtitle {
+        font-size: 1rem;
+    }
+
+    .hero {
+        padding: var(--space-2xl) var(--space-md) 3.5rem;
+    }
+
+    .searchSection {
+        padding: 0 var(--space-md);
+    }
+
+    .container {
+        padding: var(--space-md);
     }
 }
 
-/* Desktop: always show filter panel regardless of toggle */
+@media (max-width: 480px) {
+    .plantGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (min-width: 701px) {
     .filterPanel {
         display: flex !important;
-    }
-
-    .filterToggleRow {
-        display: flex;
     }
 }

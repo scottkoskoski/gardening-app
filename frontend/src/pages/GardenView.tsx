@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import api from "../services/api";
 import styles from "../styles/GardenView.module.css";
 
@@ -41,6 +42,7 @@ type GardenType = {
 
 const GardenView = () => {
     const auth = useContext(AuthContext);
+    const { showToast } = useToast();
     const token = auth?.isAuthenticated
         ? localStorage.getItem("token") ?? undefined
         : undefined;
@@ -178,6 +180,7 @@ const GardenView = () => {
 
                 setGardens((prevGardens) => [...prevGardens, createdGarden]);
                 toggleNewGardenForm(); // Close the form
+                showToast("Garden created successfully!");
             }
         } catch (err: any) {
             console.error("Error creating garden:", err);
@@ -236,6 +239,7 @@ const GardenView = () => {
                 );
 
                 toggleAddPlantForm(null); // Close the form
+                showToast("Plant added to garden!");
             }
         } catch (err: any) {
             console.error("Error adding plant:", err);
@@ -261,6 +265,7 @@ const GardenView = () => {
             setGardens((prevGardens) =>
                 prevGardens.filter((garden) => garden.id !== gardenId)
             );
+            showToast("Garden deleted.");
         } catch (err: any) {
             console.error("Error deleting garden:", err);
             setError(err.message || "Failed to delete garden");
@@ -301,6 +306,7 @@ const GardenView = () => {
                     return garden;
                 })
             );
+            showToast("Plant removed from garden.");
         } catch (err: any) {
             console.error("Error removing plant:", err);
             setError(err.message || "Failed to remove plant");
@@ -316,15 +322,30 @@ const GardenView = () => {
 
     if (loading && gardens.length === 0) {
         return (
-            <div className={styles.container}>
-                <p>Loading your gardens...</p>
-            </div>
+            <>
+                <div className={styles.pageHeader}>
+                    <h1 className={styles.pageTitle}>My Gardens</h1>
+                    <p className={styles.pageSubtitle}>Plan, plant, and grow</p>
+                </div>
+                <div className={styles.container}>
+                    <div className="skeleton" style={{ height: "3rem", width: "200px", margin: "0 auto var(--space-xl)", borderRadius: "9999px" }} />
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))", gap: "var(--space-lg)" }}>
+                        {[1, 2].map((i) => (
+                            <div key={i} className="skeleton" style={{ height: "240px", borderRadius: "var(--radius-xl)" }} />
+                        ))}
+                    </div>
+                </div>
+            </>
         );
     }
 
     return (
-        <div className={styles.container}>
+        <>
+        <div className={styles.pageHeader}>
             <h1 className={styles.pageTitle}>My Gardens</h1>
+            <p className={styles.pageSubtitle}>Plan, plant, and grow</p>
+        </div>
+        <div className={styles.container}>
 
             {/* Error message display */}
             {error && (
@@ -639,6 +660,7 @@ const GardenView = () => {
                 </div>
             )}
         </div>
+        </>
     );
 };
 

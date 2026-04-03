@@ -1,3 +1,4 @@
+import logging
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from datetime import datetime
@@ -7,6 +8,7 @@ from ..models.plant import Plant
 from ..models.user_garden_plant import UserGardenPlant, GrowthStage
 
 user_garden_plants_bp = Blueprint("user_garden_plants", __name__)
+logger = logging.getLogger(__name__)
 
 @user_garden_plants_bp.route("", methods=["POST"])
 @jwt_required()
@@ -14,10 +16,20 @@ def add_plant_to_garden():
     """Adds a plant to a user's garden."""
     user_id = get_jwt_identity()
     data = request.get_json()
-    
+
+    if not data:
+        return jsonify({"error": "No input data provided"}), 400
+
     required_fields = ["garden_id", "plant_id"]
     if not all(field in data for field in required_fields):
-        return jsonify({"error": "Missing required fields"}), 400
+        return jsonify({"error": "Missing required fields: garden_id and plant_id"}), 400
+
+    # Validate types
+    try:
+        int(data["garden_id"])
+        int(data["plant_id"])
+    except (ValueError, TypeError):
+        return jsonify({"error": "garden_id and plant_id must be integers"}), 400
     
     garden = UserGarden.query.filter_by(id=data["garden_id"], user_id=user_id).first()
     if not garden:
@@ -76,7 +88,7 @@ def remove_garden_plant(garden_plant_id):
         return jsonify({"error": "Garden not found"}), 404
     
     if garden_plant.garden.user_id != user_id:
-        return jsonify({"error": f"Unauthorized - expected user {garden_plant.garden.user_id}, but got {user_id}"}), 403
+        return jsonify({"error": "Unauthorized"}), 403
     
     db.session.delete(garden_plant)
     db.session.commit()

@@ -59,8 +59,8 @@ class UserGardenPlant(db.Model):
     __tablename__ = "user_garden_plant"
     
     id = db.Column(db.Integer, primary_key=True)
-    garden_id = db.Column(db.Integer, db.ForeignKey("user_garden.id"), nullable=False)
-    plant_id = db.Column(db.Integer, db.ForeignKey("plant.id"), nullable=False)
+    garden_id = db.Column(db.Integer, db.ForeignKey("user_garden.id"), nullable=False, index=True)
+    plant_id = db.Column(db.Integer, db.ForeignKey("plant.id"), nullable=False, index=True)
     planted_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     expected_harvest_date = db.Column(db.DateTime, nullable=True)
     growth_stage = db.Column(db.Enum(GrowthStage), nullable=False, default=GrowthStage.SEEDLING)
