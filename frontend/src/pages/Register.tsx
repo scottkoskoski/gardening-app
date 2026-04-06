@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import GoogleSignInButton from "../components/GoogleSignInButton";
 import styles from "../styles/Register.module.css";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:5000";
 
 const Register = () => {
     const [username, setUsername] = useState("");
