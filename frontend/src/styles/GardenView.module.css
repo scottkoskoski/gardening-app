@@ -1,251 +1,361 @@
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+/* Page Header */
+.pageHeader {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 50%, var(--primary-green-light) 100%);
+    padding: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.pageHeader::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(149,213,178,0.12) 0%, transparent 70%);
+    border-radius: 50%;
 }
 
 .pageTitle {
-    color: var(--primary-green);
+    font-family: var(--font-serif);
+    color: white;
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 2.5rem;
+    margin-bottom: var(--space-sm);
+    font-size: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.pageSubtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-xl);
+    animation: fadeInUp 0.4s ease;
 }
 
 /* Error message styling */
 .errorMessage {
-    background-color: #ffebee;
-    color: #c62828;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    background: #fef2f2;
+    color: #991b1b;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid #fecaca;
 }
 
 .closeButton {
     background: none;
     border: none;
-    color: #c62828;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-}
-
-/* Button styling */
-.primaryButton {
-    background-color: var(--primary-green);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: block;
-    margin: 0 auto 30px;
-    transition: background-color 0.3s ease;
-}
-
-.primaryButton:hover {
-    background-color: var(--secondary-green);
-}
-
-/* Garden cards styling */
-.gardensGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 30px;
-    margin-top: 30px;
-}
-
-.gardenCard {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.gardenCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.gardenHeader {
-    background-color: var(--primary-green);
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.gardenHeader h2 {
-    margin: 0;
-    font-size: 20px;
-    color: white;
-}
-
-.gardenActions {
-    display: flex;
-    gap: 10px;
-}
-
-.addButton,
-.deleteButton {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
-
-.addButton {
-    background-color: white;
-    color: var(--primary-green);
-}
-
-.addButton:hover {
-    background-color: #f0f0f0;
-}
-
-.deleteButton {
-    background-color: #d32f2f;
-    color: white;
-}
-
-.deleteButton:hover {
-    background-color: #b71c1c;
-}
-
-.gardenDetails {
-    padding: 20px;
-    border-bottom: 1px solid #eee;
-}
-
-.gardenDetails p {
-    margin: 10px 0;
-}
-
-/* Plants section styling */
-.plantsSection {
-    padding: 20px;
-}
-
-.plantsSection h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: var(--primary-green);
-    font-size: 18px;
-}
-
-.noPlantMessage,
-.noGardensMessage {
-    color: #757575;
-    font-style: italic;
-    text-align: center;
-    margin: 20px 0;
-    grid-column: 1 / -1;
-    width: 100%;
-}
-
-.plantsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.plantCard {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.plantHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10px;
-}
-
-.plantHeader h4 {
-    margin: 0;
-    color: var(--primary-green);
-    font-size: 16px;
-}
-
-.removePlantButton {
-    background: none;
-    border: none;
-    color: #d32f2f;
-    font-size: 20px;
+    color: #991b1b;
+    font-size: 1.5rem;
     cursor: pointer;
     padding: 0;
     margin: 0;
     line-height: 1;
 }
 
+.closeButton:hover {
+    transform: none;
+    background: none;
+}
+
+/* Button styling */
+.primaryButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    margin: 0 auto var(--space-xl);
+    display: block;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+.primaryButton:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Garden cards styling */
+.gardensGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: var(--space-lg);
+}
+
+.gardenCard {
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.gardenCard:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.gardenHeader {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+    color: white;
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.gardenHeader h2 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 600;
+}
+
+.gardenActions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.addButton,
+.deleteButton {
+    padding: 5px 12px;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.addButton {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.addButton:hover {
+    background-color: rgba(255, 255, 255, 0.35);
+    transform: none;
+    color: white;
+}
+
+.deleteButton {
+    background-color: rgba(211, 47, 47, 0.2);
+    color: white;
+    border: 1px solid rgba(211, 47, 47, 0.4);
+}
+
+.deleteButton:hover {
+    background-color: rgba(211, 47, 47, 0.4);
+    transform: none;
+    color: white;
+}
+
+.gardenDetails {
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+}
+
+.gardenDetails p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.gardenDetails p strong {
+    color: var(--text-dark);
+}
+
+/* Plants section styling */
+.plantsSection {
+    padding: var(--space-lg);
+}
+
+.plantsSection h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-md);
+    color: var(--primary-green-dark);
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.noPlantMessage,
+.noGardensMessage {
+    color: var(--text-muted);
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    grid-column: 1 / -1;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.plantsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-md);
+}
+
+.plantCard {
+    background: var(--background-cream);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    border: 1px solid var(--border-light);
+    transition: background var(--transition-fast);
+}
+
+.plantCard:hover {
+    background: var(--mint);
+}
+
+.plantHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-sm);
+}
+
+.plantHeader h4 {
+    margin: 0;
+    color: var(--primary-green-dark);
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.removePlantButton {
+    background: none;
+    border: none;
+    color: var(--coral);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity var(--transition-fast);
+}
+
+.removePlantButton:hover {
+    opacity: 1;
+    transform: none;
+    background: none;
+}
+
 .plantCard p {
-    margin: 5px 0;
-    font-size: 14px;
+    margin: 4px 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.plantCard p strong {
+    color: var(--text-dark);
+    font-weight: 600;
 }
 
 /* Form styling */
 .formContainer {
-    background-color: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+    background: var(--card-white);
+    padding: var(--space-xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--space-xl);
+    border: 1px solid var(--border-light);
 }
 
 .formContainer h2 {
-    color: var(--primary-green);
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: var(--space-lg);
+    font-size: 1.3rem;
 }
 
 .form {
     display: grid;
-    gap: 15px;
+    gap: var(--space-md);
 }
 
 .formGroup {
     display: flex;
     flex-direction: column;
+    gap: 6px;
 }
 
 .formGroup label {
-    margin-bottom: 5px;
-    font-weight: bold;
+    font-size: 0.85rem;
+    font-weight: 600;
     color: var(--text-dark);
 }
 
 .formGroup input,
 .formGroup select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: 0.625rem 0.875rem;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    background: var(--card-white);
+    color: var(--text-dark);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
 }
 
 .submitButton {
-    background-color: var(--primary-green);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
     color: white;
     border: none;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 5px;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
+    margin-top: var(--space-sm);
+    transition: all var(--transition-base);
 }
 
 .submitButton:hover {
-    background-color: var(--secondary-green);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 /* Modal styling */
@@ -259,28 +369,32 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
 }
 
 .modalContent {
-    background-color: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background: var(--card-white);
+    padding: var(--space-xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
     width: 90%;
     max-width: 500px;
+    animation: fadeInUp 0.3s ease;
 }
 
 .modalHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: var(--space-lg);
 }
 
 .modalHeader h2 {
     margin: 0;
-    color: var(--primary-green);
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
+    font-size: 1.3rem;
 }
 
 /* Responsive adjustments */
@@ -295,10 +409,19 @@
     }
 
     .gardenActions {
-        margin-top: 10px;
+        justify-content: flex-start;
+        margin-top: var(--space-sm);
     }
 
     .plantsGrid {
         grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: var(--space-md);
+    }
+
+    .pageTitle {
+        font-size: 1.6rem;
     }
 }

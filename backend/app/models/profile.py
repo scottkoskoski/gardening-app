@@ -79,7 +79,7 @@ class UserProfile(db.Model):
     __tablename__ = "user_profile"
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, unique=True, index=True)
     plant_hardiness_zone = db.Column(db.String(10), nullable=True)
     zip_code = db.Column(db.String(10), nullable=True)
     city = db.Column(db.String(100), nullable=True)

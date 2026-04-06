@@ -81,18 +81,32 @@ const Tasks = () => {
 
     if (loading) {
         return (
-            <div className={styles.container}>
-                <p className={styles.loading}>Loading tasks...</p>
-            </div>
+            <>
+                <div className={styles.pageHeader}>
+                    <h1 className={styles.pageTitle}>Garden Tasks</h1>
+                    <p className={styles.subtitle}>Smart reminders to keep your garden thriving</p>
+                </div>
+                <div className={styles.container}>
+                    <div style={{ display: "flex", justifyContent: "center", gap: "var(--space-md)", marginBottom: "var(--space-xl)" }}>
+                        {[1, 2, 3].map((i) => (
+                            <div key={i} className="skeleton" style={{ height: "2.5rem", width: "100px", borderRadius: "9999px" }} />
+                        ))}
+                    </div>
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className="skeleton" style={{ height: "80px", borderRadius: "var(--radius-lg)", marginBottom: "var(--space-md)" }} />
+                    ))}
+                </div>
+            </>
         );
     }
 
     return (
-        <div className={styles.container}>
+        <>
+        <div className={styles.pageHeader}>
             <h1 className={styles.pageTitle}>Garden Tasks</h1>
-            <p className={styles.subtitle}>
-                Smart reminders to keep your garden thriving
-            </p>
+            <p className={styles.subtitle}>Smart reminders to keep your garden thriving</p>
+        </div>
+        <div className={styles.container}>
 
             {error && <p className={styles.errorMessage}>{error}</p>}
 
@@ -213,6 +227,7 @@ const Tasks = () => {
                 </div>
             )}
         </div>
+        </>
     );
 };
 

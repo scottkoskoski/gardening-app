@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import api from "../services/api";
 import styles from "../styles/GardenMap.module.css";
 
@@ -72,6 +73,7 @@ function getPlantColor(plantId: number): string {
 const GardenMap = () => {
     const { gardenId } = useParams<{ gardenId: string }>();
     const auth = useContext(AuthContext);
+    const { showToast } = useToast();
     const token = auth?.isAuthenticated
         ? localStorage.getItem("token") ?? undefined
         : undefined;
@@ -90,6 +92,7 @@ const GardenMap = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [mode, setMode] = useState<"place" | "view">("place");
+    const [paletteSearch, setPaletteSearch] = useState("");
 
     const id = Number(gardenId);
 
@@ -175,6 +178,7 @@ const GardenMap = () => {
                     image_url: result.image_url,
                 };
                 setPlacements((prev) => [...prev, newPlacement]);
+                showToast(`${result.plant_name} placed on map!`);
             } catch (err: any) {
                 setError(err.message || "Failed to place plant.");
             }
@@ -189,6 +193,7 @@ const GardenMap = () => {
             setPlacements((prev) => prev.filter((p) => p.id !== gardenPlantId));
             setShowInfoPanel(false);
             setPlantInfo(null);
+            showToast("Plant removed from map.");
         } catch (err: any) {
             setError(err.message || "Failed to remove plant.");
         }
@@ -219,7 +224,12 @@ const GardenMap = () => {
     if (loading) {
         return (
             <div className={styles.container}>
-                <p>Loading garden map...</p>
+                <div className="skeleton" style={{ height: "1rem", width: "140px", marginBottom: "var(--space-sm)" }} />
+                <div className="skeleton" style={{ height: "2rem", width: "300px", marginBottom: "var(--space-xl)" }} />
+                <div style={{ display: "flex", gap: "var(--space-xl)" }}>
+                    <div className="skeleton" style={{ width: "220px", height: "400px", borderRadius: "var(--radius-lg)", flexShrink: 0 }} />
+                    <div className="skeleton" style={{ flex: 1, height: "400px", borderRadius: "var(--radius-md)" }} />
+                </div>
             </div>
         );
     }
@@ -299,8 +309,17 @@ const GardenMap = () => {
                             Select a plant, then click an empty cell to place it.
                         </p>
                     )}
+                    <input
+                        type="text"
+                        className={styles.paletteSearch}
+                        placeholder="Search plants..."
+                        value={paletteSearch}
+                        onChange={(e) => setPaletteSearch(e.target.value)}
+                    />
                     <div className={styles.plantList}>
-                        {plants.map((plant) => (
+                        {plants.filter((plant) =>
+                            plant.name.toLowerCase().includes(paletteSearch.toLowerCase())
+                        ).map((plant) => (
                             <button
                                 key={plant.id}
                                 className={`${styles.plantOption} ${

@@ -1,3 +1,4 @@
+import logging
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from marshmallow import ValidationError
@@ -6,6 +7,7 @@ from ..models.journal_entry import JournalEntry, JournalEntrySchema
 from ..models.user_garden import UserGarden
 
 journal_bp = Blueprint("journal", __name__)
+logger = logging.getLogger(__name__)
 
 entry_schema = JournalEntrySchema()
 entries_schema = JournalEntrySchema(many=True)
@@ -72,7 +74,8 @@ def create_journal_entry():
         }), 201
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
+        logger.error("Error creating journal entry: %s", e, exc_info=True)
+        return jsonify({"error": "An unexpected error occurred."}), 500
 
 
 @journal_bp.route("/<int:garden_id>", methods=["GET"])
@@ -133,4 +136,5 @@ def delete_journal_entry(entry_id):
         return jsonify({"message": "Journal entry deleted successfully"}), 200
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": f"Failed to delete journal entry: {str(e)}"}), 500
+        logger.error("Error deleting journal entry_id=%s: %s", entry_id, e, exc_info=True)
+        return jsonify({"error": "Failed to delete journal entry."}), 500

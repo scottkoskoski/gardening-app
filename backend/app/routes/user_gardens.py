@@ -1,3 +1,4 @@
+import logging
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
@@ -8,6 +9,7 @@ from ..models.garden_type import GardenType, GardenTypeEnum
 from ..models.profile import UserProfile
 
 user_gardens_bp = Blueprint("user_gardens", __name__)
+logger = logging.getLogger(__name__)
 
 # Schema instances
 garden_schema = UserGardenSchema()
@@ -74,8 +76,9 @@ def add_garden():
         return jsonify({"error": "Failed to add garden. Possible duplicate or missing required field(s)."}), 500
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
-    
+        logger.error("Error adding garden for user_id=%s: %s", user_id, e, exc_info=True)
+        return jsonify({"error": "An unexpected error occurred."}), 500
+
 @user_gardens_bp.route("", methods=["GET"])
 @jwt_required()
 def get_user_gardens():
@@ -213,7 +216,8 @@ def update_garden(garden_id):
         return jsonify({"error": "Validation error", "details": err.messages}), 422
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
+        logger.error("Error updating garden_id=%s: %s", garden_id, e, exc_info=True)
+        return jsonify({"error": "An unexpected error occurred."}), 500
 
 @user_gardens_bp.route("/<int:garden_id>", methods=["DELETE"])
 @jwt_required()
@@ -231,4 +235,5 @@ def delete_garden(garden_id):
         return jsonify({"message": "Garden deleted successfully"}), 200
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": f"Failed to delete garden: {str(e)}"}), 500
+        logger.error("Error deleting garden_id=%s: %s", garden_id, e, exc_info=True)
+        return jsonify({"error": "Failed to delete garden."}), 500

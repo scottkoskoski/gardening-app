@@ -243,6 +243,16 @@ async function deleteHarvest(harvestId: number, token: string) {
     return deleteRequest(`/harvests/${harvestId}`, token);
 }
 
+// Plant care tips
+async function getPlantCareTips(plantId: number) {
+    return get(`/plants/${plantId}/care-tips`);
+}
+
+// Seasonal gardening tips
+async function getSeasonalTips(zone: string) {
+    return get(`/tips/seasonal?zone=${zone}`);
+}
+
 // Soil API calls
 async function getSoilRecommendations(token: string) {
     return get("/soil/recommendations", token);
@@ -288,6 +298,8 @@ export default {
     deleteHarvest,
     getSoilRecommendations,
     getPhGuide,
+    getPlantCareTips,
+    getSeasonalTips,
     get,
     post,
     put,

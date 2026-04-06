@@ -21,6 +21,7 @@ const Profile = () => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     // Fetch plant hardiness zone from backend API
     const fetchHardinessZone = async (zip: string) => {
@@ -29,7 +30,6 @@ const Profile = () => {
                 `/hardiness/get_hardiness_zone?zip=${zip}`
             );
             if (response.zone) {
-                // Ensure correct response key
                 setProfile((prev) => ({
                     ...prev,
                     plantHardinessZone: response.zone,
@@ -61,9 +61,7 @@ const Profile = () => {
             }
 
             try {
-                console.log("Fetching profile with token:", token);
                 const response = await api.get("/users/profile", token);
-                console.log("Profile response:", response);
 
                 if (response.error) {
                     console.warn(
@@ -94,11 +92,10 @@ const Profile = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
-
-        console.log("Submitting profile data:", profile);
+        setSuccess("");
 
         try {
-            const response = await api.post(
+            await api.post(
                 "users/profile",
                 {
                     zip_code: profile.zipCode,
@@ -111,8 +108,8 @@ const Profile = () => {
                 token
             );
 
-            console.log("Profile updated:", response);
-            alert("Profile saved successfully!");
+            setSuccess("Profile saved successfully!");
+            setTimeout(() => setSuccess(""), 3000);
         } catch (error) {
             console.error("Error saving profile:", error);
             setError("Error saving profile. Please try again.");
@@ -121,107 +118,144 @@ const Profile = () => {
 
     if (loading) {
         return (
-            <div className={styles.profileContainer}>
-                <p>Loading...</p>
-            </div>
+            <>
+                <div className={styles.pageHeader}>
+                    <h1 className={styles.pageTitle}>Your Profile</h1>
+                    <p className={styles.pageSubtitle}>Manage your garden preferences</p>
+                </div>
+                <div className={styles.profileContainer}>
+                    <div className={styles.profileCard}>
+                        <div className="skeleton" style={{ height: "1.5rem", width: "60%", margin: "0 auto var(--space-xl)" }} />
+                        <div className="skeleton" style={{ height: "2.5rem", width: "100%", marginBottom: "var(--space-md)" }} />
+                        <div className="skeleton" style={{ height: "2.5rem", width: "100%", marginBottom: "var(--space-md)" }} />
+                        <div className="skeleton" style={{ height: "2.5rem", width: "100%" }} />
+                    </div>
+                </div>
+            </>
         );
     }
 
     return (
-        <div className={styles.profileContainer}>
-            <h2 className={styles.profileTitle}>User Profile</h2>
+        <>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Your Profile</h1>
+                <p className={styles.pageSubtitle}>Manage your garden preferences</p>
+            </div>
+            <div className={styles.profileContainer}>
+                <div className={styles.profileCard}>
+                    {error && <p className={styles.errorMessage}>{error}</p>}
+                    {success && <p className={styles.successMessage}>{success}</p>}
 
-            {error && <p className={styles.errorMessage}>{error}</p>}
+                    <form onSubmit={handleSubmit} className={styles.profileForm}>
+                        <h3 className={styles.sectionLabel}>Location</h3>
 
-            <form onSubmit={handleSubmit} className={styles.profileForm}>
-                <label>
-                    Zip Code:
-                    <input
-                        type="text"
-                        name="zipCode"
-                        value={profile.zipCode}
-                        onChange={handleChange}
-                        required
-                        pattern="\d{5}(-\d{4})?"
-                        placeholder="12345 or 12345-6789"
-                    />
-                </label>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="zipCode">ZIP Code</label>
+                            <input
+                                type="text"
+                                id="zipCode"
+                                name="zipCode"
+                                value={profile.zipCode}
+                                onChange={handleChange}
+                                required
+                                pattern="\d{5}(-\d{4})?"
+                                placeholder="e.g. 10001"
+                            />
+                        </div>
 
-                <label>
-                    City:
-                    <input
-                        type="text"
-                        name="city"
-                        value={profile.city || ""}
-                        onChange={handleChange}
-                    />
-                </label>
+                        <div className={styles.formRow}>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="city">City</label>
+                                <input
+                                    type="text"
+                                    id="city"
+                                    name="city"
+                                    value={profile.city || ""}
+                                    onChange={handleChange}
+                                    placeholder="e.g. Portland"
+                                />
+                            </div>
 
-                <label>
-                    State:
-                    <input
-                        type="text"
-                        name="state"
-                        value={profile.state || ""}
-                        onChange={handleChange}
-                    />
-                </label>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="state">State</label>
+                                <input
+                                    type="text"
+                                    id="state"
+                                    name="state"
+                                    value={profile.state || ""}
+                                    onChange={handleChange}
+                                    placeholder="e.g. OR"
+                                />
+                            </div>
+                        </div>
 
-                <label className={styles.checkboxLabel}>
-                    <input
-                        type="checkbox"
-                        name="hasIrrigation"
-                        checked={profile.hasIrrigation || false}
-                        onChange={handleChange}
-                    />
-                    Has Irrigation System
-                </label>
+                        {profile.plantHardinessZone && (
+                            <div className={styles.formGroup}>
+                                <label>Hardiness Zone</label>
+                                <div>
+                                    <span className={styles.zoneBadge}>
+                                        Zone {profile.plantHardinessZone}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
 
-                <label>
-                    Daily Sunlight Hours:
-                    <input
-                        type="number"
-                        name="sunlightHours"
-                        value={
-                            profile.sunlightHours === null
-                                ? ""
-                                : profile.sunlightHours
-                        }
-                        onChange={handleChange}
-                        min="0"
-                        max="24"
-                        step="0.5"
-                    />
-                </label>
+                        <hr className={styles.sectionDivider} />
+                        <h3 className={styles.sectionLabel}>Garden Conditions</h3>
 
-                <label>
-                    Soil pH:
-                    <input
-                        type="number"
-                        name="soilPh"
-                        value={profile.soilPh === null ? "" : profile.soilPh}
-                        onChange={handleChange}
-                        min="0"
-                        max="14"
-                        step="0.1"
-                    />
-                </label>
+                        <label className={styles.checkboxLabel}>
+                            <input
+                                type="checkbox"
+                                name="hasIrrigation"
+                                checked={profile.hasIrrigation || false}
+                                onChange={handleChange}
+                            />
+                            Has Irrigation System
+                        </label>
 
-                <label>
-                    Plant Hardiness Zone:
-                    <input
-                        type="text"
-                        name="plantHardinessZone"
-                        value={profile.plantHardinessZone}
-                        disabled
-                    />
-                </label>
+                        <div className={styles.formRow}>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="sunlightHours">Daily Sunlight Hours</label>
+                                <input
+                                    type="number"
+                                    id="sunlightHours"
+                                    name="sunlightHours"
+                                    value={
+                                        profile.sunlightHours === null
+                                            ? ""
+                                            : profile.sunlightHours
+                                    }
+                                    onChange={handleChange}
+                                    min="0"
+                                    max="24"
+                                    step="0.5"
+                                    placeholder="e.g. 6"
+                                />
+                            </div>
 
-                <button type="submit" className={styles.profileButton}>
-                    Save Profile
-                </button>
-            </form>
-        </div>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="soilPh">Soil pH</label>
+                                <input
+                                    type="number"
+                                    id="soilPh"
+                                    name="soilPh"
+                                    value={profile.soilPh === null ? "" : profile.soilPh}
+                                    onChange={handleChange}
+                                    min="0"
+                                    max="14"
+                                    step="0.1"
+                                    placeholder="e.g. 6.5"
+                                />
+                            </div>
+                        </div>
+
+                        <button type="submit" className={styles.profileButton}>
+                            Save Profile
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </>
     );
 };
 

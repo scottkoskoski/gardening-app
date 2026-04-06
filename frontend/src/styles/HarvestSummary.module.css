@@ -1,62 +1,106 @@
+/* Page Header */
+.pageHeader {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 50%, var(--primary-green-light) 100%);
+    padding: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.pageHeader::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(149,213,178,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: var(--space-xl);
+    animation: fadeInUp 0.4s ease;
 }
 
 .pageTitle {
-    color: var(--primary-green);
+    font-family: var(--font-serif);
+    color: white;
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 2.5rem;
+    margin-bottom: var(--space-sm);
+    font-size: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.pageSubtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
+    margin: 0;
 }
 
 /* Stats row */
 .statsRow {
     display: flex;
-    gap: 20px;
-    margin-bottom: 30px;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
     flex-wrap: wrap;
 }
 
 .statCard {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px 30px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-lg) var(--space-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
     flex: 1;
     min-width: 200px;
     text-align: center;
+    transition: all var(--transition-base);
+}
+
+.statCard:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .statValue {
+    font-family: var(--font-serif);
     font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--primary-green);
+    font-weight: 700;
+    color: var(--primary-green-dark);
     margin: 0;
+    line-height: 1;
 }
 
 .statLabel {
-    font-size: 0.95rem;
-    color: var(--text-dark);
-    opacity: 0.7;
-    margin: 5px 0 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 6px 0 0;
 }
 
 /* Sections */
 .section {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    padding: 25px;
-    margin-bottom: 30px;
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    padding: var(--space-xl);
+    margin-bottom: var(--space-lg);
 }
 
 .sectionTitle {
-    color: var(--primary-green);
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
     margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
+    margin-bottom: var(--space-lg);
+    font-size: 1.3rem;
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--mint);
 }
 
 /* Top performers */
@@ -70,8 +114,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid #eee;
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .performerItem:last-child {
@@ -79,10 +123,10 @@
 }
 
 .performerRank {
-    font-weight: bold;
-    color: var(--accent-brown);
-    margin-right: 12px;
-    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    margin-right: var(--space-md);
+    font-size: 1.05rem;
     min-width: 30px;
 }
 
@@ -93,9 +137,9 @@
 }
 
 .performerQuantity {
-    color: var(--primary-green);
-    font-weight: bold;
-    font-size: 1.1rem;
+    color: var(--primary-green-dark);
+    font-weight: 700;
+    font-size: 1.05rem;
 }
 
 /* Bar chart */
@@ -105,7 +149,7 @@
     gap: 8px;
     height: 200px;
     padding: 10px 0;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid var(--border-light);
 }
 
 .chartBar {
@@ -120,28 +164,28 @@
 .bar {
     width: 100%;
     max-width: 50px;
-    background-color: var(--primary-green);
-    border-radius: 4px 4px 0 0;
-    transition: background-color 0.3s ease;
+    background: linear-gradient(180deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    transition: all var(--transition-base);
     min-height: 4px;
 }
 
 .bar:hover {
-    background-color: var(--secondary-green);
+    background: linear-gradient(180deg, var(--primary-green-light) 0%, var(--secondary-green) 100%);
 }
 
 .barLabel {
     margin-top: 8px;
     font-size: 0.75rem;
-    color: var(--text-dark);
+    color: var(--text-muted);
     text-align: center;
 }
 
 .barValue {
     margin-bottom: 4px;
     font-size: 0.75rem;
-    font-weight: bold;
-    color: var(--primary-green);
+    font-weight: 700;
+    color: var(--primary-green-dark);
 }
 
 /* Plants summary table */
@@ -152,15 +196,19 @@
 
 .summaryTable th {
     text-align: left;
-    padding: 10px 16px;
-    border-bottom: 2px solid var(--primary-green);
-    color: var(--primary-green);
-    font-weight: 600;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 2px solid var(--mint);
+    color: var(--primary-green-dark);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 .summaryTable td {
-    padding: 10px 16px;
-    border-bottom: 1px solid #eee;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.92rem;
 }
 
 .summaryTable tr:last-child td {
@@ -174,30 +222,34 @@
 /* Garden links */
 .gardenLinks {
     display: flex;
-    gap: 12px;
+    gap: var(--space-md);
     flex-wrap: wrap;
 }
 
 .gardenLink {
     display: inline-block;
-    background-color: var(--primary-green);
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
     color: white;
     text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 0.6rem 1.5rem;
+    border-radius: var(--radius-full);
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
 }
 
 .gardenLink:hover {
-    background-color: var(--secondary-green);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: white;
 }
 
 .noData {
     text-align: center;
-    color: #757575;
-    font-style: italic;
-    padding: 40px 20px;
+    color: var(--text-muted);
+    padding: var(--space-3xl) var(--space-xl);
+    font-size: 1rem;
 }
 
 /* Responsive */
@@ -216,5 +268,13 @@
 
     .gardenLink {
         text-align: center;
+    }
+
+    .container {
+        padding: var(--space-md);
+    }
+
+    .pageTitle {
+        font-size: 1.6rem;
     }
 }

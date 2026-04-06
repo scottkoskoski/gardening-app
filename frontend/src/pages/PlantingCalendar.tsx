@@ -120,11 +120,14 @@ const PlantingCalendar = () => {
             ?.month_name || "April";
 
     return (
-        <div className={styles.container}>
+        <>
+        <div className={styles.pageHeader}>
             <h1 className={styles.pageTitle}>Seasonal Planting Calendar</h1>
             <p className={styles.subtitle}>
                 Plan your garden year-round with month-by-month planting activities
             </p>
+        </div>
+        <div className={styles.container}>
 
             {/* Zone Selector */}
             <div className={styles.zoneSelector}>
@@ -326,6 +329,7 @@ const PlantingCalendar = () => {
                 </div>
             )}
         </div>
+        </>
     );
 };
 

@@ -1,49 +1,213 @@
-.profile-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f8f8f8;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.profile-title {
+/* Profile Page */
+.pageHeader {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 50%, var(--primary-green-light) 100%);
+    padding: var(--space-2xl) var(--space-xl);
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
 }
 
-.profile-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.pageHeader::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(149,213,178,0.12) 0%, transparent 70%);
+    border-radius: 50%;
 }
 
-.profile-form label {
-    display: flex;
-    flex-direction: column;
-    font-weight: bold;
-}
-
-.profile-form input,
-.profile-form select {
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.profile-button {
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
+.pageTitle {
+    font-family: var(--font-serif);
     color: white;
-    background-color: #28a745;
-    border: none;
-    border-radius: 4px;
+    text-align: center;
+    margin-bottom: var(--space-sm);
+    font-size: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.pageSubtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.profileContainer {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: var(--space-xl);
+    animation: fadeInUp 0.4s ease;
+}
+
+.profileCard {
+    background: var(--card-white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+}
+
+.profileTitle {
+    font-family: var(--font-serif);
+    text-align: center;
+    color: var(--primary-green-dark);
+    font-size: 1.75rem;
+    margin-bottom: var(--space-xl);
+}
+
+.errorMessage {
+    background: #fef2f2;
+    color: #991b1b;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
+    font-size: 0.9rem;
+    border: 1px solid #fecaca;
+    text-align: center;
+}
+
+.successMessage {
+    background: var(--mint);
+    color: var(--primary-green-dark);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
+    font-size: 0.9rem;
+    border: 1px solid var(--sage);
+    text-align: center;
+}
+
+.profileForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.formGroup label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.formGroup input,
+.formGroup select {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.95rem;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    background: var(--card-white);
+    color: var(--text-dark);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
+}
+
+.formGroup input:disabled {
+    background: var(--background-warm);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: var(--space-sm) 0;
+}
+
+.checkboxLabel input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-green);
     cursor: pointer;
 }
 
-.profile-button:hover {
-    background-color: #218838;
+.zoneBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+    color: white;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-full);
+    margin-top: 4px;
+}
+
+.profileButton {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    margin-top: var(--space-sm);
+}
+
+.profileButton:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.sectionDivider {
+    border: none;
+    border-top: 1.5px solid var(--border-light);
+    margin: var(--space-sm) 0;
+}
+
+.sectionLabel {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--primary-green-dark);
+    margin: 0;
+    padding-bottom: var(--space-xs);
+}
+
+@media (max-width: 640px) {
+    .profileContainer {
+        padding: var(--space-md);
+    }
+
+    .profileCard {
+        padding: var(--space-lg);
+    }
+
+    .formRow {
+        grid-template-columns: 1fr;
+    }
+
+    .pageTitle {
+        font-size: 1.6rem;
+    }
 }

@@ -30,12 +30,12 @@ class JournalEntry(db.Model):
     __tablename__ = "journal_entry"
 
     id = db.Column(db.Integer, primary_key=True)
-    garden_id = db.Column(db.Integer, db.ForeignKey("user_garden.id"), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    garden_id = db.Column(db.Integer, db.ForeignKey("user_garden.id"), nullable=False, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, index=True)
     entry_type = db.Column(db.String(50), nullable=False)
     title = db.Column(db.String(200), nullable=False)
     notes = db.Column(db.Text, nullable=True)
-    entry_date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    entry_date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), index=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     garden = db.relationship("UserGarden", backref="journal_entries")
