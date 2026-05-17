@@ -253,6 +253,12 @@ async function getSeasonalTips(zone: string) {
     return get(`/tips/seasonal?zone=${zone}`);
 }
 
+// Irrigation API calls
+async function getIrrigationSchedule(token: string, zip?: string) {
+    const query = zip ? `?zip=${encodeURIComponent(zip)}` : "";
+    return get(`/irrigation${query}`, token);
+}
+
 // Soil API calls
 async function getSoilRecommendations(token: string) {
     return get("/soil/recommendations", token);
@@ -296,6 +302,7 @@ export default {
     getHarvests,
     getHarvestSummary,
     deleteHarvest,
+    getIrrigationSchedule,
     getSoilRecommendations,
     getPhGuide,
     getPlantCareTips,

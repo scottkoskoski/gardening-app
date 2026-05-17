@@ -41,6 +41,7 @@ const Navbar = () => {
                         <span className={styles.divider} />
                         <Link to="/dashboard" onClick={closeMenu}>Dashboard</Link>
                         <Link to="/gardens" onClick={closeMenu}>Gardens</Link>
+                        <Link to="/irrigation" onClick={closeMenu}>Water</Link>
                         <Link to="/recommendations" onClick={closeMenu}>Tips</Link>
                         <Link to="/profile" onClick={closeMenu}>Profile</Link>
                     </>

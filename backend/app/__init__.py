@@ -116,6 +116,7 @@ def create_app(config_name=None):
     from .routes.harvests import harvests_bp
     from .routes.soil import soil_bp
     from .routes.seasonal_tips import seasonal_tips_bp
+    from .routes.irrigation import irrigation_bp
 
     app.register_blueprint(hardiness_bp, url_prefix="/api/hardiness")
     app.register_blueprint(weather_bp, url_prefix="/api/weather")
@@ -139,6 +140,7 @@ def create_app(config_name=None):
     app.register_blueprint(harvests_bp, url_prefix="/api/harvests")
     app.register_blueprint(soil_bp, url_prefix="/api/soil")
     app.register_blueprint(seasonal_tips_bp, url_prefix="/api/tips/seasonal")
+    app.register_blueprint(irrigation_bp, url_prefix="/api/irrigation")
 
     # Health check endpoint
     @app.route("/api/health", methods=["GET"])
