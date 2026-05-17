@@ -1,0 +1,354 @@
+.pageHeader {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 50%, var(--primary-green-light) 100%);
+    padding: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.pageHeader::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(149,213,178,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.pageTitle {
+    font-family: var(--font-serif);
+    color: white;
+    text-align: center;
+    margin-bottom: var(--space-sm);
+    font-size: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.subtitle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-xl);
+    animation: fadeInUp 0.4s ease;
+}
+
+.weatherBanner {
+    background: var(--mint);
+    color: var(--primary-green-dark);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-lg);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.weatherLabel {
+    font-weight: 600;
+}
+
+.weatherZip {
+    color: var(--text-muted);
+}
+
+.summaryBar {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+}
+
+.summaryItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--card-white);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--text-dark);
+}
+
+.summaryDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dotToday {
+    background-color: #2563eb;
+}
+
+.dotSoon {
+    background-color: var(--terracotta);
+}
+
+.dotLater {
+    background-color: var(--secondary-green);
+}
+
+.dotSkip {
+    background-color: #94a3b8;
+}
+
+.filterTabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+}
+
+.filterTab {
+    padding: 0.5rem 1.25rem;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-full);
+    background: var(--card-white);
+    color: var(--text-dark);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.filterTab:hover {
+    border-color: var(--primary-green);
+    color: var(--primary-green);
+    background: var(--mint);
+}
+
+.filterTabActive {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+    color: white;
+    border-color: transparent;
+}
+
+.filterTabActive:hover {
+    background: linear-gradient(135deg, var(--primary-green-light) 0%, var(--primary-green) 100%);
+    color: white;
+}
+
+.scheduleList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.scheduleCard {
+    display: flex;
+    background: var(--card-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.scheduleCard:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.urgencyBorder {
+    width: 4px;
+    flex-shrink: 0;
+}
+
+.borderToday {
+    background-color: #2563eb;
+}
+
+.borderSoon {
+    background-color: var(--terracotta);
+}
+
+.borderLater {
+    background-color: var(--secondary-green);
+}
+
+.borderSkip {
+    background-color: #94a3b8;
+}
+
+.cardContent {
+    flex: 1;
+    padding: var(--space-md) var(--space-lg);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.plantName {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.urgencyBadge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 12px;
+    border-radius: var(--radius-full);
+    color: white;
+    flex-shrink: 0;
+}
+
+.badgeToday {
+    background-color: #2563eb;
+}
+
+.badgeSoon {
+    background-color: var(--terracotta);
+}
+
+.badgeLater {
+    background-color: var(--secondary-green);
+}
+
+.badgeSkip {
+    background-color: #94a3b8;
+}
+
+.cardStats {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-sm);
+    padding: var(--space-sm) 0;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.statLabel {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.statValue {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.statDate {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 0.85rem;
+}
+
+.amountGuidance {
+    margin: var(--space-sm) 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.reasoning {
+    margin: var(--space-sm) 0 0 0;
+    padding-left: var(--space-lg);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.reasoning li {
+    margin-bottom: 2px;
+}
+
+.cardMeta {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: var(--space-sm);
+}
+
+.cardMeta a {
+    color: var(--primary-green);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.cardMeta a:hover {
+    text-decoration: underline;
+}
+
+.emptyState {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-xl);
+    color: var(--text-muted);
+}
+
+.emptyState h2 {
+    font-family: var(--font-serif);
+    color: var(--primary-green-dark);
+    margin-bottom: var(--space-sm);
+}
+
+.emptyState a {
+    color: var(--primary-green);
+    font-weight: 600;
+}
+
+.errorMessage {
+    background: #fef2f2;
+    color: #991b1b;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
+    text-align: center;
+    border: 1px solid #fecaca;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: var(--space-md);
+    }
+
+    .pageTitle {
+        font-size: 1.6rem;
+    }
+
+    .cardContent {
+        padding: var(--space-md);
+    }
+
+    .cardStats {
+        gap: var(--space-md);
+    }
+}

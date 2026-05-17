@@ -15,6 +15,7 @@ import Tasks from "./pages/Tasks";
 import HarvestLog from "./pages/HarvestLog";
 import HarvestSummary from "./pages/HarvestSummary";
 import SoilGuide from "./pages/SoilGuide";
+import Irrigation from "./pages/Irrigation";
 
 const AppRoutes = () => (
     <Routes>
@@ -100,6 +101,14 @@ const AppRoutes = () => (
             element={
                 <ProtectedRoute>
                     <SoilGuide />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/irrigation"
+            element={
+                <ProtectedRoute>
+                    <Irrigation />
                 </ProtectedRoute>
             }
         />
